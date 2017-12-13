@@ -1087,7 +1087,7 @@ QString getThemeStyleSheet(){
         "#labelWalletStatus { border: none; background: transparent}"
         "#labelTransactionsStatus { border: none; background: transparent}"
         "#lineWatchBalance { border: none;}"
-
+        //"#scrollArea {border: none }"
         "#widgetCoinControl { border: none }"
         "#frameFeeSelection { border: none}"
         "#warningIcon { border: none; background: transparent }"
@@ -1096,7 +1096,7 @@ QString getThemeStyleSheet(){
         "#frame { border: none;}"                               //balances frame
         "#frame_2 {border: none;}"                              //recent transactions
         "#SendCoins {border: none;}"                            //sendcoins entries
-        "#scrollArea {border: 1px solid " + buttonHover + ";}"  //sendcoins scrollarea
+        "#SendCoinsDialog > #scrollArea {border: 1px solid " + buttonHover + ";}"  //sendcoins scrollarea
         "#frameFee {border: none;}"                             //sendcoins lower frame
         "#frame2 {border: none;}"                               //receive coins
     );
