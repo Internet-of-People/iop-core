@@ -132,6 +132,10 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     if(GUIUtil::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
+        QPalette newPal(qApp->palette());
+        newPal.setColor(QPalette::Link, QColor(41,128,185));
+        newPal.setColor(QPalette::LinkVisited, QColor(41,99,185));
+        qApp->setPalette(newPal);
         setStyleSheet(GUIUtil::getThemeStyleSheet());
     }
 
