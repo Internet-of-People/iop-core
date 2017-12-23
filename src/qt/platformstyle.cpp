@@ -51,14 +51,14 @@ void MakeSingleColorImage(QImage& img, const QColor& colorbase)
                 QColor col;
                 float r;
                 if(y < x) {
-                    r = (x*1.0/img.width()-y*1.0/img.height())*1.25;
+                    r = (x*1.0/img.width()-y*1.0/img.height());
                     col = QColor(
                         colorMid.red()* (1-r) + colorRight.red()*r,
                         colorMid.green()* (1-r) + colorRight.green()*r,
                         colorMid.blue()* (1-r) + colorRight.blue()*r,
                         255);
                 } else {
-                    r = (y*1.0/img.height()-x*1.0/img.width())*1.25;
+                    r = (y*1.0/img.height()-x*1.0/img.width());
                     col = QColor(
                         colorMid.red()* (1-r) + colorLeft.red()*r,
                         colorMid.green()* (1-r) + colorLeft.green()*r,
