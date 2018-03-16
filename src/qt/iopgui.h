@@ -17,6 +17,8 @@
 #include <QMenu>
 #include <QPoint>
 #include <QSystemTrayIcon>
+#include <QDesktopServices>
+#include <QUrl>
 
 class ClientModel;
 class NetworkStyle;
@@ -90,6 +92,7 @@ private:
     QProgressDialog *progressDialog;
 
     QMenuBar *appMenuBar;
+    QAction *iopLogoAction;
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
@@ -191,6 +194,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 #ifdef ENABLE_WALLET
+    void openIOP_global();
     /** Switch to overview (home) page */
     void gotoOverviewPage();
     /** Switch to history (transactions) page */

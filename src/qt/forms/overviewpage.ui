@@ -417,17 +417,17 @@
           <property name="alignment">
                <set>Qt::AlignLeft|Qt::AlignTop</set>
           </property>
-          <item>
+          <!--item>
           <widget class="QPushButton" name="iopLogo">
            <property name="enabled">
               <bool>true</bool>
             </property>
-            <!--<property name="sizePolicy">
+            <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
                 <horstretch>1</horstretch>
                 <verstretch>1</verstretch>
                </sizepolicy>
-              </property>-->
+              </property>>
             <property name="styleSheet">
               <string notr="true">QPushButton {background: transparent; width: 187; height: 165; margin: 0px; padding: 10; border: none; textalign:left; image: url(:/icons/iop) }
                                   QPushButton:hover {padding-left: 11; padding-right:9; padding-top:11; padding-bottom:9 }</string>
@@ -448,7 +448,7 @@
               <bool>true</bool>
             </property>
           </widget>
-          </item>
+          </item-->
         </layout>
       </item>
        <item>

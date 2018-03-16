@@ -986,11 +986,11 @@ QString getThemeStyleSheet(){
     bool validTheme = false;
 
     if(theme == "dark"){
-        accentOne = "rgb(31,31,31)";
-        accentTwo = "rgb(62,62,62)";
+        accentOne = "rgb(53,53,53)";
+        accentTwo = "rgb(63,63,63)";
         buttonHover = "rgb(87,87,87)";
-        backgroundColor = "rgb(45,45,45)";
-        fontColor = "rgb(204,204,204)";
+        backgroundColor = "rgb(22,22,22)";
+        fontColor = "rgb(211,211,211)";
         validTheme = true;
     }
 
@@ -1049,7 +1049,7 @@ QString getThemeStyleSheet(){
 
         //Toolbar
         "#toolbar {background: " + accentTwo + "; border-left: none; border-right:none; border-top: none; border-bottom: 3px solid " + backgroundColor + "; padding-top: 0px;}"
-        "#toolbar > QToolButton { background: " + accentTwo + "; border-color: " + accentTwo + "; border-style: solid; border-width: 1px; border-radius: 0px; padding: 6px; padding-left: 9px; padding-right: 9px; margin-bottom: 1px;}"
+        "#toolbar > QToolButton { width: 150px; height: 40px; background: " + accentTwo + "; border-color: " + accentTwo + "; border-style: solid; border-width: 1px; border-radius: 0px; padding: 6px; padding-left: 9px; padding-right: 9px; margin-bottom: 1px;}"
         "#toolbar > QToolButton:hover { background: " + backgroundColor + "; border-color: " + accentTwo + "; border-top-color: " + backgroundColor + ";  border-style: solid; border-width: 1px; border-top-left-radius: 5px; border-top-right-radius: 5px;}"                    
         "#toolbar > QToolButton:checked { background: " + backgroundColor + "; border-color: " + backgroundColor + "; border-style: solid; border-width: 1px; border-radius: 0px; border-top-left-radius: 5px; border-top-right-radius: 5px;}"
         

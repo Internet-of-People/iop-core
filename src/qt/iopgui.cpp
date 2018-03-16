@@ -92,6 +92,7 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     progressBar(0),
     progressDialog(0),
     appMenuBar(0),
+    iopLogoAction(0),
     overviewAction(0),
     historyAction(0),
     quitAction(0),
@@ -198,16 +199,17 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     createTrayIcon(networkStyle);
 
     // Create status bar
-    statusBar();
+    //statusBar();
 
     // Disable size grip because it looks ugly and nobody needs it
-    statusBar()->setSizeGripEnabled(false);
+    //statusBar()->setSizeGripEnabled(false);
 
     // Status bar notification icons
     QFrame *frameBlocks = new QFrame();
     frameBlocks->setContentsMargins(0,0,0,0);
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     frameBlocks->setStyleSheet("border: none");
+
     QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
     frameBlocksLayout->setContentsMargins(3,0,3,0);
     frameBlocksLayout->setSpacing(3);
@@ -216,6 +218,7 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     labelWalletHDStatusIcon = new QLabel();
     connectionsControl = new GUIUtil::ClickableLabel();
     labelBlocksIcon = new GUIUtil::ClickableLabel();
+
     if(enableWallet)
     {
         frameBlocksLayout->addStretch();
@@ -246,10 +249,10 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
         progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
     }
 
-    statusBar()->addWidget(progressBarLabel);
+    /*statusBar()->addWidget(progressBarLabel);
     statusBar()->addWidget(progressBar);
     statusBar()->addPermanentWidget(frameBlocks);
-
+*/
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
     this->installEventFilter(this);
 
@@ -291,6 +294,14 @@ IoPGUI::~IoPGUI()
 void IoPGUI::createActions()
 {
     QActionGroup *tabGroup = new QActionGroup(this);
+
+    iopLogoAction = new QAction("", this);
+    //iopLogoAction->setStatusTip(tr("open IOP website"));
+    //iopLogoAction->setToolTip();
+    iopLogoAction->setCheckable(false);
+    //iopLogoAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(iopLogoAction);
+
     overviewAction = new QAction(platformStyle->SingleColorIcon(":/icons/overview"), tr("&Overview"), this);
     overviewAction->setStatusTip(tr("Show general overview of wallet"));
     overviewAction->setToolTip(overviewAction->statusTip());
@@ -332,6 +343,7 @@ void IoPGUI::createActions()
     // can be triggered from the tray menu, and need to show the GUI to be useful.
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
+    connect(iopLogoAction, SIGNAL(triggered()), this, SLOT(openIOP_global()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
     connect(sendCoinsMenuAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -468,14 +480,23 @@ void IoPGUI::createToolBars()
 {
     if(walletFrame)
     {
-        QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+        QToolBar *toolbar = new QToolBar(tr("Tabs toolbar"),this);
+        addToolBar(Qt::LeftToolBarArea, toolbar);
+        //toolbar->setLayoutDirection(Qt::TopToBottom);
         toolbar->setObjectName("toolbar");
+        toolbar->setOrientation(Qt::Vertical);
         toolbar->setMovable(false);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolbar->addAction(iopLogoAction);
         toolbar->addAction(overviewAction);
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
+        toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 150; height: 132; padding-top: 30; padding-bottom: 45; margin: 0px; border: none; image: url(:/icons/iop)");
+        toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
+        //toolbar->addWidget(progressBarLabel);
+        //toolbar->addWidget(progressBar);
+        //toolbar->addPermanentWidget(frameBlocks);
         overviewAction->setChecked(true);
     }
 }
@@ -569,6 +590,7 @@ void IoPGUI::removeAllWallets()
 
 void IoPGUI::setWalletActionsEnabled(bool enabled)
 {
+    iopLogoAction->setEnabled(enabled);
     overviewAction->setEnabled(enabled);
     sendCoinsAction->setEnabled(enabled);
     sendCoinsMenuAction->setEnabled(enabled);
@@ -699,6 +721,11 @@ void IoPGUI::gotoOverviewPage()
     if (walletFrame) walletFrame->gotoOverviewPage();
 }
 
+void IoPGUI::openIOP_global()
+{
+    QDesktopServices::openUrl(QUrl("http://iop.global", QUrl::TolerantMode));
+}
+
 void IoPGUI::gotoHistoryPage()
 {
     historyAction->setChecked(true);
@@ -789,7 +816,7 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
         return;
 
     // Prevent orphan statusbar messages (e.g. hover Quit in main menu, wait until chain-sync starts -> garbled text)
-    statusBar()->clearMessage();
+    //statusBar()->clearMessage();
 
     // Acquire current block source
     enum BlockSource blockSource = clientModel->getBlockSource();
