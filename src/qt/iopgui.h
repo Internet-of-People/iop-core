@@ -12,6 +12,7 @@
 #include "amount.h"
 
 #include <QLabel>
+#include <QWidgetAction>
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
@@ -114,6 +115,9 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
+    QWidgetAction *actProgressBar;
+    QWidgetAction *actProgressBarLabel;
+    
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;

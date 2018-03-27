@@ -39,6 +39,7 @@
 #include <iostream>
 
 #include <QAction>
+#include <QWidgetAction>
 #include <QApplication>
 #include <QDateTime>
 #include <QDesktopWidget>
@@ -192,7 +193,14 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     // Create application menu bar
     createMenuBar();
 
-    // Create the toolbars
+    // Progress bar and label for blocks download
+        progressBarLabel = new QLabel();
+        //progressBarLabel->setVisible(false);
+        progressBar = new GUIUtil::ProgressBar();
+        progressBar->setAlignment(Qt::AlignLeft);
+        //progressBar->setVisible(false);
+
+    // Create tool bars
     createToolBars();
 
     // Create system tray icon and notification
@@ -203,56 +211,22 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
 
     // Disable size grip because it looks ugly and nobody needs it
     //statusBar()->setSizeGripEnabled(false);
-
-    // Status bar notification icons
-    QFrame *frameBlocks = new QFrame();
-    frameBlocks->setContentsMargins(0,0,0,0);
-    frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    frameBlocks->setStyleSheet("border: none");
-
-    QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
-    frameBlocksLayout->setContentsMargins(3,0,3,0);
-    frameBlocksLayout->setSpacing(3);
-    unitDisplayControl = new UnitDisplayStatusBarControl(platformStyle);
-    labelWalletEncryptionIcon = new QLabel();
-    labelWalletHDStatusIcon = new QLabel();
-    connectionsControl = new GUIUtil::ClickableLabel();
-    labelBlocksIcon = new GUIUtil::ClickableLabel();
-
-    if(enableWallet)
-    {
-        frameBlocksLayout->addStretch();
-        frameBlocksLayout->addWidget(unitDisplayControl);
-        frameBlocksLayout->addStretch();
-        frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
-        frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
-    }
-    frameBlocksLayout->addStretch();
-    frameBlocksLayout->addWidget(connectionsControl);
-    frameBlocksLayout->addStretch();
-    frameBlocksLayout->addWidget(labelBlocksIcon);
-    frameBlocksLayout->addStretch();
-
-    // Progress bar and label for blocks download
-    progressBarLabel = new QLabel();
-    progressBarLabel->setVisible(false);
-    progressBar = new GUIUtil::ProgressBar();
-    progressBar->setAlignment(Qt::AlignCenter);
-    progressBar->setVisible(false);
-
     // Override style sheet for progress bar for styles that have a segmented progress bar,
     // as they make the text unreadable (workaround for issue #1071)
     // See https://qt-project.org/doc/qt-4.8/gallery.html
-    QString curStyle = QApplication::style()->metaObject()->className();
-    if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
-    {
-        progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
-    }
+    //QString curStyle = QApplication::style()->metaObject()->className();
+    //if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
+    //{
+        //progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
+    //}
 
-    /*statusBar()->addWidget(progressBarLabel);
-    statusBar()->addWidget(progressBar);
-    statusBar()->addPermanentWidget(frameBlocks);
-*/
+    //statusBar()->addWidget(progressBarLabel);
+    //statusBar()->addWidget(progressBar);
+    //statusBar()->addPermanentWidget(frameBlocks);
+
+    // Create the toolbars after statusbar!
+    
+
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
     this->installEventFilter(this);
 
@@ -480,11 +454,12 @@ void IoPGUI::createToolBars()
 {
     if(walletFrame)
     {
-        QToolBar *toolbar = new QToolBar(tr("Tabs toolbar"),this);
+        QToolBar *toolbar = new QToolBar(tr("Tabs toolbar"),this); 
         addToolBar(Qt::LeftToolBarArea, toolbar);
         //toolbar->setLayoutDirection(Qt::TopToBottom);
         toolbar->setObjectName("toolbar");
         toolbar->setOrientation(Qt::Vertical);
+        //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         toolbar->setMovable(false);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolbar->addAction(iopLogoAction);
@@ -494,9 +469,56 @@ void IoPGUI::createToolBars()
         toolbar->addAction(historyAction);
         toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 132; height: 132; padding-top: 30; padding-bottom: 45; margin: 0px; border: none; image: url(:/icons/iop_t)");
         toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
-        //toolbar->addWidget(progressBarLabel);
-        //toolbar->addWidget(progressBar);
-        //toolbar->addPermanentWidget(frameBlocks);
+        QWidget *spacerWidget = new QWidget(this);
+        spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        spacerWidget->setVisible(true);
+        spacerWidget->setStyleSheet("background: transparent;");
+
+
+        // Status bar notification icons
+        QFrame *frameBlocks = new QFrame();
+        frameBlocks->setContentsMargins(0,0,0,0);
+        frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        frameBlocks->setStyleSheet("border: none; background: transparent; padding-top: 10px;");
+
+        QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
+        frameBlocksLayout->setContentsMargins(3,0,3,0);
+        frameBlocksLayout->setSpacing(3);
+        unitDisplayControl = new UnitDisplayStatusBarControl(platformStyle);
+        labelWalletEncryptionIcon = new QLabel();
+        labelWalletHDStatusIcon = new QLabel();
+        connectionsControl = new GUIUtil::ClickableLabel();
+        labelBlocksIcon = new GUIUtil::ClickableLabel();
+
+        if(enableWallet)
+        {
+            frameBlocksLayout->addStretch();
+            frameBlocksLayout->addWidget(unitDisplayControl);
+            frameBlocksLayout->addStretch();
+            frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
+            frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
+        }
+        frameBlocksLayout->addStretch();
+        frameBlocksLayout->addWidget(connectionsControl);
+        frameBlocksLayout->addStretch();
+        frameBlocksLayout->addWidget(labelBlocksIcon);
+        frameBlocksLayout->addStretch();
+
+        
+
+        //QWidgetAction* spacerWidgetAction = new QWidgetAction(this);
+        //spacerWidgetAction->setDefaultWidget(spacerWidget);
+        toolbar->addWidget(spacerWidget);
+        actProgressBarLabel = new QWidgetAction(this);
+        progressBarLabel->setStyleSheet("background: transparent;");
+        actProgressBarLabel->setDefaultWidget(progressBarLabel);
+        toolbar->addAction(actProgressBarLabel);
+        actProgressBar = new QWidgetAction(this);
+        actProgressBar->setDefaultWidget(progressBar);
+        toolbar->addAction(actProgressBar);
+
+        toolbar->addWidget(frameBlocks);
+
         overviewAction->setChecked(true);
     }
 }
@@ -817,6 +839,10 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
 
     // Prevent orphan statusbar messages (e.g. hover Quit in main menu, wait until chain-sync starts -> garbled text)
     //statusBar()->clearMessage();
+    
+    actProgressBarLabel->setVisible(false);
+    actProgressBar->setVisible(false);
+    
 
     // Acquire current block source
     enum BlockSource blockSource = clientModel->getBlockSource();
@@ -868,18 +894,18 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
         }
 #endif // ENABLE_WALLET
 
-        progressBarLabel->setVisible(false);
-        progressBar->setVisible(false);
+        actProgressBarLabel->setVisible(false);
+        actProgressBar->setVisible(false);
     }
     else
     {
         QString timeBehindText = GUIUtil::formatNiceTimeOffset(secs);
 
-        progressBarLabel->setVisible(true);
+        actProgressBarLabel->setVisible(true);
         progressBar->setFormat(tr("%1 behind").arg(timeBehindText));
         progressBar->setMaximum(1000000000);
         progressBar->setValue(nVerificationProgress * 1000000000.0 + 0.5);
-        progressBar->setVisible(true);
+        actProgressBar->setVisible(true);
 
         tooltip = tr("Catching up...") + QString("<br>") + tooltip;
         if(count != prevBlocks)
