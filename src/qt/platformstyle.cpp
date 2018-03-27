@@ -38,9 +38,8 @@ void MakeSingleColorImage(QImage& img, const QColor& colorbase)
 {   
     if(GUIUtil::customThemeIsSet()) 
     { 
-        QColor colorLeft = QColor(108,200,239);
-        QColor colorMid = QColor(102,204,204);
-        QColor colorRight = QColor(12,175,165);
+        QColor colorLeft = cPrimaryMint;
+        QColor colorRight = cPrimaryLightblue;
         
         img = img.convertToFormat(QImage::Format_ARGB32);
         for (int x = img.width(); x--; )
@@ -50,21 +49,12 @@ void MakeSingleColorImage(QImage& img, const QColor& colorbase)
                 const QRgb rgb = img.pixel(x, y);
                 QColor col;
                 float r;
-                if(y < x) {
-                    r = (x*1.0/img.width()-y*1.0/img.height());
-                    col = QColor(
-                        colorMid.red()* (1-r) + colorRight.red()*r,
-                        colorMid.green()* (1-r) + colorRight.green()*r,
-                        colorMid.blue()* (1-r) + colorRight.blue()*r,
-                        255);
-                } else {
-                    r = (y*1.0/img.height()-x*1.0/img.width());
-                    col = QColor(
-                        colorMid.red()* (1-r) + colorLeft.red()*r,
-                        colorMid.green()* (1-r) + colorLeft.green()*r,
-                        colorMid.blue()* (1-r) + colorLeft.blue()*r,
-                        255);
-                }
+                r = 0.5*(x*1.0/img.width()+1-y*1.0/img.height());
+                col = QColor(
+                    colorLeft.red()* (1-r) + colorRight.red()*r,
+                    colorLeft.green()* (1-r) + colorRight.green()*r,
+                    colorLeft.blue()* (1-r) + colorRight.blue()*r,
+                    255);
                 img.setPixel(x, y, qRgba(col.red(), col.green(), col.blue(), qAlpha(rgb)));
             }
         }
