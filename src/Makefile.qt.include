@@ -315,6 +315,8 @@ RES_ICONS = \
   qt/res/icons/left_arrow.png \
   qt/res/icons/right_arrow.png \
   qt/res/icons/iop_t.png \
+  qt/res/icons/balance.png \
+  qt/res/icons/pending.png \
   qt/res/icons/verify.png
 
 IOP_QT_BASE_CPP = \

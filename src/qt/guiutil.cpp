@@ -1075,8 +1075,8 @@ QString getThemeStyleSheet(){
         "QProgressBar::chunk {color: " + accentOne + "; background: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgb(108,200,239), stop: 1 rgb(102,204,204), stop: 2 rgb(12,175,165)); border-radius: 1px; margin: 0px;}"
         
         //Balance seperator line
-        "#line { border-top: none; border-left: none; border-right: none; border-bottom: 1px; border-style: solid; border-color: " + fontColor + ";}"
-
+        "#lineb, #lineb1, #lineb2, #lineb3, #lineb4, #lineb5 { border-top: none; border-left: none; border-right: none; border-bottom: 1px; border-style: solid; border-color: " + fontColor + ";}"
+        
         
         //Buttons (and Icons)
         "QPushButton { background-color: " + accentTwo + "; color: " + fontColor + "; border-color: " + accentOne + "; border-width: 1px; padding: 6px; border-style: outset; border-radius: 0px ;}"

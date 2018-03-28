@@ -62,6 +62,9 @@
         <file alias="left_arrow">res/icons/left_arrow.png</file>
         <file alias="iop_t">res/icons/iop_t.png</file>
         <file alias="right_arrow">res/icons/right_arrow.png</file>
+        <file alias="balance">res/icons/balance.png</file>
+        <file alias="pending">res/icons/pending.png</file>
+
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>
