@@ -40,7 +40,7 @@
                 </widget>
             </item>
             <item>
-                <layout class="QVBoxLayout" name="overview_Vertical" stretch="1,1">
+                <layout class="QVBoxLayout" name="overview_Vertical" stretch="0,1">
                     <item>
                         <layout class="QVBoxLayout" name="verticalLayout_2">
                             <item>
@@ -65,7 +65,7 @@
                                                         <property name="sizeHint" stdset="0">
                                                             <size>
                                                                 <width>40</width>
-                                                                <height>10</height>
+                                                                <height>30</height>
                                                             </size>
                                                         </property>
                                                     </spacer>
@@ -109,7 +109,7 @@
                                         <item>
                                             <layout class="QHBoxLayout" name ="balancesLayout">
                                                 <property name="spacing">
-                                                    <number>20</number>
+                                                    <number>50</number>
                                                 </property>
                                                 <item>
                                                     <layout class="QGridLayout" name="gridAvailable">
@@ -266,9 +266,6 @@
                                                                 <property name="text">
                                                                     <string notr="true">0.000 000 00 IOP</string>
                                                                 </property>
-                                                                <property name="alignment">
-                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                                                                </property>
                                                                 <property name="textInteractionFlags">
                                                                     <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
                                                                 </property>
@@ -276,7 +273,7 @@
                                                         </item>
                                                         <!-- available label-->
                                                         <item row="2" column="1">
-                                                            <widget class="QLabel" name="labelBalanceText">
+                                                            <widget class="QLabel" name="labelTotalText">
                                                                 <property name="text">
                                                                     <string>Total</string>
                                                                 </property>
@@ -358,9 +355,6 @@
                                                                 <property name="text">
                                                                     <string notr="true">0.000 000 00 IOP</string>
                                                                 </property>
-                                                                <property name="alignment">
-                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                                                                </property>
                                                                 <property name="textInteractionFlags">
                                                                     <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
                                                                 </property>
@@ -368,7 +362,7 @@
                                                         </item>
                                                         <!-- available label-->
                                                         <item row="2" column="1">
-                                                            <widget class="QLabel" name="labelBalanceText">
+                                                            <widget class="QLabel" name="labelPendingText">
                                                                 <property name="text">
                                                                     <string>Pending</string>
                                                                 </property>

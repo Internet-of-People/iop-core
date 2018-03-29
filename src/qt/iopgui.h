@@ -55,6 +55,8 @@ public:
     explicit IoPGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
     ~IoPGUI();
 
+
+    int getConnectedNodeCount();
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
@@ -89,6 +91,7 @@ private:
     QLabel *connectionsControl;
     QLabel *labelBlocksIcon;
     QLabel *progressBarLabel;
+    QLabel *numNodesLabel;
     QProgressBar *progressBar;
     QProgressDialog *progressDialog;
 

@@ -90,6 +90,7 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     connectionsControl(0),
     labelBlocksIcon(0),
     progressBarLabel(0),
+    numNodesLabel(0),
     progressBar(0),
     progressDialog(0),
     appMenuBar(0),
@@ -199,7 +200,8 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
         progressBar = new GUIUtil::ProgressBar();
         progressBar->setAlignment(Qt::AlignLeft);
         //progressBar->setVisible(false);
-
+    numNodesLabel = new QLabel();
+    
     // Create tool bars
     createToolBars();
 
@@ -473,7 +475,7 @@ void IoPGUI::createToolBars()
         spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         spacerWidget->setVisible(true);
         spacerWidget->setStyleSheet("background: transparent;");
-
+        toolbar->addWidget(spacerWidget);
 
         // Status bar notification icons
         QFrame *frameBlocks = new QFrame();
@@ -508,7 +510,7 @@ void IoPGUI::createToolBars()
 
         //QWidgetAction* spacerWidgetAction = new QWidgetAction(this);
         //spacerWidgetAction->setDefaultWidget(spacerWidget);
-        toolbar->addWidget(spacerWidget);
+        
         actProgressBarLabel = new QWidgetAction(this);
         progressBarLabel->setStyleSheet("background: transparent;");
         actProgressBarLabel->setDefaultWidget(progressBarLabel);
@@ -516,11 +518,26 @@ void IoPGUI::createToolBars()
         actProgressBar = new QWidgetAction(this);
         actProgressBar->setDefaultWidget(progressBar);
         toolbar->addAction(actProgressBar);
-
+        numNodesLabel->setStyleSheet("background: transparent; color: " + sPrimaryMint + "; font-size: 12px; padding-left: 10px; padding-top: 3px");
         toolbar->addWidget(frameBlocks);
+        toolbar->addWidget(numNodesLabel);
+        QWidget *spacerWidget2 = new QWidget(this);
+        spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        spacerWidget2->setFixedHeight(10);
+        spacerWidget2->setVisible(true);
+        spacerWidget2->setStyleSheet("background: transparent;");
+        toolbar->addWidget(spacerWidget2);
 
         overviewAction->setChecked(true);
     }
+}
+
+int IoPGUI::getConnectedNodeCount()
+{
+    std::vector<CNodeStats> vstats;
+    if(g_connman)
+        g_connman->GetNodeStats(vstats);
+    return vstats.size();
 }
 
 void IoPGUI::setClientModel(ClientModel *_clientModel)
@@ -780,6 +797,7 @@ void IoPGUI::gotoVerifyMessageTab(QString addr)
 void IoPGUI::updateNetworkState()
 {
     int count = clientModel->getNumConnections();
+    numNodesLabel->setText(QStringLiteral("Connection: %1").arg(count));
     QString icon;
     switch(count)
     {
