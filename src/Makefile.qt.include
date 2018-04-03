@@ -134,6 +134,7 @@ QT_MOC_CPP = \
   qt/moc_askpassphrasedialog.cpp \
   qt/moc_bantablemodel.cpp \
   qt/moc_iopaddressvalidator.cpp \
+  qt/moc_buyiopdialog.cpp \
   qt/moc_iopamountfield.cpp \
   qt/moc_iopgui.cpp \
   qt/moc_iopunits.cpp \
