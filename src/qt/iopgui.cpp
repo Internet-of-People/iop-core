@@ -296,6 +296,13 @@ void IoPGUI::createActions()
     tabGroup->addAction(sendCoinsAction);
 
     sendCoinsMenuAction = new QAction(QIcon(":/icons/send"), sendCoinsAction->text(), this);
+    buyIoPAction = new QAction(platformStyle->SingleColorIcon(":/icons/send"), tr("&Send"), this);
+    buyIoPAction->setStatusTip(tr("Send coins to an IoP address"));
+    buyIoPAction->setToolTip(buyIoPAction->statusTip());
+    buyIoPAction->setCheckable(true);
+    buyIoPAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    tabGroup->addAction(buyIoPAction);
+
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
@@ -320,8 +327,8 @@ void IoPGUI::createActions()
     connect(iopLogoAction, SIGNAL(triggered()), this, SLOT(openIOP_global()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
-    connect(sendCoinsMenuAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(sendCoinsMenuAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
+    connect(buyIoPAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(buyIoPAction, SIGNAL(triggered()), this, SLOT(gotoBuyIoPPage()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(receiveCoinsMenuAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -471,6 +478,7 @@ void IoPGUI::createToolBars()
         toolbar->addAction(overviewAction);
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
+        toolbar->addAction(buyIoPAction);
         toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 132; height: 132; padding-top: 30; padding-bottom: 45; margin: 0px; border: none; image: url(:/icons/iop_t)");
         toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
         QWidget *spacerWidget = new QWidget(this);
@@ -635,6 +643,7 @@ void IoPGUI::setWalletActionsEnabled(bool enabled)
     overviewAction->setEnabled(enabled);
     sendCoinsAction->setEnabled(enabled);
     sendCoinsMenuAction->setEnabled(enabled);
+    buyIoPAction->setEnabled(enabled);
     receiveCoinsAction->setEnabled(enabled);
     receiveCoinsMenuAction->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
@@ -797,6 +806,12 @@ void IoPGUI::gotoSendCoinsPage(QString addr)
 {
     sendCoinsAction->setChecked(true);
     if (walletFrame) walletFrame->gotoSendCoinsPage(addr);
+}
+
+void IoPGUI::gotoBuyIoPPage()
+{
+    buyIoPAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoBuyIoPPage();
 }
 
 void IoPGUI::gotoSignMessageTab(QString addr)

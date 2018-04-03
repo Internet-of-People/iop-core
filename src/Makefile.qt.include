@@ -236,6 +236,7 @@ IOP_QT_H = \
   qt/recentrequeststablemodel.h \
   qt/rpcconsole.h \
   qt/sendcoinsdialog.h \
+  qt/buyiopdialog.h \
   qt/sendcoinsentry.h \
   qt/signverifymessagedialog.h \
   qt/splashscreen.h \
@@ -361,6 +362,7 @@ IOP_QT_WALLET_CPP = \
   qt/receiverequestdialog.cpp \
   qt/recentrequeststablemodel.cpp \
   qt/sendcoinsdialog.cpp \
+  qt/buyiopdialog.cpp \
   qt/sendcoinsentry.cpp \
   qt/signverifymessagedialog.cpp \
   qt/transactiondesc.cpp \
