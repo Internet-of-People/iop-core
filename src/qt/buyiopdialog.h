@@ -6,10 +6,13 @@
 #define IOP_QT_BUYIOPDIALOG_H
 
 #include "walletmodel.h"
+#include "iopamountfield.h"
 
 
 #include <QDialog>
 #include <QLineEdit>
+#include <QDoubleSpinBox>
+
 
 class PlatformStyle;
 
@@ -26,12 +29,19 @@ public:
 
 public Q_SLOTS:
     void chooseAdress();
+    void updatePhysical();
+    void updateIoP(double i);
 
 public:
     const PlatformStyle *platformStyle;
     WalletModel *model;
     QPushButton *selectAdress;
     QLineEdit *adressLineEdit;
+    QDoubleSpinBox* paySpinBox;
+    IoPAmountField* amountIoP;
+
+private:
+    bool slotblock;
 };
 
 #endif // IOP_QT_BUYIOPDIALOG_H
