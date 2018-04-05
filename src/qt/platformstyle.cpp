@@ -6,6 +6,7 @@
 
 #include "guiconstants.h"
 #include "guiutil.h"
+#include "styles.h"
 
 #include <QApplication>
 #include <QColor>
@@ -36,10 +37,10 @@ namespace {
 
 void MakeSingleColorImage(QImage& img, const QColor& colorbase)
 {   
-    if(GUIUtil::customThemeIsSet()) 
+    if(IoPStyles::customThemeIsSet()) 
     { 
-        QColor colorLeft = cPrimaryMint;
-        QColor colorRight = cPrimaryLightblue;
+        QColor colorLeft = c_iopLightTurqoise;
+        QColor colorRight = c_iopLightBlue;
         
         img = img.convertToFormat(QImage::Format_ARGB32);
         for (int x = img.width(); x--; )
@@ -106,14 +107,14 @@ PlatformStyle::PlatformStyle(const QString &_name, bool _imagesOnButtons, bool _
     singleColor(0,0,0),
     textColor(0,0,0)
 {
-    if(GUIUtil::customThemeIsSet()) 
+    if(IoPStyles::customThemeIsSet()) 
     {   
         //TODO: may be obsolete
         //dark theme
         imagesOnButtons = true;
         colorizeIcons = true;
-        singleColor = QColor(12,175,165); 
-        textColor = QColor(12,175,165);         
+        singleColor = c_iopLightTurqoise; 
+        textColor = c_iopLightTurqoise;         
     } else {
         //default light theme
         // Determine icon highlighting color

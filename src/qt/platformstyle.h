@@ -9,22 +9,6 @@
 #include <QPixmap>
 #include <QString>
 
-static const QString sPrimaryLightblue = "rgb(108,200,240)";
-static const QString sPrimaryMint = "rgb(12,175,165)";
-
-static const QString sSecondaryAnthrazit = "rgb(22,22,22)";
-static const QString sSecondaryGray = "rgb(53,53,53)";
-static const QString sSecondaryLightGray = "rgb(211,211,211)";
-static const QString sSecondaryWhite = "rgb(255,255,255)";
-
-static const QColor cPrimaryLightblue = QColor(108,200,240);
-static const QColor cPrimaryMint = QColor(12,175,165);
-
-static const QColor cSecondaryAnthrazit = QColor(22,22,22);
-static const QColor cSecondaryGray = QColor(53,53,53);
-static const QColor cSecondaryLightGray = QColor(211,211,211);
-static const QColor cSecondaryWhite = QColor(255,255,255);
-
 /* Coin network-specific GUI style information */
 class PlatformStyle
 {

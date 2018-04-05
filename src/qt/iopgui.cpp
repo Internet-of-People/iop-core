@@ -8,6 +8,7 @@
 
 #include "iopgui.h"
 
+#include "styles.h"
 #include "iopunits.h"
 #include "clientmodel.h"
 #include "guiconstants.h"
@@ -132,14 +133,14 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
         move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
     }
 
-    if(GUIUtil::customThemeIsSet()) {
+    if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
         QPalette newPal(qApp->palette());
         newPal.setColor(QPalette::Link, QColor(41,128,185));
         newPal.setColor(QPalette::LinkVisited, QColor(41,99,185));
         qApp->setPalette(newPal);
-        setStyleSheet(GUIUtil::getThemeStyleSheet());
+        setStyleSheet(styleSheetString);
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
@@ -277,7 +278,7 @@ void IoPGUI::createActions()
     iopLogoAction->setCheckable(false);
     //iopLogoAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(iopLogoAction);
-
+    
     overviewAction = new QAction(platformStyle->SingleColorIcon(":/icons/overview"), tr("&Overview"), this);
     overviewAction->setStatusTip(tr("Show general overview of wallet"));
     overviewAction->setToolTip(overviewAction->statusTip());
@@ -459,8 +460,7 @@ void IoPGUI::createToolBars()
         QToolBar *toolbar = new QToolBar(tr("Tabs toolbar"),this); 
         addToolBar(Qt::LeftToolBarArea, toolbar);
         //toolbar->setLayoutDirection(Qt::TopToBottom);
-        toolbar->setObjectName("toolbar");
-        toolbar->setOrientation(Qt::Vertical);
+        toolbar->setObjectName("toolbar");        toolbar->setOrientation(Qt::Vertical);
         //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         toolbar->setMovable(false);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -472,9 +472,9 @@ void IoPGUI::createToolBars()
         toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 132; height: 132; padding-top: 30; padding-bottom: 45; margin: 0px; border: none; image: url(:/icons/iop_t)");
         toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
         QWidget *spacerWidget = new QWidget(this);
-        spacerWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        spacerWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         spacerWidget->setVisible(true);
-        spacerWidget->setStyleSheet("background: transparent;");
+        spacerWidget->setStyleSheet("background: transparent; width: 275");
         toolbar->addWidget(spacerWidget);
 
         // Status bar notification icons
@@ -518,7 +518,7 @@ void IoPGUI::createToolBars()
         actProgressBar = new QWidgetAction(this);
         actProgressBar->setDefaultWidget(progressBar);
         toolbar->addAction(actProgressBar);
-        numNodesLabel->setStyleSheet("background: transparent; color: " + sPrimaryMint + "; font-size: 12px; padding-left: 10px; padding-top: 3px");
+        numNodesLabel->setStyleSheet("background: transparent; color: " + s_iopLightTurqoise + "; font-size: 12px; padding-left: 10px; padding-top: 3px");
         toolbar->addWidget(frameBlocks);
         toolbar->addWidget(numNodesLabel);
         QWidget *spacerWidget2 = new QWidget(this);
