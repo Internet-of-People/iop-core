@@ -43,6 +43,7 @@ public:
     const PlatformStyle* platformStyle;
     WalletModel* model;
     QPushButton* selectAdress;
+    QPushButton* buyButton;
     QLineEdit* adressLineEdit;
     QDoubleSpinBox* paySpinBox;
     QComboBox* currency;
