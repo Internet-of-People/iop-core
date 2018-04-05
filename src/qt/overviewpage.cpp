@@ -13,6 +13,7 @@
 #include "platformstyle.h"
 #include "transactionfilterproxy.h"
 #include "transactiontablemodel.h"
+
 #include "walletmodel.h"
 
 #include <QAbstractItemDelegate>
@@ -132,34 +133,20 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     ui->labelWalletStatus->setIcon(icon);
 
     // Recent transactions
-    ui->listTransactions->setItemDelegate(txdelegate);
-    ui->listTransactions->setIconSize(QSize(DECORATION_SIZE, DECORATION_SIZE));
-    ui->listTransactions->setMinimumHeight(NUM_ITEMS * (DECORATION_SIZE + 2));
-    ui->listTransactions->setAttribute(Qt::WA_MacShowFocusRect, false);
-
-    connect(ui->listTransactions, SIGNAL(clicked(QModelIndex)), this, SLOT(handleTransactionClicked(QModelIndex)));
-    //connect(ui->iopLogo, SIGNAL(clicked()), this, SLOT(handleLogoClicked()));
+    transactionView = new TransactionView(platformStyle, this);
+    ui->transactionLayout->addWidget(transactionView);
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
     connect(ui->labelWalletStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 }
 
-void OverviewPage::handleTransactionClicked(const QModelIndex &index)
-{
-    if(filter)
-        Q_EMIT transactionClicked(filter->mapToSource(index));
-}
 
 void OverviewPage::handleOutOfSyncWarningClicks()
 {
     Q_EMIT outOfSyncWarningClicked();
 }
 
-void OverviewPage::handleLogoClicked() 
-{ 
-    QDesktopServices::openUrl(QUrl("http://iop.global")); 
-}
 
 OverviewPage::~OverviewPage()
 {
@@ -223,6 +210,7 @@ void OverviewPage::setClientModel(ClientModel *model)
 void OverviewPage::setWalletModel(WalletModel *model)
 {
     this->walletModel = model;
+    transactionView->setModel(model);
     if(model && model->getOptionsModel())
     {
         // Set up transaction list
@@ -233,9 +221,6 @@ void OverviewPage::setWalletModel(WalletModel *model)
         filter->setSortRole(Qt::EditRole);
         filter->setShowInactive(false);
         filter->sort(TransactionTableModel::Date, Qt::DescendingOrder);
-
-        ui->listTransactions->setModel(filter.get());
-        ui->listTransactions->setModelColumn(TransactionTableModel::ToAddress);
 
         // Keep up to date with wallet
         setBalance(model->getBalance(), model->getUnconfirmedBalance(), model->getImmatureBalance(),
@@ -263,7 +248,6 @@ void OverviewPage::updateDisplayUnit()
         // Update txdelegate->unit with the current unit
         txdelegate->unit = walletModel->getOptionsModel()->getDisplayUnit();
 
-        ui->listTransactions->update();
     }
 }
 
