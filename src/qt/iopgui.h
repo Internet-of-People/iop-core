@@ -98,7 +98,6 @@ private:
     QMenuBar *appMenuBar;
     QAction *iopLogoAction;
     QAction *overviewAction;
-    QAction *historyAction;
     QAction *quitAction;
     QAction *sendCoinsAction;
     QAction *sendCoinsMenuAction;
@@ -204,8 +203,6 @@ private Q_SLOTS:
     void openIOP_global();
     /** Switch to overview (home) page */
     void gotoOverviewPage();
-    /** Switch to history (transactions) page */
-    void gotoHistoryPage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
