@@ -19,50 +19,65 @@
 #include <iostream>
 
 BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent) : QDialog(parent), model(0), platformStyle(_platformStyle)
-{
+{   
+
+    slotblock = false;
+
     QLabel* buyIoPLabel = new QLabel("Buy IoP");
-    amountIoP = new IoPAmountField();
     QGridLayout* layout = new QGridLayout(this);
     layout->addWidget(buyIoPLabel);
-    layout->addWidget(amountIoP);
+
+    // amount selection
+    amountIoP = new IoPAmountField();
     paySpinBox = new QDoubleSpinBox;
     paySpinBox->setRange(50, 50000);
     paySpinBox->setDecimals(2);
-    paySpinBox->setSingleStep(.01);
+    paySpinBox->setSingleStep(1);
     paySpinBox->setValue(50);
+    
     currency = new QComboBox(this);
     currency->addItem("Dollar");
     currency->addItem("Euro");
     currency->addItem("Rubel");
-    QWidget* payAmount = new QWidget(this);
 
+    QWidget* payAmount = new QWidget(this);
     QHBoxLayout* payLayout = new QHBoxLayout(payAmount);
+
     payLayout->setContentsMargins(3, 0, 3, 0);
     payLayout->setSpacing(3);
     payLayout->addWidget(paySpinBox);
     payLayout->addWidget(currency);
-    layout->addWidget(payAmount);
-    slotblock = false;
+    payLayout->addWidget(amountIoP);
 
-    adressLineEdit = new QLineEdit("choose adress or paste your own", this);
+    layout->addWidget(payAmount);
+
+    //adress selection
+    adressLineEdit = new QLineEdit(this);
+    adressLineEdit->setPlaceholderText("choose adress or paste your own");
     selectAdress = new QPushButton("choose");
 
     QWidget* addressWidget = new QWidget(this);
     QHBoxLayout* adressLayout = new QHBoxLayout(addressWidget);
+
     adressLayout->setContentsMargins(3, 0, 3, 0);
     adressLayout->setSpacing(3);
     adressLayout->addWidget(adressLineEdit);
     adressLayout->addWidget(selectAdress);
+
     layout->addWidget(addressWidget);
+
+    buyButton = new QPushButton("buy");
+    layout->addWidget(buyButton);
+
+    //network management
     iopPriceNAM = new QNetworkAccessManager();
 
+    //SLOTS
     connect(selectAdress, SIGNAL(clicked()), this, SLOT(chooseAdress()));
     connect(amountIoP, SIGNAL(valueChanged()), this, SLOT(iopUpdated()));
     connect(paySpinBox, SIGNAL(valueChanged(double)), this, SLOT(physicalUpdated(double)));
+    connect(iopPriceNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotIoPPrice(QNetworkReply*)));
 
-    std::cout << "pricecheck: " << connect(iopPriceNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotIoPPrice(QNetworkReply*))) << std::endl;
-
-    //setStyleSheet(" background: rgb(255,0,0)");
 }
 
 
