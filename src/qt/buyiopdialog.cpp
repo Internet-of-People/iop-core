@@ -14,6 +14,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QNetworkRequest>
+#include <QDesktopServices>
 #include <QObject>
 #include <QUrl>
 #include <iostream>
@@ -29,16 +30,19 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     // amount selection
     amountIoP = new IoPAmountField();
-    paySpinBox = new QDoubleSpinBox;
-    paySpinBox->setRange(50, 50000);
-    paySpinBox->setDecimals(2);
-    paySpinBox->setSingleStep(1);
-    paySpinBox->setValue(50);
+    amountIoP->setReadOnly(true);
+    
     
     currency = new QComboBox(this);
     currency->addItem("Dollar");
     currency->addItem("Euro");
     currency->addItem("Rubel");
+
+    paySpinBox = new QDoubleSpinBox;
+    paySpinBox->setRange(50, 50000);
+    paySpinBox->setDecimals(2);
+    paySpinBox->setSingleStep(1);
+    paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
 
     QWidget* payAmount = new QWidget(this);
     QHBoxLayout* payLayout = new QHBoxLayout(payAmount);
@@ -67,23 +71,34 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     layout->addWidget(addressWidget);
 
     buyButton = new QPushButton("buy");
+    buyButton->setEnabled(false);
     layout->addWidget(buyButton);
 
     //network management
     iopPriceNAM = new QNetworkAccessManager();
 
     //SLOTS
+    connect(currency, SIGNAL(currentIndexChanged(int)), this, SLOT(physicalUpdated(int)));
+    std::cout << connect(adressLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(adressChanged(const QString &)))<< std::endl;
     connect(selectAdress, SIGNAL(clicked()), this, SLOT(chooseAdress()));
-    connect(amountIoP, SIGNAL(valueChanged()), this, SLOT(iopUpdated()));
     connect(paySpinBox, SIGNAL(valueChanged(double)), this, SLOT(physicalUpdated(double)));
     connect(iopPriceNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotIoPPrice(QNetworkReply*)));
+    connect(buyButton, SIGNAL(clicked()), this, SLOT(sendBuyRequest()));
 
+
+    updateIoPPrice(paySpinBox->value());
 }
 
 
 void BuyIoPDialog::setModel(WalletModel* _model)
 {
     this->model = _model;
+}
+
+void BuyIoPDialog::adressChanged(const QString &txt){
+    //if(valid(adressLineEdit->getText())
+    buyButton->setEnabled(true);
+    std::cout<<"buybutton enabled"<<std::endl;
 }
 
 void BuyIoPDialog::chooseAdress()
@@ -97,58 +112,39 @@ void BuyIoPDialog::chooseAdress()
     }
 }
 
-void BuyIoPDialog::iopUpdated()
+void BuyIoPDialog::physicalUpdated(int i)
 {
-    if (!slotblock) {
-        slotblock = true;
-        std::cout << amountIoP->value() << "IoP\n";
-        paySpinBox->setValue(getPhysicalPrice(amountIoP->value() * 0.00000001));
-        slotblock = false;
-    }
+    BuyIoPDialog::physicalUpdated(paySpinBox->value());
 }
 
 void BuyIoPDialog::physicalUpdated(double i)
 {
-    if (!slotblock) {
-        slotblock = true;
-
-        std::cout << i << "$\n";
-        amountIoP->setValue(getIoPPrice(i) * 100000000);
-        slotblock = false;
+    std::cout << i << "$\n";
+    if(i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
+        updateIoPPrice(i);
+    else{
+        if(i <= MIN_PRICE[currency->currentIndex()])
+            paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
+        if(i >= MAX_PRICE[currency->currentIndex()])
+            paySpinBox->setValue(MAX_PRICE[currency->currentIndex()]);
     }
 }
 
-double BuyIoPDialog::getIoPPrice(double amount)
+void BuyIoPDialog::updateIoPPrice(double amount)
 {
     responsed = false;
-    QNetworkRequest request(QUrl(QString(GET_PRICE).append(CURRENCY[currency->currentIndex()]).append(SEPERATOR).append(PARTNER_NAME).append(SEPERATOR).append(QString::number(amount).append(SEPERATOR).append(PARTNER_NAME))));
+    QNetworkRequest request(QUrl(QString(GET_PRICE).append(CURRENCY[currency->currentIndex()]).append(SEPERATOR).append(IOP_CURRENCY).append(SEPERATOR).append(QString::number(amount).append(SEPERATOR))));
     std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
     iopPriceNAM->get(request);
-    waitForResponse();
-    return iopPrice;
 }
 
-double BuyIoPDialog::getPhysicalPrice(double amount)
-{
-    responsed = false;
-    int maxbuy = MAX_PRICE[currency->currentIndex()];
-    QNetworkRequest request(QUrl(QString(GET_PRICE).append(CURRENCY[currency->currentIndex()]).append(SEPERATOR).append(PARTNER_NAME).append(SEPERATOR).append(QString::number(maxbuy).append(SEPERATOR).append(PARTNER_NAME))));
-    std::cout << "phys maxbuy price: " << request.url().toString().toStdString() << std::endl;
-    
-    iopPriceNAM->get(request);
-    waitForResponse();
+void BuyIoPDialog::sendBuyRequest(){
+    QString adress = QString(BUY_URL).append(PARTNER_NAME).append(WITH_CARD).append(CURRENCY[currency->currentIndex()]).append(AMOUNT_PAY).append(QString::number(paySpinBox->value()).append(WALLET).append(adressLineEdit->text()).append(DISCOUNT));
+    std::cout << "buy url: " << adress.toStdString() << std::endl;
 
-    iopPrice = maxbuy/iopPrice *amount;
-    std::cout << amount << "iop cost" << iopPrice << "( " << amount << " )" << std::endl; 
-    return iopPrice;
+    QDesktopServices::openUrl(QUrl(adress,QUrl::TolerantMode));
 }
 
-void BuyIoPDialog::waitForResponse()
-{
-    //while (!responsed) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
-    //}
-}
 
 void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
 {   
@@ -161,7 +157,7 @@ void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
     bool successfullParsed;
     iopPrice = answer.toDouble(&successfullParsed);
     std::cout << "GOT PRICE: " << answer.toStdString() << std::endl;
-
+    amountIoP->setValue(iopPrice* 100000000);
     responsed = true;
     return;
 }

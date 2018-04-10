@@ -33,11 +33,12 @@ public:
 
 public Q_SLOTS:
     //void managerFinished();
+    void adressChanged(const QString &txt);
     void chooseAdress();
-    void iopUpdated();
+    void physicalUpdated(int i);
     void physicalUpdated(double i);
     void gotIoPPrice(QNetworkReply* r);
-
+    void sendBuyRequest();
 
 public:
     const PlatformStyle* platformStyle;
@@ -48,7 +49,6 @@ public:
     QDoubleSpinBox* paySpinBox;
     QComboBox* currency;
     IoPAmountField* amountIoP;
-
     QNetworkAccessManager* iopPriceNAM;
 
 
@@ -68,7 +68,9 @@ private:
 
     const QString CURRENCY[3] = {QString("USD"), QString("EUR"), QString("RUB")};
 
-    const QString PARTNER_NAME = QString("iop");
+    const QString PARTNER_NAME = QString("Internet%20Of%20People");
+
+    const QString IOP_CURRENCY = QString("IOP");
 
     const QString SEPERATOR = QString("/");
 
@@ -87,11 +89,22 @@ private:
     //POST https://indacoin.com/api/exgw_createTransaction
     const QString CREATE_TRANSACTION = QString("https://indacoin.com/api/exgw_createTransaction");
 
+
+
+    const QString BUY_URL = QString("https://indacoin.com/xx_XX/change/buy-");
+
+    const QString WITH_CARD = QString("-with-card");
+
+    const QString AMOUNT_PAY = QString("?amount_pay=");
+
+    const QString WALLET = QString("&wallet=");
+
+    const QString DISCOUNT = QString("&discount=82446");
+
+
     double iopPrice;
 
-    double getIoPPrice(double amount);
-    double getPhysicalPrice(double amount);
-    void waitForResponse();
+    void updateIoPPrice(double amount);
 };
 
 #endif // IOP_QT_BUYIOPDIALOG_H
