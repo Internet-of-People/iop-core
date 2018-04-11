@@ -46,7 +46,7 @@
             //Table view
             "QHeaderView { background: " + s_iopantrazith + ";} "
             "QTableView { border: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
-            "QTableView::item { border-right: 1px solid " + s_iopMidGrey + "; border-bottom: 1px solid " + s_iopMidGrey + ";}"                    
+            "QTableView::item { border-right: none; border-bottom: none;}"                    
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
             //Spinbox
