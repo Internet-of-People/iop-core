@@ -34,6 +34,9 @@ class WalletModel;
 class HelpMessageDialog;
 class ModalOverlay;
 
+static const QSize TOOLBAR_ICONSIZE = QSize(40,40);
+
+
 QT_BEGIN_NAMESPACE
 class QAction;
 class QProgressBar;
@@ -51,7 +54,6 @@ class IoPGUI : public QMainWindow
 public:
     static const QString DEFAULT_WALLET;
     static const std::string DEFAULT_UIPLATFORM;
-
     explicit IoPGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
     ~IoPGUI();
 
