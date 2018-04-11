@@ -109,6 +109,7 @@
             "QPushButton { background-color: " + s_iopMidGrey + "; color: " + s_iopLightGrey + "; border-color: " + s_iopMidGrey + "; border-width: 1px; padding: 6px; border-style: outset; border-radius: 0px ;}"
             "QPushButton:hover { background-color: " + s_highlight_light_midgrey + "; color: " + s_iopLightBlue + ";}"
             "QPushButton:pressed { background-color: " + s_highlight_dark_midgrey + ";}"
+            "QPushButton:disabled { background-color: " + s_highlight_light_anthrazith + "; color: " + s_highlight_light_midgrey + "}"
 
 
             //Disturbing borders
