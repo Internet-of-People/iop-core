@@ -41,11 +41,11 @@
             //Checkbox
             "QCheckBox {padding: 5px;}"
 
-            "#transactions_title { color: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgb(108,200,239), stop: 1 rgb(102,204,204), stop: 2 rgb(12,175,165)); font-size: 24px; }"
+            "#transactions_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
 
             //Table view
             "QHeaderView { background: " + s_iopantrazith + ";} "
-            "QTableView { border: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightGrey + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
+            "QTableView { border: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
             "QTableView::item { border-right: 1px solid " + s_iopMidGrey + "; border-bottom: 1px solid " + s_iopMidGrey + ";}"                    
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
@@ -84,7 +84,7 @@
             "QScrollBar:horizontal {background: " + s_iopantrazith + "; padding-left: 13px; padding-right: 13px;}"
 
             "QScrollBar::handle { background: " + s_iopMidGrey + "; border: 1px outset " + s_iopMidGrey + "}"
-            "QScrollBar::handle:hover { background: " + s_highlight_light_midgrey + "; border: 1px outset " + s_iopMidGrey + "}"
+            "QScrollBar::handle:hover { background: " + s_highlight_light_midgrey + "; border: 1px outset " + s_highlight_light_midgrey + "}"
             "QScrollBar::handle:pressed { background: " + s_highlight_dark_midgrey + "; border: 1px outset " + s_iopMidGrey + "}"
             "QScrollBar::add-line:vertical { background: " + s_iopantrazith + "; height: 10px; border: 1px outset " + s_iopMidGrey + "; subcontrol-positon: bottom; subcontrol-origin: margin; }"
             "QScrollBar::sub-line:vertical { background: " + s_iopantrazith + "; height: 10px; border: 1px outset " + s_iopMidGrey + "; subcontrol-positon: top; subcontrol-origin: margin;}"
@@ -107,7 +107,7 @@
             
             //Buttons (and Icons)
             "QPushButton { background-color: " + s_iopMidGrey + "; color: " + s_iopLightGrey + "; border-color: " + s_iopMidGrey + "; border-width: 1px; padding: 6px; border-style: outset; border-radius: 0px ;}"
-            "QPushButton:hover { background-color: " + s_highlight_light_midgrey + ";}"
+            "QPushButton:hover { background-color: " + s_highlight_light_midgrey + "; color: " + s_iopLightBlue + ";}"
             "QPushButton:pressed { background-color: " + s_highlight_dark_midgrey + ";}"
 
 
