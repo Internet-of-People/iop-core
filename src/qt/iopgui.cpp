@@ -105,6 +105,7 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     signMessageAction(0),
     verifyMessageAction(0),
     aboutAction(0),
+    updateAction(0),
     receiveCoinsAction(0),
     receiveCoinsMenuAction(0),
     optionsAction(0),
@@ -340,6 +341,9 @@ void IoPGUI::createActions()
     aboutQtAction = new QAction(platformStyle->TextColorIcon(":/icons/about_qt"), tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
+    updateAction = new QAction(platformStyle->TextColorIcon(":/icons/about_qt"), tr("check for updates"), this);
+    updateAction->setStatusTip(tr("Check if new Wallet version is online"));
+    updateAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(platformStyle->TextColorIcon(":/icons/options"), tr("&Options..."), this);
     optionsAction->setStatusTip(tr("Modify configuration options for %1").arg(tr(PACKAGE_NAME)));
     optionsAction->setMenuRole(QAction::PreferencesRole);
@@ -379,6 +383,7 @@ void IoPGUI::createActions()
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(checkForUpdate()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
@@ -447,6 +452,7 @@ void IoPGUI::createMenuBar()
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
+    //help->addAction(updateAction);
 }
 
 void IoPGUI::createToolBars()
@@ -718,6 +724,26 @@ void IoPGUI::aboutClicked()
 
     HelpMessageDialog dlg(this, true);
     dlg.exec();
+}
+
+void IoPGUI::checkForUpdate()
+{
+    if(!clientModel)
+        return;
+
+    if(updateAvailable())
+        return;
+
+    HelpMessageDialog dlg(this, true,true,false);
+    dlg.exec();
+}
+
+bool IoPGUI::updateAvailable()
+{
+    //CHECK AVAILABILITY
+    HelpMessageDialog dlg(this, true,true,true);
+    dlg.exec();
+    return true;
 }
 
 void IoPGUI::showDebugWindow()
@@ -1053,6 +1079,7 @@ void IoPGUI::showEvent(QShowEvent *event)
     // enable the debug window when the main window shows up
     openRPCConsoleAction->setEnabled(true);
     aboutAction->setEnabled(true);
+    //updateAction->setEnabled(true);
     optionsAction->setEnabled(true);
 }
 

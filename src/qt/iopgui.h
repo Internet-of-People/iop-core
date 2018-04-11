@@ -34,7 +34,7 @@ class WalletModel;
 class HelpMessageDialog;
 class ModalOverlay;
 
-static const QSize TOOLBAR_ICONSIZE = QSize(40,40);
+static const QSize TOOLBAR_ICONSIZE = QSize(30,30);
 
 
 QT_BEGIN_NAMESPACE
@@ -116,6 +116,7 @@ private:
     QAction *backupWalletAction;
     QAction *changePassphraseAction;
     QAction *aboutQtAction;
+    QAction *updateAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
@@ -159,6 +160,8 @@ private:
     void updateNetworkState();
 
     void updateHeadersSyncProgressLabel();
+
+    bool updateAvailable();
 
 Q_SIGNALS:
     /** Signal raised when a URI was entered or dragged to the GUI */
@@ -223,6 +226,8 @@ private Q_SLOTS:
     /** Show about dialog */
     void aboutClicked();
     /** Show debug window */
+    void checkForUpdate();
+    /** Check if update is available */
     void showDebugWindow();
     /** Show debug window and set focus to the console */
     void showDebugWindowActivateConsole();

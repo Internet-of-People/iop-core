@@ -32,7 +32,7 @@
 #include <QSettings>
 
 /** "Help message" or "About" dialog box */
-HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
+HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available) :
     QDialog(parent),
     ui(new Ui::HelpMessageDialog)
 {
@@ -47,8 +47,34 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
 #elif defined(__i386__ )
     version += " " + tr("(%1-bit)").arg(32);
 #endif
+    if(update)
+    {
+        QString updateInfo;
+        if(available)
+        {
+             setWindowTitle(tr("Update Available"));
+            updateInfo = QString::fromStdString("A new Update is available!\n\n<br><br>You can download it at:\n<br>< a href=\"https://iop.global#wallets\">iop.global</a>\n");
 
-    if (about)
+            
+        } else {
+            setWindowTitle(tr("Latest Version"));
+            updateInfo = QString::fromStdString("You have the current Version!<br><br>") + version;
+        }
+        /// HTML-format the license message from the core
+        // Make URLs clickable
+        //QRegExp uri("<(.*)>", Qt::CaseSensitive, QRegExp::RegExp2);
+        //uri.setMinimal(true); // use non-greedy matching
+        //updateInfoHTML.replace(uri, "<a href=\"\\1\">\\1</a>");
+        // Replace newlines with HTML breaks
+        //updateInfoHTML.replace("\n", "<br>");
+
+        ui->aboutMessage->setTextFormat(Qt::RichText);
+        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        text = updateInfo;
+        ui->aboutMessage->setText(updateInfo);
+        //ui->aboutMessage->setWordWrap(true);
+        ui->helpMessage->setVisible(false);
+    } else if (about)
     {
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
 
