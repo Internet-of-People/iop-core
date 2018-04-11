@@ -58,6 +58,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     //adress selection
     adressLineEdit = new QLineEdit(this);
     adressLineEdit->setPlaceholderText("choose adress or paste your own");
+    //adressLineEdit->setValid(false);
     selectAdress = new QPushButton("choose");
 
     QWidget* addressWidget = new QWidget(this);
@@ -96,9 +97,15 @@ void BuyIoPDialog::setModel(WalletModel* _model)
 }
 
 void BuyIoPDialog::adressChanged(const QString &txt){
-    //if(valid(adressLineEdit->getText())
-    buyButton->setEnabled(true);
-    std::cout<<"buybutton enabled"<<std::endl;
+    if(model->validateAddress(adressLineEdit->text())){
+        buyButton->setEnabled(true);
+        //adressLineEdit->setValid(true);
+        std::cout<<"buybutton enabled"<<std::endl;
+    } else {
+        buyButton->setEnabled(false);
+        //adressLineEdit->setValid(false);
+        std::cout<<"buybutton enabled"<<std::endl;
+    }
 }
 
 void BuyIoPDialog::chooseAdress()
