@@ -9,19 +9,18 @@
 #include <chrono>
 #include <thread>
 
+#include <QDesktopServices>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QNetworkRequest>
-#include <QDesktopServices>
 #include <QObject>
 #include <QUrl>
 #include <iostream>
 
 BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent) : QDialog(parent), model(0), platformStyle(_platformStyle)
-{   
-
+{
     slotblock = false;
 
     QLabel* buyIoPLabel = new QLabel("Buy IoP");
@@ -80,7 +79,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     //SLOTS
     connect(currency, SIGNAL(currentIndexChanged(int)), this, SLOT(physicalUpdated(int)));
-    std::cout << connect(adressLineEdit, SIGNAL(textChanged(const QString &)), this, SLOT(adressChanged(const QString &)))<< std::endl;
+    std::cout << connect(adressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(adressChanged(const QString&))) << std::endl;
     connect(selectAdress, SIGNAL(clicked()), this, SLOT(chooseAdress()));
     connect(paySpinBox, SIGNAL(valueChanged(double)), this, SLOT(physicalUpdated(double)));
     connect(iopPriceNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotIoPPrice(QNetworkReply*)));
@@ -96,15 +95,18 @@ void BuyIoPDialog::setModel(WalletModel* _model)
     this->model = _model;
 }
 
-void BuyIoPDialog::adressChanged(const QString &txt){
-    if(model->validateAddress(adressLineEdit->text())){
+void BuyIoPDialog::adressChanged(const QString& txt)
+{
+    if (adressLineEdit->text().isEmpty() || model->validateAddress(adressLineEdit->text())) {
         buyButton->setEnabled(true);
-        //adressLineEdit->setValid(true);
-        std::cout<<"buybutton enabled"<<std::endl;
+        adressLineEdit->setStyleSheet("");
+        std::cout << "buybutton enabled" << std::endl;
     } else {
         buyButton->setEnabled(false);
         //adressLineEdit->setValid(false);
-        std::cout<<"buybutton enabled"<<std::endl;
+        adressLineEdit->setStyleSheet("background: rgb(155,0,0);");
+
+        std::cout << "buybutton enabled" << std::endl;
     }
 }
 
@@ -127,12 +129,12 @@ void BuyIoPDialog::physicalUpdated(int i)
 void BuyIoPDialog::physicalUpdated(double i)
 {
     std::cout << i << "$\n";
-    if(i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
+    if (i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
         updateIoPPrice(i);
-    else{
-        if(i <= MIN_PRICE[currency->currentIndex()])
+    else {
+        if (i <= MIN_PRICE[currency->currentIndex()])
             paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
-        if(i >= MAX_PRICE[currency->currentIndex()])
+        if (i >= MAX_PRICE[currency->currentIndex()])
             paySpinBox->setValue(MAX_PRICE[currency->currentIndex()]);
     }
 }
@@ -145,16 +147,17 @@ void BuyIoPDialog::updateIoPPrice(double amount)
     iopPriceNAM->get(request);
 }
 
-void BuyIoPDialog::sendBuyRequest(){
+void BuyIoPDialog::sendBuyRequest()
+{
     QString adress = QString(BUY_URL).append(PARTNER_NAME).append(WITH_CARD).append(CURRENCY[currency->currentIndex()]).append(AMOUNT_PAY).append(QString::number(paySpinBox->value()).append(WALLET).append(adressLineEdit->text()).append(DISCOUNT));
     std::cout << "buy url: " << adress.toStdString() << std::endl;
 
-    QDesktopServices::openUrl(QUrl(adress,QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl(adress, QUrl::TolerantMode));
 }
 
 
 void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
-{   
+{
     if (reply->error()) {
         std::cout << "ERROR! " << reply->errorString().toStdString() << std::endl; //Error handling
         responsed = true;
@@ -164,7 +167,7 @@ void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
     bool successfullParsed;
     iopPrice = answer.toDouble(&successfullParsed);
     std::cout << "GOT PRICE: " << answer.toStdString() << std::endl;
-    amountIoP->setValue(iopPrice* 100000000);
+    amountIoP->setValue(iopPrice * 100000000);
     responsed = true;
     return;
 }
