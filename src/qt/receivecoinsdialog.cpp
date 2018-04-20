@@ -39,7 +39,7 @@ ReceiveCoinsDialog::ReceiveCoinsDialog(const PlatformStyle *_platformStyle, QWid
     } else {
         ui->clearButton->setIcon(_platformStyle->SingleColorIcon(":/icons/remove"));
         ui->receiveButton->setIcon(QIcon(":/icons/receiving_addresses"));
-        ui->showRequestButton->setIcon(_platformStyle->SingleColorIcon(":/icons/edit"));
+        ui->showRequestButton->setIcon(QIcon(":/icons/edit"));
         ui->removeRequestButton->setIcon(_platformStyle->SingleColorIcon(":/icons/remove"));
     }
 

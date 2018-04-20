@@ -31,6 +31,8 @@
 #include <QVBoxLayout>
 #include <QSettings>
 
+#include <iostream>
+
 /** "Help message" or "About" dialog box */
 HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available) :
     QDialog(parent),
@@ -49,13 +51,16 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
 #endif
     if(update)
     {
+        
+        //ui->horizontalSpacerButtons->setVisible(true);
         QString updateInfo;
         if(available)
         {
-             setWindowTitle(tr("Update Available"));
-            updateInfo = QString::fromStdString("A new Update is available!\n\n<br><br>You can download it at:\n<br>< a href=\"https://iop.global#wallets\">iop.global</a>\n");
+            setWindowTitle(tr("Update Available"));
+            updateInfo = QString::fromStdString("A new Update is available!\n\n<br><br>You can download it < a href=\"https://github.com/Internet-of-People/iop-core/releases\">here</a>\n");
+            ui->downloadButton->setVisible(true);
+            std::cout << connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted())) << std::endl;
 
-            
         } else {
             setWindowTitle(tr("Latest Version"));
             updateInfo = QString::fromStdString("You have the current Version!<br><br>") + version;
@@ -74,6 +79,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         ui->aboutMessage->setText(updateInfo);
         //ui->aboutMessage->setWordWrap(true);
         ui->helpMessage->setVisible(false);
+        //connect(ui->addButton, SIGNAL(clicked()), this, SLOT(addEntry()));
     } else if (about)
     {
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
@@ -87,6 +93,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         licenseInfoHTML.replace(uri, "<a href=\"\\1\">\\1</a>");
         // Replace newlines with HTML breaks
         licenseInfoHTML.replace("\n", "<br>");
+        
 
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -152,7 +159,6 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
                 cursor.insertTable(1, 2, tf);
             }
         }
-
         ui->helpMessage->moveCursor(QTextCursor::Start);
         ui->scrollArea->setVisible(false);
         ui->aboutLogo->setVisible(false);
@@ -186,6 +192,10 @@ void HelpMessageDialog::on_okButton_accepted()
     close();
 }
 
+void HelpMessageDialog::on_downloadButton_accepted()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Internet-of-People/iop-core/releases",QUrl::TolerantMode)); 
+}
 
 /** "Shutdown" window */
 ShutdownWindow::ShutdownWindow(QWidget *parent, Qt::WindowFlags f):

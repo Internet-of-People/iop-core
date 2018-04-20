@@ -47,13 +47,13 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     QHBoxLayout *hlayout = new QHBoxLayout();
     hlayout->setContentsMargins(0,0,0,0);
 
-    if (platformStyle->getUseExtraSpacing()) {
-        hlayout->setSpacing(5);
-        hlayout->addSpacing(26);
-    } else {
-        hlayout->setSpacing(0);
-        hlayout->addSpacing(23);
-    }
+    //if (platformStyle->getUseExtraSpacing()) {
+    //    hlayout->setSpacing(5);
+    //    hlayout->addSpacing(26);
+    //} else {
+    //    hlayout->setSpacing(0);
+    //    hlayout->addSpacing(23);
+    //}
 
     watchOnlyWidget = new QComboBox(this);
     watchOnlyWidget->setFixedWidth(24);
@@ -61,7 +61,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye_plus"), "", TransactionFilterProxy::WatchOnlyFilter_Yes);
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye_minus"), "", TransactionFilterProxy::WatchOnlyFilter_No);
     hlayout->addWidget(watchOnlyWidget);
-
+    //hlayout->addSpacing(15);
     dateWidget = new QComboBox(this);
     if (platformStyle->getUseExtraSpacing()) {
         dateWidget->setFixedWidth(121);
@@ -76,7 +76,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     dateWidget->addItem(tr("This year"), ThisYear);
     dateWidget->addItem(tr("Range..."), Range);
     hlayout->addWidget(dateWidget);
-
+    hlayout->addSpacing(15);
     typeWidget = new QComboBox(this);
     if (platformStyle->getUseExtraSpacing()) {
         typeWidget->setFixedWidth(121);
@@ -94,12 +94,14 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     typeWidget->addItem(tr("Other"), TransactionFilterProxy::TYPE(TransactionRecord::Other));
 
     hlayout->addWidget(typeWidget);
+    hlayout->addSpacing(15);
 
     addressWidget = new QLineEdit(this);
 #if QT_VERSION >= 0x040700
     addressWidget->setPlaceholderText(tr("Enter address or label to search"));
 #endif
     hlayout->addWidget(addressWidget);
+    hlayout->addSpacing(15);
 
     amountWidget = new QLineEdit(this);
 #if QT_VERSION >= 0x040700
@@ -131,15 +133,16 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     QTableView *view = new QTableView(this);
     vlayout->addLayout(hlayout);
     vlayout->addWidget(createDateRangeWidget());
+    vlayout->addSpacing(10);
     vlayout->addWidget(view);
     vlayout->setSpacing(0);
-    int width = view->verticalScrollBar()->sizeHint().width();
+    //int width = view->verticalScrollBar()->sizeHint().width();
     // Cover scroll bar width with spacing
-    if (platformStyle->getUseExtraSpacing()) {
-        hlayout->addSpacing(width+2);
-    } else {
-        hlayout->addSpacing(width);
-    }
+    //if (platformStyle->getUseExtraSpacing()) {
+    //    hlayout->addSpacing(width+2);
+    //} else {
+    //    hlayout->addSpacing(width);
+    //}
     // Always show scroll bar
     // view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn); //dont show always anymore!
     view->setTabKeyNavigation(false);

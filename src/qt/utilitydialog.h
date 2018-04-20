@@ -20,7 +20,7 @@ class HelpMessageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = false, bool available = false);
+    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = true, bool available = true);
     ~HelpMessageDialog();
 
     void printToConsole();
@@ -32,6 +32,7 @@ private:
 
 private Q_SLOTS:
     void on_okButton_accepted();
+    void on_downloadButton_accepted();
 };
 
 

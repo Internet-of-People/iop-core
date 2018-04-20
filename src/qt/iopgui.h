@@ -34,7 +34,7 @@ class WalletModel;
 class HelpMessageDialog;
 class ModalOverlay;
 
-static const QSize TOOLBAR_ICONSIZE = QSize(30,30);
+static const QSize TOOLBAR_ICONSIZE = QSize(76,33);
 
 
 QT_BEGIN_NAMESPACE

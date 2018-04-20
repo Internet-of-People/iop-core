@@ -36,10 +36,10 @@
             "QWidget {background: " + s_iopantrazith + "; color: " + s_iopLightGrey + ";}"
 
             //QLineEdit
-            "QLineEdit { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopMidGrey + ";}"
+            "QLineEdit {background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
 
             //Checkbox
-            "QCheckBox {padding: 5px;}"
+            "QCheckBox {margin: 15px;}"
 
             "#transactions_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
 
@@ -50,11 +50,11 @@
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
             //Spinbox
-            "QAbstractSpinBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopMidGrey + ";}"
-            "QAbstractSpinBox::up-button {min-height: 7px; border: 1px outset " + s_iopMidGrey + "}"
-            "QAbstractSpinBox::down-button { min-height: 7px; border: 1px outset " + s_iopMidGrey + "}"
-            "QAbstractSpinBox::up-button:off { min-height: 7px; border: 1px outset " + s_iopMidGrey + "}"
-            "QAbstractSpinBox::down-button:off {min-height: 7px; border: 1px outset " + s_iopMidGrey + "}"
+            "QAbstractSpinBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
+            "QAbstractSpinBox::up-button {min-height: 7px; border: none; }"
+            "QAbstractSpinBox::down-button { min-height: 7px; border: none}"
+            "QAbstractSpinBox::up-button:off { min-height: 7px; border: none}"
+            "QAbstractSpinBox::down-button:off {min-height: 7px; border: none}"
             "QAbstractSpinBox::up-arrow { image: url(:/icons/up_arrow) 1;}"
             "QAbstractSpinBox::down-arrow { image: url(:/icons/down_arrow) 1;}"                    
             "QAbstractSpinBox::up-arrow:off { image: url(:/icons/up_arrow_off) 1;}"                    
@@ -62,10 +62,10 @@
             
 
             //Combobox
-            "QComboBox { background: " + s_iopantrazith + "; border-style: outset; border-width: 1px;  border-color: " + s_iopMidGrey + "; min-width: 45px;}"
-            "QComboBox QAbstractItemView { border-style: solid; border-width: 1px;  border-color: " + s_iopMidGrey + "; }"
-            "QComboBox::drop-down { border: 1px outset " + s_iopMidGrey + "}"
-            "QComboBox::down-arrow { image: url(:/icons/down_arrow) 1;}"
+            "QComboBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none; min-width: 45px;}"
+            "QComboBox QAbstractItemView { border: 1px outset " + s_iopMidGrey + "}"//border-style: outset; border-width: 1px;  border-color: " + s_iopMidGrey + "; }"
+            "QComboBox::drop-down { border: none;}"
+            "QComboBox::down-arrow { image: url(:/icons/down_arrow) 1; width: 24; height: 24; border: none;}"
 
             //Menu
             "QMenu:item:selected { background: " + s_iopMidGrey + ";}"
@@ -108,8 +108,8 @@
             //Buttons (and Icons)
             "QPushButton { background-color: " + s_iopMidGrey + "; color: " + s_iopLightGrey + "; border-color: " + s_iopMidGrey + "; border-width: 1px; padding: 6px; border-style: outset; border-radius: 0px ;}"
             "QPushButton:hover { background-color: " + s_highlight_light_midgrey + "; color: " + s_iopLightBlue + ";}"
-            "QPushButton:pressed { background-color: " + s_highlight_dark_midgrey + ";}"
-            "QPushButton:disabled { background-color: " + s_highlight_light_anthrazith + "; color: " + s_highlight_light_midgrey + "}"
+            "QPushButton:pressed { background-color: " + s_highlight_dark_midgrey + "; border-style: inset;}"
+            "QPushButton:disabled { background-color: " + s_highlight_light_anthrazith + "; color: " + s_highlight_light_midgrey + " border-style: solid}"
 
 
             //Disturbing borders
