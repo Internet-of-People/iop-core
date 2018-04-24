@@ -64,6 +64,7 @@
         <file alias="right_arrow">res/icons/right_arrow.png</file>
         <file alias="balance">res/icons/balance.png</file>
         <file alias="pending">res/icons/pending.png</file>
+        <file alias="buy">res/icons/buy.png</file>
 
     </qresource>
     <qresource prefix="/movies">

@@ -295,14 +295,14 @@ void IoPGUI::createActions()
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    sendCoinsMenuAction = new QAction(QIcon(":/icons/send"), sendCoinsAction->text(), this);
-    buyIoPAction = new QAction(platformStyle->SingleColorIcon(":/icons/send"), tr("&Send"), this);
-    buyIoPAction->setStatusTip(tr("Send coins to an IoP address"));
+    buyIoPAction = new QAction(QIcon(":/icons/buy"), tr("&Buy"), this);
+    buyIoPAction->setStatusTip(tr("Buy IOP at Indacoin"));
     buyIoPAction->setToolTip(buyIoPAction->statusTip());
     buyIoPAction->setCheckable(true);
     buyIoPAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(buyIoPAction);
 
+    sendCoinsMenuAction = new QAction(QIcon(":/icons/send"), sendCoinsAction->text(), this);
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
@@ -479,7 +479,7 @@ void IoPGUI::createToolBars()
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(buyIoPAction);
-        toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 132; height: 132; padding-top: 30; padding-bottom: 45; margin: 0px; border: none; image: url(:/icons/iop_t)");
+        toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 132; height: 132; padding:30; margin: 20px; border: none; image: url(:/icons/iop_t)");
         toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
         QWidget *spacerWidget = new QWidget(this);
         spacerWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);

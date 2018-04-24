@@ -320,7 +320,8 @@ RES_ICONS = \
   qt/res/icons/iop_t.png \
   qt/res/icons/balance.png \
   qt/res/icons/pending.png \
-  qt/res/icons/verify.png
+  qt/res/icons/verify.png \
+  qt/res/icons/buy.png 
 
 IOP_QT_BASE_CPP = \
   qt/bantablemodel.cpp \

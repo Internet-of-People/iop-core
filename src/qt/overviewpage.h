@@ -7,6 +7,7 @@
 
 #include "amount.h"
 #include "transactionview.h"
+#include "buyiopdialog.h"
 
 #include <QWidget>
 #include <memory>
@@ -38,6 +39,7 @@ public:
     void setWalletModel(WalletModel *walletModel);
     void showOutOfSyncWarning(bool fShow);
     TransactionView *transactionView;
+    BuyIoPDialog *buyiopdialog;
 
 
 public Q_SLOTS:
