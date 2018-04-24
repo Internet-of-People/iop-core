@@ -183,6 +183,12 @@ void WalletView::gotoBuyIoPPage()
     setCurrentWidget(buyIoPPage);
 }
 
+void WalletView::gotoBuyIoPPage()
+{
+    buyIoPPage->setModel(walletModel);
+    setCurrentWidget(buyIoPPage);
+}
+
 void WalletView::gotoReceiveCoinsPage()
 {
     setCurrentWidget(receiveCoinsPage);
