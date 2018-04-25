@@ -108,7 +108,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/balance</normaloff>
-                                                                        <disabledoff>:/icons/balance</disabledoff>:/icons/balance                                                                                                                                                                                                            
+                                                                        <disabledoff>:/icons/balance</disabledoff>:/icons/balance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -179,7 +179,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/warning</normaloff>
-                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                    
+                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -234,7 +234,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/balance</normaloff>
-                                                                        <disabledoff>:/icons/balance</disabledoff>:/icons/balance                                                                                                                                                                                                            
+                                                                        <disabledoff>:/icons/balance</disabledoff>:/icons/balance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -305,7 +305,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/warning</normaloff>
-                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                    
+                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -360,7 +360,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/pending</normaloff>
-                                                                        <disabledoff>:/icons/pending</disabledoff>:/icons/pending                                                                                                                                                                                                            
+                                                                        <disabledoff>:/icons/pending</disabledoff>:/icons/pending                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -431,7 +431,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/warning</normaloff>
-                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                    
+                                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -481,145 +481,124 @@
                             </item>
                         </layout>
                     </item>
+                    <!--<item><widget class="QFrame" name="transactionLabelFrame"><property name="frameShape"><enum>QFrame::StyledPanel</enum></property><property name="frameShadow"><enum>QFrame::Raised</enum></property><property name="sizePolicy"><sizepolicy hsizetype="Expanding" vsizetype="Expanding"><horstretch>1</horstretch><verstretch>1</verstretch></sizepolicy></property><layout class="QVBoxLayout" name="transactionHeaderLayout"><item><layout class="QHBoxLayout" name="horizontalLayout_2"><item><widget class="QLabel" name="transactions_title"><property name="font"><font><weight>25</weight><bold>false</bold></font></property><property name="text"><string>Recent transactions</string></property></widget></item><item><widget class="QPushButton" name="labelTransactionsStatus"><property name="enabled"><bool>true</bool></property><property name="maximumSize"><size><width>30</width><height>16777215</height></size></property><property name="toolTip"><string>The displayed information may be out of date. Your wallet automatically synchronizes with the IoP network after a connection is established, but this process has not completed yet.</string></property><property name="text"><string/></property><property name="icon"><iconset resource="../iop.qrc"><normaloff>:/icons/warning</normaloff><disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                </iconset></property><property name="styleSheet"><string notr="true">background: transparent; border: none</string></property><property name="iconSize"><size><width>24</width><height>24</height></size></property><property name="flat"><bool>true</bool></property></widget></item><item><spacer name="horizontalSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property></spacer></item></layout></item></layout></widget></item><item><widget class="QFrame" name="transactionFrame"><property name="frameShape"><enum>QFrame::StyledPanel</enum></property><property name="frameShadow"><enum>QFrame::Raised</enum></property><property name="sizePolicy"><sizepolicy hsizetype="Minimum" vsizetype="Minimum"><horstretch>1</horstretch><verstretch>1</verstretch></sizepolicy></property></widget></item>-->
                     <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_3">
-                            <item>
-                                <widget class="QFrame" name="transactionLabelFrame">
-                                    <property name="frameShape">
-                                        <enum>QFrame::StyledPanel</enum>
-                                    </property>
-                                    <property name="frameShadow">
-                                        <enum>QFrame::Raised</enum>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                            <horstretch>1</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                    <layout class="QVBoxLayout" name="transactionLayout">
+                        <widget class="QFrame" name="transactionFrame">
+                            <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                            </property>
+                            <layout class="QVBoxLayout" name="transactionLayout">
+                                <item>
+                                    <layout class="QHBoxLayout" name="horizontalLayout_2">
                                         <item>
-                                            <layout class="QHBoxLayout" name="horizontalLayout_2">
-                                                <item>
-                                                    <widget class="QLabel" name="transactions_title">
-                                                        <property name="font">
-                                                            <font>
-                                                                <weight>25</weight>
-                                                                <bold>false</bold>
-                                                            </font>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Recent transactions</string>
-                                                        </property>
-                                                    </widget>
-                                                </item>
-                                                <item>
-                                                    <widget class="QPushButton" name="labelTransactionsStatus">
-                                                        <property name="enabled">
-                                                            <bool>true</bool>
-                                                        </property>
-                                                        <property name="maximumSize">
-                                                            <size>
-                                                                <width>30</width>
-                                                                <height>16777215</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="toolTip">
-                                                            <string>The displayed information may be out of date. Your wallet automatically synchronizes with the IoP network after a connection is established, but this process has not completed yet.</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string/>
-                                                        </property>
-                                                        <property name="icon">
-                                                            <iconset resource="../iop.qrc">
-                                                                <normaloff>:/icons/warning</normaloff>
-                                                                <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                    
-                                                            </iconset>
-                                                        </property>
-                                                        <property name="styleSheet">
-                                                                    <string notr="true">background: transparent; border: none</string>
-                                                                </property>
-                                                        <property name="iconSize">
-                                                            <size>
-                                                                <width>24</width>
-                                                                <height>24</height>
-                                                            </size>
-                                                        </property>
-                                                        <property name="flat">
-                                                            <bool>true</bool>
-                                                        </property>
-                                                    </widget>
-                                                </item>
-                                                <item>
-                                                    <spacer name="horizontalSpacer">
-                                                        <property name="orientation">
-                                                            <enum>Qt::Horizontal</enum>
-                                                        </property>
-                                                        <property name="sizeHint" stdset="0">
-                                                            <size>
-                                                                <width>40</width>
-                                                                <height>20</height>
-                                                            </size>
-                                                        </property>
-                                                    </spacer>
-                                                </item>
-                                            </layout>
+                                            <widget class="QLabel" name="transactions_title">
+                                                <property name="font">
+                                                    <font>
+                                                        <weight>25</weight>
+                                                        <bold>false</bold>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Recent transactions</string>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <widget class="QPushButton" name="labelTransactionsStatus">
+                                                <property name="enabled">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="maximumSize">
+                                                    <size>
+                                                        <width>30</width>
+                                                        <height>16777215</height>
+                                                    </size>
+                                                </property>
+                                                <property name="toolTip">
+                                                    <string>The displayed information may be out of date. Your wallet automatically synchronizes with the IoP network after a connection is established, but this process has not completed yet.</string>
+                                                </property>
+                                                <property name="text">
+                                                    <string/>
+                                                </property>
+                                                <property name="icon">
+                                                    <iconset resource="../iop.qrc">
+                                                        <normaloff>:/icons/warning</normaloff>
+                                                        <disabledoff>:/icons/warning</disabledoff>:/icons/warning                                                                                                                                                                                    
+                                                    </iconset>
+                                                </property>
+                                                <property name="iconSize">
+                                                    <size>
+                                                        <width>24</width>
+                                                        <height>24</height>
+                                                    </size>
+                                                </property>
+                                                <property name="flat">
+                                                    <bool>true</bool>
+                                                </property>
+                                            </widget>
+                                        </item>
+                                        <item>
+                                            <spacer name="horizontalSpacer">
+                                                <property name="orientation">
+                                                    <enum>Qt::Horizontal</enum>
+                                                </property>
+                                                <property name="sizeHint" stdset="0">
+                                                    <size>
+                                                        <width>40</width>
+                                                        <height>20</height>
+                                                    </size>
+                                                </property>
+                                            </spacer>
                                         </item>
                                     </layout>
-                                </widget>
-                            </item>
-                            <item>
-                                <widget class="QFrame" name="transactionFrame">
-                                    <property name="frameShape">
-                                        <enum>QFrame::StyledPanel</enum>
-                                    </property>
-                                    <property name="frameShadow">
-                                        <enum>QFrame::Raised</enum>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                            <horstretch>1</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                </widget>
-                            </item>
-                             <item>
-                                <widget class="QFrame" name="buyFrame">
-                                    <property name="frameShape">
-                                        <enum>QFrame::StyledPanel</enum>
-                                    </property>
-                                    <property name="frameShadow">
-                                        <enum>QFrame::Raised</enum>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                                            <horstretch>1</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                </widget>
-                            </item>
-                            <item>
-                                <spacer name="verticalSpacer_2">
-                                    <property name="orientation">
-                                        <enum>Qt::Vertical</enum>
-                                    </property>
-                                    <property name="sizeHint" stdset="0">
-                                        <size>
-                                            <width>20</width>
-                                            <height>40</height>
-                                        </size>
-                                    </property>
-                                    <property name="sizePolicy">
-                                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                                            <horstretch>1</horstretch>
-                                            <verstretch>1</verstretch>
-                                        </sizepolicy>
-                                    </property>
-                                </spacer>
-                            </item>
-                        </layout>
+                                </item>
+                            </layout>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QFrame" name="buyFrame">
+                            <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                            </property>
+                            <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                                <size>
+                                    <width>2000000</width>
+                                    <height>40</height>
+                                </size>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                    <horstretch>1</horstretch>
+                                    <verstretch>1</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <spacer name="verticalSpacer_2">
+                            <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                                <size>
+                                    <width>20</width>
+                                    <height>40</height>
+                                </size>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                    <horstretch>1</horstretch>
+                                    <verstretch>1</verstretch>
+                                </sizepolicy>
+                            </property>
+                        </spacer>
                     </item>
                 </layout>
             </item>

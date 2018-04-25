@@ -116,7 +116,7 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     // use a SingleColorIcon for the "out of sync warning" icon
     QIcon icon = platformStyle->SingleColorIcon(":/icons/warning");
     icon.addPixmap(icon.pixmap(QSize(64, 64), QIcon::Normal), QIcon::Disabled); // also set the disabled icon because we are using a disabled QPushButton to work around missing HiDPI support of QLabel (https://bugreports.qt.io/browse/QTBUG-42503)
-    ui->labelTransactionsStatus->setIcon(icon);
+    //ui->labelTransactionsStatus->setIcon(icon);
     ui->labelWalletStatus1->setIcon(icon);
     ui->labelWalletStatus2->setIcon(icon);
     ui->labelWalletStatus3->setIcon(icon);
@@ -124,7 +124,7 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     // Recent transactions
     transactionView = new TransactionView(platformStyle, ui->transactionFrame);
     ui->transactionFrame->setVisible(true);
-    transactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //transactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     buyiopdialog = new BuyIoPDialog(platformStyle,ui->buyFrame);
     ui->buyFrame->setVisible(false);
@@ -135,7 +135,7 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     connect(ui->labelWalletStatus2, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelWalletStatus3, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 
-    connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    //connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 }
 
 
@@ -256,5 +256,5 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
     ui->labelWalletStatus1->setVisible(fShow);
     ui->labelWalletStatus2->setVisible(fShow);
     ui->labelWalletStatus3->setVisible(fShow);
-    ui->labelTransactionsStatus->setVisible(fShow);
+    //ui->labelTransactionsStatus->setVisible(fShow);
 }
