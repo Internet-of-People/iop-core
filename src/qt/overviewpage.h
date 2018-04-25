@@ -38,6 +38,8 @@ public:
     void setClientModel(ClientModel *clientModel);
     void setWalletModel(WalletModel *walletModel);
     void showOutOfSyncWarning(bool fShow);
+    void showTransactions();
+    void showBuy();
     TransactionView *transactionView;
     BuyIoPDialog *buyiopdialog;
 
@@ -62,6 +64,7 @@ private:
 
     TxViewDelegate *txdelegate;
     std::unique_ptr<TransactionFilterProxy> filter;
+    bool tranactionsShown;
 
 private Q_SLOTS:
     void updateDisplayUnit();

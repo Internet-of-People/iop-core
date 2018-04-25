@@ -122,13 +122,15 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     ui->labelWalletStatus3->setIcon(icon);
 
     // Recent transactions
-    transactionView = new TransactionView(platformStyle, ui->transactionFrame);
-    ui->transactionFrame->setVisible(true);
+    transactionView = new TransactionView(platformStyle, NULL);
+    //ui->transactionFrame->setVisible(true);
+    ui->transactionLayout->addWidget(transactionView);
     //transactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    buyiopdialog = new BuyIoPDialog(platformStyle,ui->buyFrame);
-    ui->buyFrame->setVisible(false);
-   // ui->transactionLayout->addWidget(buyiopdialog);
+    buyiopdialog = new BuyIoPDialog(platformStyle,NULL);
+    
+    //ui->buyFrame->setVisible(false);
+    //ui->transactionLayout->addWidget(buyiopdialog);
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
     connect(ui->labelWalletStatus1, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
@@ -136,6 +138,15 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     connect(ui->labelWalletStatus3, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 
     //connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+}
+
+void OverviewPage::showTransactions(){
+    ui->transactionLayout->addWidget(buyiopdialog);
+
+}
+
+void OverviewPage::showBuy(){
+    ui->transactionLayout->addWidget(buyiopdialog);
 }
 
 
