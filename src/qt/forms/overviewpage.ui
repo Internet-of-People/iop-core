@@ -562,6 +562,50 @@
                                 </widget>
                             </item>
                             <item>
+                                <widget class="QFrame" name="buyFrame">
+                                    <property name="frameShape">
+                                        <enum>QFrame::StyledPanel</enum>
+                                    </property>
+                                    <property name="frameShadow">
+                                        <enum>QFrame::Raised</enum>
+                                    </property>
+                                    <layout class="QVBoxLayout" name="buyLayout">
+                                        <item>
+                                            <widget class="QFrame" name="buyTitle">
+                                                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                                                    <item>
+                                                        <widget class="QLabel" name="buy_title">
+                                                            <property name="font">
+                                                                <font>
+                                                                    <weight>25</weight>
+                                                                    <bold>false</bold>
+                                                                </font>
+                                                            </property>
+                                                            <property name="text">
+                                                                <string>Buy IOP</string>
+                                                            </property>
+                                                        </widget>
+                                                    </item>
+                                                    <item>
+                                                        <spacer name="horizontalSpacer">
+                                                            <property name="orientation">
+                                                                <enum>Qt::Horizontal</enum>
+                                                            </property>
+                                                            <property name="sizeHint" stdset="0">
+                                                                <size>
+                                                                    <width>40</width>
+                                                                    <height>20</height>
+                                                                </size>
+                                                            </property>
+                                                        </spacer>
+                                                    </item>
+                                                </layout>
+                                            </widget>
+                                        </item>
+                                    </layout>
+                                </widget>
+                            </item>
+                            <item>
                                 <spacer name="verticalSpacer_2">
                                     <property name="orientation">
                                         <enum>Qt::Vertical</enum>

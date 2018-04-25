@@ -125,10 +125,12 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     transactionView = new TransactionView(platformStyle, NULL);
     //ui->transactionFrame->setVisible(true);
     ui->transactionLayout->addWidget(transactionView);
+
     //transactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     buyiopdialog = new BuyIoPDialog(platformStyle,NULL);
-    
+    ui->buyLayout->addWidget(buyiopdialog);
+
     //ui->buyFrame->setVisible(false);
     //ui->transactionLayout->addWidget(buyiopdialog);
     // start with displaying the "out of sync" warnings
@@ -141,12 +143,11 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
 }
 
 void OverviewPage::showTransactions(){
-    ui->transactionLayout->addWidget(buyiopdialog);
+    
 
 }
 
 void OverviewPage::showBuy(){
-    ui->transactionLayout->addWidget(buyiopdialog);
 }
 
 
