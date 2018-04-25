@@ -16,6 +16,8 @@
 
     static const QString s_highlight_light_midgrey = "rgba(63,63,63)";
     static const QString s_highlight_dark_midgrey = "rgba(47,47,47)";
+    static const QString s_highlight_light_turqoise = "rgb(22,185,175)";
+    static const QString s_highlight_dark_turqoise = "rgb(2,165,155)";
     
     static const QColor c_iopLightBlue = QColor(108,200,240);
     static const QColor c_iopLightTurqoise = QColor(12,175,165);
@@ -30,6 +32,14 @@
     static const QColor c_highlight_light_midgrey = QColor(63,63,63);
     static const QColor c_highlight_dark_midgrey = QColor(47,47,47);
 
+    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
+    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
+    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
+    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
+
+    QString fontfamily = QFontDatabase::applicationFontFamilies(fontid).at(0);
+    QFont monospace(family);
+
     static const QString styleSheetString =  QString(
             //General
             "QFrame { background-color: " + s_iopantrazith + "; border: none;}"
@@ -41,16 +51,17 @@
             //Checkbox
             "QCheckBox {margin: 15px;}"
 
-            "#transactions_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
-
+            "#transactions_title, #buy_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
             //Table view
             "QHeaderView { background: " + s_iopantrazith + ";} "
-            "QTableView { border: none; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
-            "QTableView::item { border-right: none; border-bottom: none;}"                    
+            "QTableView { border: none; border-right: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
+            "QTableView::item { border-right: none; border-bottom: none; }"                    
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
+            "#buy_IOPLabel, #buy_amountIOP, #buy_currency, #payTo, #addAsLabel { font-size: 48px; color: " +  s_iopLightBlue +";}"                   
+            "#payAmount > QAbstractSpinBox { font-size: 48px; color: " +  s_iopLightBlue +"; max-width: 500}"
             //Spinbox
-            "QAbstractSpinBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
+            "QAbstractSpinBox { background: " + s_iopantrazith + "; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
             "QAbstractSpinBox::up-button {min-height: 7px; border: none; }"
             "QAbstractSpinBox::down-button { min-height: 7px; border: none}"
             "QAbstractSpinBox::up-button:off { min-height: 7px; border: none}"
@@ -58,8 +69,9 @@
             "QAbstractSpinBox::up-arrow { image: url(:/icons/up_arrow) 1;}"
             "QAbstractSpinBox::down-arrow { image: url(:/icons/down_arrow) 1;}"                    
             "QAbstractSpinBox::up-arrow:off { image: url(:/icons/up_arrow_off) 1;}"                    
-            "QAbstractSpinBox::down-arrow:off { image: url(:/icons/down_arrow_off) 1;}"                   
-            
+            "QAbstractSpinBox::down-arrow:off { image: url(:/icons/down_arrow_off) 1;}"
+            "QDoubleSpinBox { font-size: 48px;}"                   
+
 
             //Combobox
             "QComboBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none; min-width: 45px;}"
@@ -96,21 +108,22 @@
             "QScrollBar::left-arrow:horizontal { image: url(:/icons/left_arrow) 1; }"
             "QScrollBar::right-arrow:horizontal { image: url(:/icons/right_arrow) 1; }"                     
 
-
             //Progress Bar
-            "QProgressBar {color: " + s_iopLightGrey + "; background: " + s_iopantrazith + ";  border: 1px outset " + s_iopMidGrey + "; border-radius: 0px; padding: 1px; text-align: center;}" 
-            "QProgressBar::chunk {color: " + s_iopLightGrey + "; background: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgba(108,200,239,50%), stop: 1 rgba(102,204,204,50%), stop: 2 rgba(12,175,165,50%)); border-radius: 1px; margin: 0px;}"
+            "QProgressBar {color: transparent; background: " + s_iopantrazith + ";  border: 1px inset " + s_iopMidGrey + ";  padding: 0px;}" 
+            "QProgressBar::chunk {color: transparent; background: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgba(108,200,239,100%), stop: 1 rgba(102,204,204,100%), stop: 2 rgba(12,175,165,100%)); border-radius: 1px; margin: 0px;}"
             
             //Balance seperator line
             "#lineb, #lineb1, #lineb2, #lineb3, #lineb4, #lineb5 { border-top: none; border-left: none; border-right: none; border-bottom: 1px; border-style: solid; border-color: " + s_iopMidGrey + ";}"
             "#labelBalanceText, #labelPendingText, labelTotalText {color: " + s_iopLightGrey + ";}"
             
+            "#buyButton {background-color: " + s_iopLightTurqoise + "; color: " + s_white + "; border-color: " + s_iopLightTurqoise + "; }"
+            "#buyButton:hover { background-color: " + s_highlight_light_turqoise + "; color: " + s_iopantrazith + ";}"
+            "#buyButton:pressed { background-color: " + s_highlight_dark_turqoise + "; color: " + s_iopantrazith + "; border-style: inset;}"
             //Buttons (and Icons)
             "QPushButton { background-color: " + s_iopMidGrey + "; color: " + s_iopLightGrey + "; border-color: " + s_iopMidGrey + "; border-width: 1px; padding: 6px; border-style: outset; border-radius: 0px ;}"
             "QPushButton:hover { background-color: " + s_highlight_light_midgrey + "; color: " + s_iopLightBlue + ";}"
             "QPushButton:pressed { background-color: " + s_highlight_dark_midgrey + "; border-style: inset;}"
             "QPushButton:disabled { background-color: " + s_highlight_light_anthrazith + "; color: " + s_highlight_light_midgrey + " border-style: solid}"
-
 
             //Disturbing borders
             "#labelWalletStatus { border: none; background: transparent}"

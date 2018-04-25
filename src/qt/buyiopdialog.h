@@ -8,13 +8,14 @@
 #include "iopamountfield.h"
 #include "walletmodel.h"
 
-#include <QDialog>
 #include <QComboBox>
-#include <QPushButton>
+#include <QDialog>
 #include <QDoubleSpinBox>
+#include <QLabel>
 #include <QLineEdit>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QPushButton>
 #include <QString>
 
 
@@ -33,7 +34,7 @@ public:
 
 public Q_SLOTS:
     //void managerFinished();
-    void adressChanged(const QString &txt);
+    void adressChanged(const QString& txt);
     void chooseAdress();
     void physicalUpdated(int i);
     void physicalUpdated(double i);
@@ -48,7 +49,8 @@ public:
     QLineEdit* adressLineEdit;
     QDoubleSpinBox* paySpinBox;
     QComboBox* currency;
-    IoPAmountField* amountIoP;
+    QLabel* amountIOP;
+    QLabel* IOPLabel;
     QNetworkAccessManager* iopPriceNAM;
 
 
@@ -61,14 +63,14 @@ private:
     const int RUBEL = 2;
 
 
-    const int MAX_PRICE[3] = {1000,1000,50000};
-    const int MIN_PRICE[3] = {50,50,2000};
+    const int MAX_PRICE[3] = {1000, 1000, 50000};
+    const int MIN_PRICE[3] = {50, 50, 2000};
 
     const int FACTOR_IOP = 100000000;
 
     const QString CURRENCY[3] = {QString("USD"), QString("EUR"), QString("RUB")};
 
-    const QString PARTNER_NAME = QString("Internet%20Of%20People");
+    const QString PARTNER_NAME = QString("iopglobal");
 
     const QString IOP_CURRENCY = QString("IOP");
 
@@ -87,19 +89,22 @@ private:
     const QString TRANSACTION_INFO = QString("https://indacoin.com/api/exgw_gettransactioninfo");
 
     //POST https://indacoin.com/api/exgw_createTransaction
-    const QString CREATE_TRANSACTION = QString("https://indacoin.com/api/exgw_createTransaction");
+    const QString CREATE_TRANSACTION = QString("https://indacoin.com/gw/payment_form?partner=");
 
 
+    const QString BUY_URL = QString("https://indacoin.com/gw/payment_form?partner=");
 
-    const QString BUY_URL = QString("https://indacoin.com/xx_XX/change/buy-");
+    const QString CUR_FROM = QString("&cur_from=");
 
-    const QString WITH_CARD = QString("-with-card");
+    const QString CUR_TO = QString("&cur_to=");
 
-    const QString AMOUNT_PAY = QString("?amount_pay=");
+    const QString AMOUNT = QString("&amount=");
 
-    const QString WALLET = QString("&wallet=");
+    const QString ADDRESS = QString("&address=");
 
     const QString DISCOUNT = QString("&discount=82446");
+
+    const QString USER_ID = QString("&user_id=test@web.de");
 
 
     double iopPrice;

@@ -174,13 +174,15 @@ void WalletView::processNewTransaction(const QModelIndex& parent, int start, int
 void WalletView::gotoOverviewPage()
 {
     setCurrentWidget(overviewPage);
+    overviewPage->showTransactions();
 }
 
 
 void WalletView::gotoBuyIoPPage()
 {
-    buyIoPPage->setModel(walletModel);
-    setCurrentWidget(buyIoPPage);
+    setCurrentWidget(overviewPage);
+    overviewPage->showBuy();
+
 }
 
 void WalletView::gotoReceiveCoinsPage()

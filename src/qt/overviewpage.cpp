@@ -120,16 +120,17 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     ui->labelWalletStatus1->setIcon(icon);
     ui->labelWalletStatus2->setIcon(icon);
     ui->labelWalletStatus3->setIcon(icon);
-
+    ui->labelWalletStatus4->setIcon(icon);
     // Recent transactions
     transactionView = new TransactionView(platformStyle, NULL);
     //ui->transactionFrame->setVisible(true);
     ui->transactionLayout->addWidget(transactionView);
 
-    //transactionView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    transactionView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
 
     buyiopdialog = new BuyIoPDialog(platformStyle,NULL);
     ui->buyLayout->addWidget(buyiopdialog);
+    ui->buyFrame->setVisible(false);
 
     //ui->buyFrame->setVisible(false);
     //ui->transactionLayout->addWidget(buyiopdialog);
@@ -138,16 +139,19 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     connect(ui->labelWalletStatus1, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelWalletStatus2, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelWalletStatus3, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus4, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 
     //connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 }
 
 void OverviewPage::showTransactions(){
-    
-
+    ui->buyFrame->setVisible(false);
+    ui->transactionFrame->setVisible(true);
 }
 
 void OverviewPage::showBuy(){
+    ui->transactionFrame->setVisible(false);
+    ui->buyFrame->setVisible(true);
 }
 
 
@@ -268,5 +272,7 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
     ui->labelWalletStatus1->setVisible(fShow);
     ui->labelWalletStatus2->setVisible(fShow);
     ui->labelWalletStatus3->setVisible(fShow);
+    ui->labelWalletStatus4->setVisible(fShow);
+
     //ui->labelTransactionsStatus->setVisible(fShow);
 }
