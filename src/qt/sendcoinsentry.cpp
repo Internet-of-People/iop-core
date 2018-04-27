@@ -34,13 +34,16 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     if (platformStyle->getUseExtraSpacing())
         ui->payToLayout->setSpacing(4);
 #if QT_VERSION >= 0x040700
-    ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
+    ui->addAsLabel->setPlaceholderText(tr("Type here"));
 #endif
 
     // normal iop address field
     GUIUtil::setupAddressWidget(ui->payTo, this);
+    ui->payTo->setPlaceholderText(tr("Type here"));
     // just a label for displaying iop address(es)
-    ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
+    //ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
+    ui->payAmount->setMaximumWidth(1500);
+    //ui->payTo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // Connect signals
     connect(ui->payAmount, SIGNAL(valueChanged()), this, SIGNAL(payAmountChanged()));

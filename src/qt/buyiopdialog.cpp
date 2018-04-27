@@ -30,8 +30,8 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     //adress selection
     adressLineEdit = new QLineEdit(this);
-    adressLineEdit->setPlaceholderText("choose adress or paste your own");
-    selectAdress = new QPushButton("choose");
+    adressLineEdit->setPlaceholderText(tr("choose adress or paste your own"));
+    selectAdress = new QPushButton(tr("choose"));
 
     QWidget* addressWidget = new QWidget(this);
     QHBoxLayout* adressLayout = new QHBoxLayout(addressWidget);
@@ -43,11 +43,18 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     layout->addWidget(addressWidget);
 
+    mailEdit = new QLineEdit(this);
+    mailEdit->setPlaceholderText(tr("your email adress"));
+    layout->addWidget(mailEdit);
+    //layout->addSpacing(15);
+
     QLabel* adressInfoLabel = new QLabel(tr("exchange service provided by indacoin.com"));
     QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value: "));
+    adressInfoLabel->setObjectName("buy_adressInfo");
+    amountInfoLabel->setObjectName("buy_amountInfo");
 
     layout->addWidget(adressInfoLabel);
-    layout->addSpacing(20);
+    layout->addSpacing(50);
 
     // amount selection
     amountIOP = new QLabel();
@@ -58,6 +65,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     IOPLabel = new QLabel("IOP");
     IOPLabel->setObjectName("buy_IOPLabel");
 
+
     //amountIOP->setReadOnly(true);
 
     currency = new QComboBox(this);
@@ -65,7 +73,8 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     currency->addItem("EUR");
     currency->addItem("RUB");
     currency->setObjectName("buy_currency");
-    currency->setMaximumWidth(250);
+    currency->setMaximumWidth(500);
+
     paySpinBox = new QDoubleSpinBox;
     paySpinBox->setRange(50, 50000);
     paySpinBox->setDecimals(2);
@@ -84,7 +93,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     iopLayout->addWidget(IOPLabel);
     iopLayout->setContentsMargins(0, 0, 0, 0);
 
-    buyButton = new QPushButton("buy");
+    buyButton = new QPushButton(tr("buy"));
     buyButton->setObjectName("buyButton");
     buyButton->setEnabled(false);
 
@@ -140,13 +149,13 @@ void BuyIoPDialog::adressChanged(const QString& txt)
     if (adressLineEdit->text().isEmpty() || model->validateAddress(adressLineEdit->text())) {
         buyButton->setEnabled(true);
         adressLineEdit->setStyleSheet("");
-        std::cout << "buybutton enabled" << std::endl;
+        //std::cout << "buybutton enabled" << std::endl;
     } else {
         buyButton->setEnabled(false);
         //adressLineEdit->setValid(false);
         adressLineEdit->setStyleSheet("background: rgb(155,0,0);");
 
-        std::cout << "buybutton enabled" << std::endl;
+        //std::cout << "buybutton enabled" << std::endl;
     }
 }
 
@@ -183,14 +192,14 @@ void BuyIoPDialog::updateIoPPrice(double amount)
 {
     responsed = false;
     QNetworkRequest request(QUrl(QString(GET_PRICE).append(CURRENCY[currency->currentIndex()]).append(SEPERATOR).append(IOP_CURRENCY).append(SEPERATOR).append(QString::number(amount).append(SEPERATOR))));
-    std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
+    //std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
     iopPriceNAM->get(request);
 }
 
 void BuyIoPDialog::sendBuyRequest()
 {
     QString adress = QString(BUY_URL).append(PARTNER_NAME).append(CUR_FROM).append(CURRENCY[currency->currentIndex()]).append(CUR_TO).append(IOP_CURRENCY).append(AMOUNT).append(QString::number(paySpinBox->value()).append(ADDRESS).append(adressLineEdit->text()).append(USER_ID));
-    std::cout << "buy url: " << adress.toStdString() << std::endl;
+    //std::cout << "buy url: " << adress.toStdString() << std::endl;
 
     QDesktopServices::openUrl(QUrl(adress, QUrl::TolerantMode));
 }
@@ -206,7 +215,7 @@ void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
     QString answer = reply->readAll();
     bool successfullParsed;
     iopPrice = answer.toDouble(&successfullParsed);
-    std::cout << "GOT PRICE: " << answer.toStdString() << std::endl;
+    //std::cout << "GOT PRICE: " << answer.toStdString() << std::endl;
     amountIOP->setText(QString::number(iopPrice));
     responsed = true;
     return;

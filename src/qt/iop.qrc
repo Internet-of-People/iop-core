@@ -105,4 +105,16 @@
         <file alias="spinner-034">res/movies/spinner-034.png</file>
         <file alias="spinner-035">res/movies/spinner-035.png</file>
     </qresource>
+
+    <qresource prefix="/fonts">
+        <file alias="light">res/fonts/EncodeSansExpanded-Light.ttf</file>
+        <file alias="extralight">res/fonts/EncodeSansExpanded-ExtraLight.ttf</file>
+        <file alias="thin">res/fonts/EncodeSansExpanded-Thin.ttf</file>
+        <file alias="black">res/fonts/EncodeSansExpanded-Black.ttf</file>
+        <file alias="extrabold">res/fonts/EncodeSansExpanded-ExtraBold.ttf</file>
+        <file alias="regular">res/fonts/EncodeSansExpanded-Regular.ttf</file>
+        <file alias="medium">res/fonts/EncodeSansExpanded-Medium.ttf</file>
+        <file alias="bold">res/fonts/EncodeSansExpanded-Bold.ttf</file>
+        <file alias="semibold">res/fonts/EncodeSansExpanded-SemiBold.ttf</file>
+    </qresource>
 </RCC>

@@ -47,6 +47,7 @@ public:
     QPushButton* selectAdress;
     QPushButton* buyButton;
     QLineEdit* adressLineEdit;
+    QLineEdit* mailEdit;
     QDoubleSpinBox* paySpinBox;
     QComboBox* currency;
     QLabel* amountIOP;

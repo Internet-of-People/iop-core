@@ -90,7 +90,6 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
                                                                                                          connectionsControl(0),
                                                                                                          labelBlocksIcon(0),
                                                                                                          progressBarLabel(0),
-                                                                                                         numNodesLabel(0),
                                                                                                          progressBar(0),
                                                                                                          progressDialog(0),
                                                                                                          appMenuBar(0),
@@ -132,7 +131,9 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
         move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
     }
 
+
     if (IoPStyles::customThemeIsSet()) {
+        IoPStyles::addFonts();
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
         QPalette newPal(qApp->palette());
@@ -140,6 +141,7 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
         newPal.setColor(QPalette::LinkVisited, QColor(41, 99, 185));
         qApp->setPalette(newPal);
         setStyleSheet(styleSheetString);
+        ensurePolished();
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
@@ -199,7 +201,6 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
     progressBar->setAlignment(Qt::AlignLeft);
     progressBar->setMaximumHeight(12);
     //progressBar->setVisible(false);
-    numNodesLabel = new QLabel();
 
     // Create tool bars
     createToolBars();
@@ -300,7 +301,7 @@ void IoPGUI::createActions()
     buyIoPAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(buyIoPAction);
 
-    sendCoinsMenuAction = new QAction(QIcon(":/icons/send"), sendCoinsAction->text(), this);
+    sendCoinsMenuAction = new QAction(sendCoinsAction->text(), this);
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
@@ -312,7 +313,7 @@ void IoPGUI::createActions()
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    receiveCoinsMenuAction = new QAction(QIcon(":/icons/receiving_addresses"), receiveCoinsAction->text(), this);
+    receiveCoinsMenuAction = new QAction(receiveCoinsAction->text(), this);
     receiveCoinsMenuAction->setStatusTip(receiveCoinsAction->statusTip());
     receiveCoinsMenuAction->setToolTip(receiveCoinsMenuAction->statusTip());
 
@@ -335,53 +336,53 @@ void IoPGUI::createActions()
     //connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
 #endif // ENABLE_WALLET
 
-    quitAction = new QAction(platformStyle->TextColorIcon(":/icons/quit"), tr("E&xit"), this);
+    quitAction = new QAction(tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(platformStyle->TextColorIcon(":/icons/about"), tr("&About %1").arg(tr(PACKAGE_NAME)), this);
+    aboutAction = new QAction(tr("&About %1").arg(tr(PACKAGE_NAME)), this);
     aboutAction->setStatusTip(tr("Show information about %1").arg(tr(PACKAGE_NAME)));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
-    aboutQtAction = new QAction(platformStyle->TextColorIcon(":/icons/about_qt"), tr("About &Qt"), this);
+    aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
-    updateAction = new QAction(platformStyle->TextColorIcon(":/icons/about_qt"), tr("check for updates"), this);
+    updateAction = new QAction(tr("check for updates"), this);
     updateAction->setStatusTip(tr("Check if new Wallet version is online"));
     updateAction->setMenuRole(QAction::AboutQtRole);
-    optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
+    optionsAction = new QAction(tr("&Options..."), this);
     optionsAction->setStatusTip(tr("Modify configuration options for %1").arg(tr(PACKAGE_NAME)));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     optionsAction->setEnabled(false);
-    toggleHideAction = new QAction(platformStyle->TextColorIcon(":/icons/about"), tr("&Show / Hide"), this);
+    toggleHideAction = new QAction(tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
 
-    encryptWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
+    encryptWalletAction = new QAction(tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
-    backupWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
+    backupWalletAction = new QAction(tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
-    changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
+    changePassphraseAction = new QAction(tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
-    signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
+    signMessageAction = new QAction(this);
     signMessageAction->setStatusTip(tr("Sign messages with your IoP addresses to prove you own them"));
-    verifyMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/verify"), tr("&Verify message..."), this);
+    verifyMessageAction = new QAction(tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified IoP addresses"));
 
-    openRPCConsoleAction = new QAction(platformStyle->TextColorIcon(":/icons/debugwindow"), tr("&Debug window"), this);
+    openRPCConsoleAction = new QAction(tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
     // initially disable the debug window menu item
     openRPCConsoleAction->setEnabled(false);
 
-    usedSendingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Sending addresses..."), this);
+    usedSendingAddressesAction = new QAction(tr("&Sending addresses..."), this);
     usedSendingAddressesAction->setStatusTip(tr("Show the list of used sending addresses and labels"));
-    usedReceivingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Receiving addresses..."), this);
+    usedReceivingAddressesAction = new QAction(tr("&Receiving addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
-    openAction = new QAction(platformStyle->TextColorIcon(":/icons/open"), tr("Open &URI..."), this);
+    openAction = new QAction(tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a iop: URI or payment request"));
 
-    showHelpMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/info"), tr("&Command-line options"), this);
+    showHelpMessageAction = new QAction(tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible IoP command-line options").arg(tr(PACKAGE_NAME)));
 
@@ -485,10 +486,11 @@ void IoPGUI::createToolBars()
         QFrame* frameBlocks = new QFrame();
         frameBlocks->setContentsMargins(0, 0, 0, 0);
         frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        frameBlocks->setStyleSheet("border: none; background: transparent; padding-top: 10px;");
+        frameBlocks->setStyleSheet("border: none; background: transparent; padding-top: 10px; font-size: 8px; font-weight: bold;");
 
         QHBoxLayout* frameBlocksLayout = new QHBoxLayout(frameBlocks);
         frameBlocksLayout->setContentsMargins(3, 0, 3, 0);
+        frameBlocksLayout->addSpacing(30);
         frameBlocksLayout->setSpacing(3);
         unitDisplayControl = new UnitDisplayStatusBarControl(platformStyle);
         labelWalletEncryptionIcon = new QLabel();
@@ -512,20 +514,13 @@ void IoPGUI::createToolBars()
 
         frameBlocksLayout->addWidget(progressBarLabel);
         frameBlocksLayout->addStretch();
-
+        //frameBlocksLayout->addSpacing(30);
         //QWidgetAction* spacerWidgetAction = new QWidgetAction(this);
         //spacerWidgetAction->setDefaultWidget(spacerWidget);
 
 
-        numNodesLabel->setStyleSheet("background: transparent; color: " + s_iopLightTurqoise + "; font-size: 12px; padding-left: 10px; padding-top: 3px");
         toolbar->addWidget(frameBlocks);
-        //toolbar->addWidget(numNodesLabel);
-        QWidget* spacerWidget2 = new QWidget(this);
-        spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        spacerWidget2->setFixedHeight(10);
-        spacerWidget2->setVisible(true);
-        spacerWidget2->setStyleSheet("background: transparent;");
-        toolbar->addWidget(spacerWidget2);
+        
         actProgressBarLabel = new QWidgetAction(this);
         progressBarLabel->setStyleSheet("background: transparent;");
         //actProgressBarLabel->setDefaultWidget(progressBarLabel);
@@ -533,6 +528,14 @@ void IoPGUI::createToolBars()
         actProgressBar = new QWidgetAction(this);
         actProgressBar->setDefaultWidget(progressBar);
         toolbar->addAction(actProgressBar);
+        
+        QWidget* spacerWidget2 = new QWidget(this);
+        spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        spacerWidget2->setFixedHeight(15);
+        spacerWidget2->setVisible(true);
+        spacerWidget2->setStyleSheet("background: transparent;");
+        toolbar->addWidget(spacerWidget2);
+
         overviewAction->setChecked(true);
     }
 }
@@ -816,7 +819,6 @@ void IoPGUI::gotoVerifyMessageTab(QString addr)
 void IoPGUI::updateNetworkState()
 {
     int count = clientModel->getNumConnections();
-    numNodesLabel->setText(QStringLiteral("Connection: %1").arg(count));
     QString icon;
     switch (count) {
     case 0:
@@ -945,7 +947,8 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
 
         actProgressBarLabel->setVisible(true);
         actProgressBar->setVisible(true);
-        progressBar->setValue(100);
+        progressBar->setMaximum(1000000000);
+        progressBar->setValue(1000000000);
         progressBarLabel->setText(tr("Fully synchronized!"));
     } else {
         QString timeBehindText = GUIUtil::formatNiceTimeOffset(secs);

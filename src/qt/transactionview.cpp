@@ -132,7 +132,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
 
     QTableView *view = new QTableView(this);
     view->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Expanding);
-
+    view->setMaximumHeight(123456);
     vlayout->addLayout(hlayout);
     vlayout->addWidget(createDateRangeWidget());
     vlayout->addSpacing(10);

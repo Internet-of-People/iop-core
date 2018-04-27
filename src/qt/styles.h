@@ -3,6 +3,8 @@
 #define IOP_STYLES_H
 
     #include <QSettings>
+    #include <QFontDatabase>
+    #include <QFont>
 
     static const QString s_iopLightBlue = "rgb(108,200,240)";
     static const QString s_iopLightTurqoise = "rgb(12,175,165)";
@@ -32,22 +34,20 @@
     static const QColor c_highlight_light_midgrey = QColor(63,63,63);
     static const QColor c_highlight_dark_midgrey = QColor(47,47,47);
 
-    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
-    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
-    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
-    //int font_light = QFontDatabase::addApplicationFont(":/font/EncodeSansExpanded-Light.ttf");
-
-    QString fontfamily = QFontDatabase::applicationFontFamilies(fontid).at(0);
-    QFont monospace(family);
+    
+    //QString fontfamily = QFontDatabase::applicationFontFamilies(fontid).at(0);
+    //QFont monospace(family);
 
     static const QString styleSheetString =  QString(
             //General
-            "QFrame { background-color: " + s_iopantrazith + "; border: none;}"
-            "QWidget {background: " + s_iopantrazith + "; color: " + s_iopLightGrey + ";}"
+            "QFrame { background-color: " + s_iopantrazith + "; border: none; font-family: Encode Sans Expanded;}"
+            "QWidget {background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-family: Encode Sans Expanded;}"
+
+
 
             //QLineEdit
             "QLineEdit {background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
-
+            "#payTo, #addAsLabel { font-size: 48px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightBlue + ";}"                   
             //Checkbox
             "QCheckBox {margin: 15px;}"
 
@@ -58,10 +58,12 @@
             "QTableView::item { border-right: none; border-bottom: none; }"                    
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
-            "#buy_IOPLabel, #buy_amountIOP, #buy_currency, #payTo, #addAsLabel { font-size: 48px; color: " +  s_iopLightBlue +";}"                   
-            "#payAmount > QAbstractSpinBox { font-size: 48px; color: " +  s_iopLightBlue +"; max-width: 500}"
+            "#payAmount > QAbstractSpinBox { font-size: 48px; color: " +  s_iopLightBlue +"; font-weight: light}"
+            "#buy_adressInfo, #buy_amountInfo { color: " + s_iopMidGrey + ";}"
+            "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox { font-size: 48px; padding-right: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+            
             //Spinbox
-            "QAbstractSpinBox { background: " + s_iopantrazith + "; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
+            "QAbstractSpinBox { background: " + s_iopantrazith + "; maximum-width: 500px; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
             "QAbstractSpinBox::up-button {min-height: 7px; border: none; }"
             "QAbstractSpinBox::down-button { min-height: 7px; border: none}"
             "QAbstractSpinBox::up-button:off { min-height: 7px; border: none}"
@@ -109,7 +111,7 @@
             "QScrollBar::right-arrow:horizontal { image: url(:/icons/right_arrow) 1; }"                     
 
             //Progress Bar
-            "QProgressBar {color: transparent; background: " + s_iopantrazith + ";  border: 1px inset " + s_iopMidGrey + ";  padding: 0px;}" 
+            "QProgressBar {color: transparent; background: " + s_iopantrazith + ";  border: 1px inset " + s_iopMidGrey + ";  padding: 0px; margin-left: 30px; margin-right: 30px;}" 
             "QProgressBar::chunk {color: transparent; background: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgba(108,200,239,100%), stop: 1 rgba(102,204,204,100%), stop: 2 rgba(12,175,165,100%)); border-radius: 1px; margin: 0px;}"
             
             //Balance seperator line
@@ -148,11 +150,18 @@
     {
 
      public:
+         static void addFonts()
+         {
+            QFontDatabase::addApplicationFont(":/fonts/light");
+            QFontDatabase::addApplicationFont(":/fonts/regular");
+            QFontDatabase::addApplicationFont(":/fonts/medium");
+            QFontDatabase::addApplicationFont(":/fonts/bold");
+         }
 
-        static bool customThemeIsSet()
-        {
-            QSettings settings;
-            return (settings.value("theme").toString() != "default");
+         static bool customThemeIsSet()
+         {
+             QSettings settings;
+             return (settings.value("theme").toString() != "default");
         }
     };
 

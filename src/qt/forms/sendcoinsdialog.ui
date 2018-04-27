@@ -735,13 +735,13 @@
                 </property>
                </widget>
               </item>
-              <item>
+              <!--<item>
                <widget class="QPushButton" name="buttonChooseFee">
                 <property name="text">
                  <string>Choose...</string>
                 </property>
                </widget>
-              </item>
+              </item>-->
              </layout>
             </item>
             <item>
@@ -759,7 +759,7 @@
             </item>
            </layout>
           </item>
-          <item>
+          <!--<item>
            <widget class="QLabel" name="fallbackFeeWarningLabel">
             <property name="toolTip">
              <string>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</string>
@@ -777,7 +777,7 @@
              <bool>false</bool>
             </property>
            </widget>
-          </item>
+          </item>-->
           <item>
            <spacer name="horizontalSpacer_4">
             <property name="orientation">
@@ -794,7 +794,7 @@
             </property>
            </spacer>
           </item>
-          <item>
+          <!--<item>
            <widget class="QPushButton" name="buttonMinimizeFee">
             <property name="toolTip">
              <string>collapse fee-settings</string>
@@ -803,7 +803,7 @@
              <string>Hide</string>
             </property>
            </widget>
-          </item>
+          </item>-->
          </layout>
         </item>
         <item>
