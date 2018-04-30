@@ -349,7 +349,7 @@ void IoPGUI::createActions()
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     updateAction = new QAction(tr("check for updates"), this);
     updateAction->setStatusTip(tr("Check if new Wallet version is online"));
-    updateAction->setMenuRole(QAction::AboutQtRole);
+    //updateAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(tr("&Options..."), this);
     optionsAction->setStatusTip(tr("Modify configuration options for %1").arg(tr(PACKAGE_NAME)));
     optionsAction->setMenuRole(QAction::PreferencesRole);
@@ -451,10 +451,11 @@ void IoPGUI::createMenuBar()
         help->addAction(openRPCConsoleAction);
     }
     help->addAction(showHelpMessageAction);
+    help->addAction(updateAction);
+
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
-    //help->addAction(updateAction);
 }
 
 void IoPGUI::createToolBars()
