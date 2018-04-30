@@ -48,8 +48,11 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     QLabel* adressInfoLabel = new QLabel(tr("exchange service provided by indacoin.com"));
     QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value: "));
+    QLabel* amountVaryInfoLabel = new QLabel(tr("the amount may vary"));
     adressInfoLabel->setObjectName("buy_adressInfo");
     amountInfoLabel->setObjectName("buy_amountInfo");
+    amountVaryInfoLabel->setObjectName("buy_amountVaryInfo");
+
 
     layout->addWidget(adressInfoLabel);
     layout->addSpacing(50);
@@ -114,6 +117,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     payLayout->addSpacing(25);
 
     payLayout->addLayout(iopLayout);
+    payLayout->addWidget(amountVaryInfoLabel);
 
     bottomLayout->addWidget(payAmount, 0, 0, Qt::AlignLeft);
     bottomLayout->addWidget(buttonWidget, 0, 1, Qt::AlignBottom | Qt::AlignRight);

@@ -65,7 +65,7 @@
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
             "#payAmount > QAbstractSpinBox { font-size: 48px; color: " +  s_iopLightBlue +"; font-weight: light}"
-            "#buy_adressInfo, #buy_amountInfo { color: " + s_iopMidGrey + ";}"
+            "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo { color: " + s_iopMidGrey + ";}"
             "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox { font-size: 48px; padding-right: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
             
             //Spinbox
