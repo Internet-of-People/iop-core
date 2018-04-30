@@ -364,7 +364,7 @@ void IoPGUI::createActions()
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
     changePassphraseAction = new QAction(tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
-    signMessageAction = new QAction(this);
+    signMessageAction = new QAction(tr("Sign &message..."),this);
     signMessageAction->setStatusTip(tr("Sign messages with your IoP addresses to prove you own them"));
     verifyMessageAction = new QAction(tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified IoP addresses"));
@@ -451,6 +451,8 @@ void IoPGUI::createMenuBar()
         help->addAction(openRPCConsoleAction);
     }
     help->addAction(showHelpMessageAction);
+    help->addSeparator();
+
     help->addAction(updateAction);
 
     help->addSeparator();

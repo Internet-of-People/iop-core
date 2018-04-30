@@ -24,9 +24,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 {
     slotblock = false;
 
-    QLabel* buyIoPLabel = new QLabel("Buy IoP");
     QVBoxLayout* layout = new QVBoxLayout(this);
-    layout->addWidget(buyIoPLabel);
 
     //adress selection
     adressLineEdit = new QLineEdit(this);
@@ -59,7 +57,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     // amount selection
     amountIOP = new QLabel();
     amountIOP->setMaximumWidth(350);
-    amountIOP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    amountIOP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     amountIOP->setObjectName("buy_amountIOP");
 
     IOPLabel = new QLabel("IOP");
@@ -81,7 +79,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     paySpinBox->setSingleStep(1);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
     paySpinBox->setMaximumWidth(350);
-    paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
 
     QHBoxLayout* fiatLayout = new QHBoxLayout();
     fiatLayout->addWidget(paySpinBox);
@@ -198,7 +196,7 @@ void BuyIoPDialog::updateIoPPrice(double amount)
 
 void BuyIoPDialog::sendBuyRequest()
 {
-    QString adress = QString(BUY_URL).append(PARTNER_NAME).append(CUR_FROM).append(CURRENCY[currency->currentIndex()]).append(CUR_TO).append(IOP_CURRENCY).append(AMOUNT).append(QString::number(paySpinBox->value()).append(ADDRESS).append(adressLineEdit->text()).append(USER_ID));
+    QString adress = QString(BUY_URL).append(PARTNER_NAME).append(CUR_FROM).append(CURRENCY[currency->currentIndex()]).append(CUR_TO).append(IOP_CURRENCY).append(AMOUNT).append(QString::number(paySpinBox->value()).append(ADDRESS).append(adressLineEdit->text()).append(USER_ID).append(mailEdit->text().replace('@',"%40",Qt::CaseInsensitive)));
     //std::cout << "buy url: " << adress.toStdString() << std::endl;
 
     QDesktopServices::openUrl(QUrl(adress, QUrl::TolerantMode));

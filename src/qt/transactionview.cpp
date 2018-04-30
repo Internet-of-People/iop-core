@@ -224,6 +224,8 @@ void TransactionView::setModel(WalletModel *_model)
         transactionProxyModel->setSortRole(Qt::EditRole);
 
         transactionView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        transactionView->setMaximumHeight(133700);
+        transactionView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
         transactionView->setModel(transactionProxyModel);
         transactionView->setAlternatingRowColors(true);
         transactionView->setSelectionBehavior(QAbstractItemView::SelectRows);

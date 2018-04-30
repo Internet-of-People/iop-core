@@ -43,7 +43,7 @@
             "QFrame { background-color: " + s_iopantrazith + "; border: none; font-family: Encode Sans Expanded;}"
             "QWidget {background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-family: Encode Sans Expanded;}"
 
-
+            "#addressBookButton, #pasteButton, #deleteButton {width: 50px; height:50px; background: transparent; border: 1px outset " + s_highlight_light_anthrazith + "; }"
 
             //QLineEdit
             "QLineEdit {background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
@@ -53,9 +53,11 @@
 
 
             //Checkbox
-            "QCheckBox {margin: 15px;}"
+            "QCheckBox {spacing: 5px; margin-left: 15px;}"
 
             "#transactions_title, #buy_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
+            //"#transactionView {border-right: none; }"
+            "QPlainTextEdit { background: " + s_highlight_light_anthrazith + "; border: 1px solid " + s_iopLightBlue + "; border-left: none; border-right: none; border-top: none}"
             //Table view
             "QHeaderView { background: " + s_iopantrazith + ";} "
             "QTableView { border: none; border-right: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
@@ -94,8 +96,8 @@
             //Toolbar
             "#toolbar {background: " + s_iopantrazith + "; border-left: none; border-right: 1px solid " + s_iopMidGrey + "; border-top: none; border-bottom: none; padding-top: 0px;}"
             "#toolbar > QToolButton { width: 150px; height: 40px; background: " + s_iopantrazith + "; border: none; padding: 6px; padding-left: 9px; padding-right: 9px; margin-bottom: 1px;}"
-            "#toolbar > QToolButton:hover { color: " + s_iopLightBlue + "; border: none;}"                    
-            "#toolbar > QToolButton:checked { color: " + s_iopLightTurqoise + "; border: none;}"
+            "#toolbar > QToolButton:hover { color: " + s_iopLightTurqoise + "; border: none;}"                    
+            "#toolbar > QToolButton:checked { color: " + s_iopLightBlue + "; border: none;}"
             
             //Scrollbar
             "QScrollBar:vertical {background: " + s_iopantrazith + "; padding-top: 13px; padding-bottom: 13px;}"

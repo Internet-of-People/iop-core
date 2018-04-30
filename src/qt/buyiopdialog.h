@@ -69,7 +69,7 @@ private:
 
     const int FACTOR_IOP = 100000000;
 
-    const QString CURRENCY[3] = {QString("USD"), QString("EUR"), QString("RUB")};
+    const QString CURRENCY[3] = {QString("USD"), QString("EURO"), QString("RUB")};
 
     const QString PARTNER_NAME = QString("iopglobal");
 
@@ -105,7 +105,7 @@ private:
 
     const QString DISCOUNT = QString("&discount=82446");
 
-    const QString USER_ID = QString("&user_id=test@web.de");
+    const QString USER_ID = QString("&user_id=");
 
 
     double iopPrice;

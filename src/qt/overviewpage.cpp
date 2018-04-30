@@ -125,6 +125,7 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     transactionView = new TransactionView(platformStyle, NULL);
     //ui->transactionFrame->setVisible(true);
     ui->transactionLayout->addWidget(transactionView);
+    //ui->transactionLayout->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
 
     transactionView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
     transactionView->setMaximumHeight(123456);
@@ -133,6 +134,8 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     buyiopdialog = new BuyIoPDialog(platformStyle,NULL);
     ui->buyLayout->addWidget(buyiopdialog);
     ui->buyFrame->setVisible(false);
+    ui->buyFrame->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
+    ui->buyFrame->setMaximumHeight(123456);
 
     //ui->buyFrame->setVisible(false);
     //ui->transactionLayout->addWidget(buyiopdialog);

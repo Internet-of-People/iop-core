@@ -2,14 +2,14 @@
 <ui version="4.0">
     <class>OverviewPage</class>
     <widget class="QWidget" name="OverviewPage">
-        <property name="geometry">
+        <!--<property name="geometry">
             <rect>
                 <x>0</x>
                 <y>0</y>
                 <width>596</width>
                 <height>342</height>
             </rect>
-        </property>
+        </property>-->
         <property name="windowTitle">
             <string>Form</string>
         </property>
@@ -608,7 +608,7 @@
                                     </layout>
                                 </widget>
                             </item>
-                            <item>
+                            <!--<item>
                                 <spacer name="verticalSpacer_2">
                                     <property name="orientation">
                                         <enum>Qt::Vertical</enum>
@@ -620,7 +620,7 @@
                                         </size>
                                     </property>
                                 </spacer>
-                            </item>
+                            </item>-->
                         </layout>
                     </item>
                 </layout>
