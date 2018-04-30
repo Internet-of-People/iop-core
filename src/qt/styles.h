@@ -48,6 +48,10 @@
             //QLineEdit
             "QLineEdit {background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
             "#payTo, #addAsLabel { font-size: 48px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightBlue + ";}"                   
+            
+            "#warningIcon { border: none; background: transparent }"
+
+
             //Checkbox
             "QCheckBox {margin: 15px;}"
 
@@ -134,7 +138,6 @@
             //"#scrollArea {border: none }"
             "#widgetCoinControl { border: none }"
             "#frameFeeSelection { border: none}"
-            "#warningIcon { border: none; background: transparent }"
 
             //Optional Borders
             "#frame { border: none;}"                               //balances frame

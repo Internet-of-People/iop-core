@@ -466,6 +466,7 @@ void IoPGUI::createToolBars()
         toolbar->setObjectName("toolbar");
         toolbar->setOrientation(Qt::Vertical);
         //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        toolbar->setContextMenuPolicy(Qt::PreventContextMenu); 
         toolbar->setMovable(false);
         toolbar->setIconSize(TOOLBAR_ICONSIZE);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
