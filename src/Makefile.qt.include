@@ -321,7 +321,11 @@ RES_ICONS = \
   qt/res/icons/balance.png \
   qt/res/icons/pending.png \
   qt/res/icons/verify.png \
-  qt/res/icons/buy.png 
+  qt/res/icons/buy.png \
+  qt/res/icons/checkbox_empty.png \
+  qt/res/icons/checkbox_filled.png \
+  qt/res/icons/radio_empty.png \
+  qt/res/icons/radio_filled.png 
 
 
 RES_FONTS = \

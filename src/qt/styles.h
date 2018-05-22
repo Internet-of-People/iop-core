@@ -47,13 +47,22 @@
 
             //QLineEdit
             "QLineEdit {background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
-            "#payTo, #addAsLabel { font-size: 48px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightBlue + ";}"                   
+            
+            "#payTo, #reqLabel, #reqMessage, #reqAmount, #addAsLabel, #label_Label, #label_amount, #label_message "
+            "{ font-size: 16px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightBlue + ";}"                   
             
             "#warningIcon { border: none; background: transparent }"
 
 
             //Checkbox
-            "QCheckBox {spacing: 5px; margin-left: 15px;}"
+            "QCheckBox {spacing: 5px}"
+            "QCheckBox::indicator { width: 13px; height: 13px } "
+            "QCheckBox::indicator:unchecked { image: url(:icons/checkbox_empty) }"
+            "QCheckBox::indicator:checked { image: url(:icons/checkbox_filled) }"
+
+            "QRadioButton::indicator { width: 13px; height: 13px } "
+            "QRadioButton::indicator:unchecked { image: url(:icons/radio_empty) }"
+            "QRadioButton::indicator:checked { image: url(:icons/radio_filled) }"
 
             "#transactions_title, #buy_title { color: qlineargradient(x0:0, y0:0, x1: 1, y1: 0, stop: 0 "+ s_iopLightTurqoise + ", stop: 0.3 " + s_iopLightBlue + "); font-size: 24px; }"
             //"#transactionView {border-right: none; }"
@@ -64,9 +73,9 @@
             "QTableView::item { border-right: none; border-bottom: none; }"                    
             //"RecentRequestsTableModel::item { selection-background: " + accentTwo + "; selection-color: "+ fontColor + "; alternate-background: " + accentOne + "; }"
 
-            "#payAmount > QAbstractSpinBox { font-size: 48px; color: " +  s_iopLightBlue +"; font-weight: light}"
+            "#payAmount > QAbstractSpinBox { font-size: 16px; color: " +  s_iopLightBlue +"; font-weight: light;}"
             "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo { color: " + s_iopMidGrey + ";}"
-            "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox { font-size: 48px; padding-right: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+            "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox { font-size: 16px; padding-right: 14px; padding-top: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
             
             //Spinbox
             "QAbstractSpinBox { background: " + s_iopantrazith + "; maximum-width: 500px; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"

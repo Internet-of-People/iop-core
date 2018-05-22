@@ -675,6 +675,13 @@
         <property name="topMargin">
          <number>0</number>
         </property>
+         <item>
+              <widget class="Line" name="lineb">
+                  <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                  </property>
+              </widget>
+          </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayoutFee1">
           <property name="bottomMargin">
@@ -873,6 +880,7 @@
                  </item>
                 </layout>
                </item>
+               <!--
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayoutFee8">
                  <item>
@@ -916,6 +924,7 @@
                  </item>
                 </layout>
                </item>
+               -->
               </layout>
              </item>
              <item row="0" column="0">
@@ -1118,6 +1127,7 @@
           </layout>
          </widget>
         </item>
+        
         <item>
          <spacer name="verticalSpacerFee">
           <property name="orientation">
@@ -1258,6 +1268,26 @@
      </item>
     </layout>
    </item>
+   <item>
+      <widget class="Line" name="lineb">
+        <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+        </property>
+      </widget>
+    </item>
+    <item>
+      <spacer name="verticalBottomSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
   </layout>
  </widget>
  <customwidgets>

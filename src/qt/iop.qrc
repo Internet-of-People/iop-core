@@ -65,6 +65,11 @@
         <file alias="balance">res/icons/balance.png</file>
         <file alias="pending">res/icons/pending.png</file>
         <file alias="buy">res/icons/buy.png</file>
+        <file alias="checkbox_filled">res/icons/checkbox_filled.png</file>
+        <file alias="checkbox_empty">res/icons/checkbox_empty.png</file>
+        <file alias="radio_filled">res/icons/radio_filled.png</file>
+        <file alias="radio_empty">res/icons/radio_empty.png</file>
+
 
     </qresource>
     <qresource prefix="/movies">
