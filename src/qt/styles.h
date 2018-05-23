@@ -51,6 +51,10 @@
             "#payTo, #reqLabel, #reqMessage, #reqAmount, #addAsLabel, #label_Label, #label_amount, #label_message "
             "{ font-size: 16px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightBlue + ";}"                   
             
+            "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox, #pay_spinbox "
+            "{ font-size: 16px; padding-right: 14px; padding-top: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+
+
             "#warningIcon { border: none; background: transparent }"
 
 
@@ -75,7 +79,6 @@
 
             "#payAmount > QAbstractSpinBox { font-size: 16px; color: " +  s_iopLightBlue +"; font-weight: light;}"
             "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo { color: " + s_iopMidGrey + ";}"
-            "#buy_currency, #buy_amountIOP, #buy_IOPLabel, #payAmount > QValueComboBox { font-size: 16px; padding-right: 14px; padding-top: 14px; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
             
             //Spinbox
             "QAbstractSpinBox { background: " + s_iopantrazith + "; maximum-width: 500px; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"
@@ -87,8 +90,6 @@
             "QAbstractSpinBox::down-arrow { image: url(:/icons/down_arrow) 1;}"                    
             "QAbstractSpinBox::up-arrow:off { image: url(:/icons/up_arrow_off) 1;}"                    
             "QAbstractSpinBox::down-arrow:off { image: url(:/icons/down_arrow_off) 1;}"
-            "QDoubleSpinBox { font-size: 48px;}"                   
-
 
             //Combobox
             "QComboBox { background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none; min-width: 45px;}"

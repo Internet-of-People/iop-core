@@ -26,38 +26,45 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     QVBoxLayout* layout = new QVBoxLayout(this);
 
-    //adress selection
+    // ADRESS SELECTION
     adressLineEdit = new QLineEdit(this);
     adressLineEdit->setPlaceholderText(tr("choose adress or paste your own"));
     selectAdress = new QPushButton(tr("choose"));
 
+    mailEdit = new QLineEdit(this);
+    mailEdit->setPlaceholderText(tr("your email adress"));
+
+    QLabel* adressInfoLabel = new QLabel(tr("exchange service provided by indacoin.com"));
+    adressInfoLabel->setObjectName("buy_adressInfo");
+
     QWidget* addressWidget = new QWidget(this);
-    QHBoxLayout* adressLayout = new QHBoxLayout(addressWidget);
+    QVBoxLayout* topLayout = new QVBoxLayout(addressWidget);
+    QHBoxLayout* adressLayout = new QHBoxLayout();
+    QHBoxLayout* mailLayout = new QHBoxLayout();
 
     adressLayout->setContentsMargins(3, 0, 3, 0);
     adressLayout->setSpacing(3);
     adressLayout->addWidget(adressLineEdit);
     adressLayout->addWidget(selectAdress);
+    mailLayout->addWidget(mailEdit);
+
+    topLayout->addLayout(adressLayout);
+    topLayout->addSpacing(20);
+    topLayout->addLayout(mailLayout);
+    topLayout->addSpacing(5);
+    topLayout->addWidget(adressInfoLabel);
 
     layout->addWidget(addressWidget);
 
-    mailEdit = new QLineEdit(this);
-    mailEdit->setPlaceholderText(tr("your email adress"));
-    layout->addWidget(mailEdit);
-    //layout->addSpacing(15);
+    layout->addSpacing(30);
 
-    QLabel* adressInfoLabel = new QLabel(tr("exchange service provided by indacoin.com"));
+    // AMOUNT SELECTION
     QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value: "));
     QLabel* amountVaryInfoLabel = new QLabel(tr("the amount may vary"));
-    adressInfoLabel->setObjectName("buy_adressInfo");
     amountInfoLabel->setObjectName("buy_amountInfo");
     amountVaryInfoLabel->setObjectName("buy_amountVaryInfo");
 
 
-    layout->addWidget(adressInfoLabel);
-    layout->addSpacing(50);
-
-    // amount selection
     amountIOP = new QLabel();
     amountIOP->setMaximumWidth(350);
     amountIOP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
@@ -65,9 +72,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     IOPLabel = new QLabel("IOP");
     IOPLabel->setObjectName("buy_IOPLabel");
-
-
-    //amountIOP->setReadOnly(true);
+    IOPLabel->setMaximumWidth(500);
 
     currency = new QComboBox(this);
     currency->addItem("USD");
@@ -76,23 +81,14 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     currency->setObjectName("buy_currency");
     currency->setMaximumWidth(500);
 
-    paySpinBox = new QDoubleSpinBox;
+    paySpinBox = new QDoubleSpinBox();
+    paySpinBox->setObjectName("pay_spinbox");
     paySpinBox->setRange(50, 50000);
     paySpinBox->setDecimals(2);
     paySpinBox->setSingleStep(1);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
     paySpinBox->setMaximumWidth(350);
     paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
-
-    QHBoxLayout* fiatLayout = new QHBoxLayout();
-    fiatLayout->addWidget(paySpinBox);
-    fiatLayout->addWidget(currency);
-    fiatLayout->setContentsMargins(0, 0, 0, 0);
-
-    QHBoxLayout* iopLayout = new QHBoxLayout();
-    iopLayout->addWidget(amountIOP);
-    iopLayout->addWidget(IOPLabel);
-    iopLayout->setContentsMargins(0, 0, 0, 0);
 
     buyButton = new QPushButton(tr("buy"));
     buyButton->setObjectName("buyButton");
@@ -105,25 +101,36 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     QHBoxLayout* buttonLayout = new QHBoxLayout(buttonWidget);
 
     buttonLayout->addWidget(buyButton);
+
     QWidget* payAmount = new QWidget(bottomWidget);
-    QVBoxLayout* payLayout = new QVBoxLayout(payAmount);
+    QGridLayout* payLayout = new QGridLayout(payAmount);
+    payLayout->setHorizontalSpacing(10);
+    payLayout->setVerticalSpacing(5);
+    payLayout->setRowMinimumHeight(2,10);
+    payLayout->setColumnMinimumWidth(0,100);
 
-    payLayout->setContentsMargins(3, 0, 3, 0);
-    payLayout->setSpacing(3);
+    payLayout->addWidget(paySpinBox,0,0);
+    payLayout->addWidget(currency,0,1);
+    payLayout->addWidget(amountInfoLabel,1,0,1,2);
 
-
-    payLayout->addLayout(fiatLayout);
-    payLayout->addWidget(amountInfoLabel);
-    payLayout->addSpacing(25);
-
-    payLayout->addLayout(iopLayout);
-    payLayout->addWidget(amountVaryInfoLabel);
+    payLayout->addWidget(amountIOP,3,0);
+    payLayout->addWidget(IOPLabel,3,1);
+    payLayout->addWidget(amountVaryInfoLabel,4,0,2,1);
 
     bottomLayout->addWidget(payAmount, 0, 0, Qt::AlignLeft);
     bottomLayout->addWidget(buttonWidget, 0, 1, Qt::AlignBottom | Qt::AlignRight);
 
     layout->addWidget(bottomWidget);
+    
+    
+    
+    QFrame* lineb1 = new QFrame(this);
+    lineb1->setObjectName(QStringLiteral("lineb1"));
+    lineb1->setFrameShape(QFrame::HLine);
+    lineb1->setFrameShadow(QFrame::Sunken);
+    layout->addWidget(lineb1);
 
+    layout->addSpacing(20);
 
     //network management
     iopPriceNAM = new QNetworkAccessManager();
