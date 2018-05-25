@@ -64,6 +64,7 @@
         <file alias="right_arrow">res/icons/right_arrow.png</file>
         <file alias="balance">res/icons/balance.png</file>
         <file alias="pending">res/icons/pending.png</file>
+        <file alias="total">res/icons/total.png</file>
         <file alias="buy">res/icons/buy.png</file>
         <file alias="checkbox_filled">res/icons/checkbox_filled.png</file>
         <file alias="checkbox_empty">res/icons/checkbox_empty.png</file>

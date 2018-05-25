@@ -131,7 +131,9 @@
             "QProgressBar::chunk {color: transparent; background: qlineargradient(x1:0, y1:0, x2: 0.5, y2: 0, x3: 1, y3: 0, stop: 0 rgba(108,200,239,100%), stop: 1 rgba(102,204,204,100%), stop: 2 rgba(12,175,165,100%)); border-radius: 1px; margin: 0px;}"
             
             //Balance seperator line
-            "#lineb, #lineb1, #lineb2, #lineb3, #lineb4, #lineb5 { border-top: none; border-left: none; border-right: none; border-bottom: 1px; border-style: solid; border-color: " + s_iopMidGrey + ";}"
+            "#lineb, #lineb1, #lineb2, #lineb3, #lineb4, #lineb5 ,#w_lineb, #w_lineb1, #w_lineb2, #w_lineb3, #w_lineb4, #w_lineb5 "
+            "{ border-top: none; border-left: none; border-right: none; border-bottom: 1px; border-style: solid; border-color: " + s_iopMidGrey + ";}"
+            
             "#labelBalanceText, #labelPendingText, labelTotalText {color: " + s_iopLightGrey + ";}"
             
             "#buyButton {background-color: " + s_iopLightTurqoise + "; color: " + s_white + "; border-color: " + s_iopLightTurqoise + "; }"

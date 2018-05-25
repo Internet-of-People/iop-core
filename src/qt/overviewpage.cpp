@@ -184,10 +184,10 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     ui->labelUnconfirmed->setText(IoPUnits::formatWithUnit(unit, unconfirmedBalance, false, IoPUnits::separatorAlways));
     //ui->labelImmature->setText(IoPUnits::formatWithUnit(unit, immatureBalance, false, IoPUnits::separatorAlways));
     ui->labelTotal->setText(IoPUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, IoPUnits::separatorAlways));
-    //ui->labelWatchAvailable->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance, false, IoPUnits::separatorAlways));
-    //ui->labelWatchPending->setText(IoPUnits::formatWithUnit(unit, watchUnconfBalance, false, IoPUnits::separatorAlways));
+    ui->labelWatchAvailable->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance, false, IoPUnits::separatorAlways));
+    ui->labelWatchPending->setText(IoPUnits::formatWithUnit(unit, watchUnconfBalance, false, IoPUnits::separatorAlways));
     //ui->labelWatchImmature->setText(IoPUnits::formatWithUnit(unit, watchImmatureBalance, false, IoPUnits::separatorAlways));
-    //ui->labelWatchTotal->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, IoPUnits::separatorAlways));
+    ui->labelWatchTotal->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, IoPUnits::separatorAlways));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
     // for the non-mining users
@@ -206,9 +206,10 @@ void OverviewPage::updateWatchOnlyLabels(bool showWatchOnly)
     //ui->labelSpendable->setVisible(showWatchOnly);      // show spendable label (only when watch-only is active)
     //ui->labelWatchonly->setVisible(showWatchOnly);      // show watch-only label
     //ui->lineWatchBalance->setVisible(showWatchOnly);    // show watch-only balance separator line
-    //ui->labelWatchAvailable->setVisible(showWatchOnly); // show watch-only available balance
-    //ui->labelWatchPending->setVisible(showWatchOnly);   // show watch-only pending balance
-    //ui->labelWatchTotal->setVisible(showWatchOnly);     // show watch-only total balance
+    ui->watchOnly->setVisible(showWatchOnly);
+    ui->labelWatchAvailable->setVisible(showWatchOnly); // show watch-only available balance
+    ui->labelWatchPending->setVisible(showWatchOnly);   // show watch-only pending balance
+    ui->labelWatchTotal->setVisible(showWatchOnly);     // show watch-only total balance
 
     // if (!showWatchOnly)
     //   ui->labelWatchImmature->hide();
