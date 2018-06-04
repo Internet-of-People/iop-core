@@ -137,7 +137,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     //SLOTS
     connect(currency, SIGNAL(currentIndexChanged(int)), this, SLOT(physicalUpdated(int)));
-    std::cout << connect(adressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(adressChanged(const QString&))) << std::endl;
+    connect(adressLineEdit, SIGNAL(textChanged(const QString&)), this, SLOT(adressChanged(const QString&)));
     connect(selectAdress, SIGNAL(clicked()), this, SLOT(chooseAdress()));
     connect(paySpinBox, SIGNAL(valueChanged(double)), this, SLOT(physicalUpdated(double)));
     connect(iopPriceNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotIoPPrice(QNetworkReply*)));
@@ -186,7 +186,6 @@ void BuyIoPDialog::physicalUpdated(int i)
 
 void BuyIoPDialog::physicalUpdated(double i)
 {
-    std::cout << i << "$\n";
     if (i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
         updateIoPPrice(i);
     else {
@@ -213,7 +212,6 @@ void BuyIoPDialog::sendBuyRequest()
     QDesktopServices::openUrl(QUrl(adress, QUrl::TolerantMode));
 }
 
-
 void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
 {
     if (reply->error()) {
@@ -229,7 +227,6 @@ void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
     responsed = true;
     return;
 }
-
 
 BuyIoPDialog::~BuyIoPDialog()
 {
