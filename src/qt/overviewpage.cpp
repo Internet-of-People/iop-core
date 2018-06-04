@@ -121,6 +121,12 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     ui->labelWalletStatus2->setIcon(icon);
     ui->labelWalletStatus3->setIcon(icon);
     ui->labelWalletStatus4->setIcon(icon);
+    ui->labelWalletStatus5->setIcon(icon);
+    ui->labelWalletStatus6->setIcon(icon);
+    ui->labelWalletStatus7->setIcon(icon);
+    ui->labelWalletStatus8->setIcon(icon);
+    ui->labelWalletStatus9->setIcon(icon);
+
     // Recent transactions
     transactionView = new TransactionView(platformStyle, NULL);
     //ui->transactionFrame->setVisible(true);
@@ -145,6 +151,11 @@ OverviewPage::OverviewPage(const PlatformStyle* platformStyle, QWidget* parent) 
     connect(ui->labelWalletStatus2, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelWalletStatus3, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
     connect(ui->labelWalletStatus4, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus5, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus6, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus7, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus8, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
+    connect(ui->labelWalletStatus9, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 
     //connect(ui->labelTransactionsStatus, SIGNAL(clicked()), this, SLOT(handleOutOfSyncWarningClicks()));
 }
@@ -180,13 +191,14 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     currentWatchOnlyBalance = watchOnlyBalance;
     currentWatchUnconfBalance = watchUnconfBalance;
     currentWatchImmatureBalance = watchImmatureBalance;
+
     ui->labelBalance->setText(IoPUnits::formatWithUnit(unit, balance, false, IoPUnits::separatorAlways));
     ui->labelUnconfirmed->setText(IoPUnits::formatWithUnit(unit, unconfirmedBalance, false, IoPUnits::separatorAlways));
-    //ui->labelImmature->setText(IoPUnits::formatWithUnit(unit, immatureBalance, false, IoPUnits::separatorAlways));
+    ui->labelImmature->setText(IoPUnits::formatWithUnit(unit, immatureBalance, false, IoPUnits::separatorAlways));
     ui->labelTotal->setText(IoPUnits::formatWithUnit(unit, balance + unconfirmedBalance + immatureBalance, false, IoPUnits::separatorAlways));
     ui->labelWatchAvailable->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance, false, IoPUnits::separatorAlways));
     ui->labelWatchPending->setText(IoPUnits::formatWithUnit(unit, watchUnconfBalance, false, IoPUnits::separatorAlways));
-    //ui->labelWatchImmature->setText(IoPUnits::formatWithUnit(unit, watchImmatureBalance, false, IoPUnits::separatorAlways));
+    ui->labelWatchImmature->setText(IoPUnits::formatWithUnit(unit, watchImmatureBalance, false, IoPUnits::separatorAlways));
     ui->labelWatchTotal->setText(IoPUnits::formatWithUnit(unit, watchOnlyBalance + watchUnconfBalance + watchImmatureBalance, false, IoPUnits::separatorAlways));
 
     // only show immature (newly mined) balance if it's non-zero, so as not to complicate things
@@ -195,6 +207,8 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     bool showWatchOnlyImmature = watchImmatureBalance != 0;
 
     // for symmetry reasons also show immature label when the watch-only one is shown
+    ui->immature->setVisible(showImmature || showWatchOnlyImmature);
+    ui->watchImmature->setVisible(showImmature || showWatchOnlyImmature);
     //ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature);
     //ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
     //ui->labelWatchImmature->setVisible(showWatchOnlyImmature); // show watch-only immature balance
@@ -207,9 +221,9 @@ void OverviewPage::updateWatchOnlyLabels(bool showWatchOnly)
     //ui->labelWatchonly->setVisible(showWatchOnly);      // show watch-only label
     //ui->lineWatchBalance->setVisible(showWatchOnly);    // show watch-only balance separator line
     ui->watchOnly->setVisible(showWatchOnly);
-    ui->labelWatchAvailable->setVisible(showWatchOnly); // show watch-only available balance
-    ui->labelWatchPending->setVisible(showWatchOnly);   // show watch-only pending balance
-    ui->labelWatchTotal->setVisible(showWatchOnly);     // show watch-only total balance
+    //ui->labelWatchAvailable->setVisible(showWatchOnly); // show watch-only available balance
+    //ui->labelWatchPending->setVisible(showWatchOnly);   // show watch-only pending balance
+   // ui->labelWatchTotal->setVisible(showWatchOnly);     // show watch-only total balance
 
     // if (!showWatchOnly)
     //   ui->labelWatchImmature->hide();
@@ -279,6 +293,11 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
     ui->labelWalletStatus2->setVisible(fShow);
     ui->labelWalletStatus3->setVisible(fShow);
     ui->labelWalletStatus4->setVisible(fShow);
+    ui->labelWalletStatus5->setVisible(fShow);
+    ui->labelWalletStatus6->setVisible(fShow);
+    ui->labelWalletStatus7->setVisible(fShow);
+    ui->labelWalletStatus8->setVisible(fShow);
+    ui->labelWalletStatus9->setVisible(fShow);
 
     //ui->labelTransactionsStatus->setVisible(fShow);
 }

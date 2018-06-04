@@ -10,6 +10,7 @@
 #endif
 
 #include "amount.h"
+#include "styles.h"
 
 #include <QLabel>
 #include <QWidgetAction>
@@ -19,6 +20,7 @@
 #include <QPoint>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
+#include <QGuiApplication>
 #include <QUrl>
 
 class ClientModel;
@@ -33,9 +35,6 @@ class WalletFrame;
 class WalletModel;
 class HelpMessageDialog;
 class ModalOverlay;
-
-static const QSize TOOLBAR_ICONSIZE = QSize(76,33);
-
 
 QT_BEGIN_NAMESPACE
 class QAction;

@@ -59,7 +59,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     layout->addSpacing(30);
 
     // AMOUNT SELECTION
-    QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value: "));
+    QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value"));
     QLabel* amountVaryInfoLabel = new QLabel(tr("the amount may vary"));
     amountInfoLabel->setObjectName("buy_amountInfo");
     amountVaryInfoLabel->setObjectName("buy_amountVaryInfo");

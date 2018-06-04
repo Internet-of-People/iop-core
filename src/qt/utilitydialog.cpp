@@ -21,8 +21,6 @@
 #include "init.h"
 #include "util.h"
 
-#include <stdio.h>
-
 #include <QCloseEvent>
 #include <QLabel>
 #include <QRegExp>
@@ -39,7 +37,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
     ui(new Ui::HelpMessageDialog)
 {
     ui->setupUi(this);
-
+    ui->okButton->button(QDialogButtonBox::Ok)->setIcon(QIcon());
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
     /* On x86 add a bit specifier to the version so that users can distinguish between
      * 32 and 64 bit builds. On other architectures, 32/64 bit may be more ambiguous.
@@ -57,29 +55,20 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         if(available)
         {
             setWindowTitle(tr("Update Available"));
-            updateInfo = QString::fromStdString("A new Update is available!\n\n<br><br>You can download it < a href=\"https://github.com/Internet-of-People/iop-core/releases\">here</a>\n");
+            updateInfo = tr("A new Update is available!\n\n<br><br>You can download it < a href=\"https://github.com/Internet-of-People/iop-core/releases\">here</a>\n");
             ui->downloadButton->setVisible(true);
-            std::cout << connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted())) << std::endl;
+            connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
 
         } else {
             setWindowTitle(tr("Latest Version"));
-            updateInfo = QString::fromStdString("You have the current Version!<br><br>") + version;
+            updateInfo = tr("You have the current Version!<br><br>") + version;
         }
-        /// HTML-format the license message from the core
-        // Make URLs clickable
-        //QRegExp uri("<(.*)>", Qt::CaseSensitive, QRegExp::RegExp2);
-        //uri.setMinimal(true); // use non-greedy matching
-        //updateInfoHTML.replace(uri, "<a href=\"\\1\">\\1</a>");
-        // Replace newlines with HTML breaks
-        //updateInfoHTML.replace("\n", "<br>");
 
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         text = updateInfo;
         ui->aboutMessage->setText(updateInfo);
-        //ui->aboutMessage->setWordWrap(true);
         ui->helpMessage->setVisible(false);
-        //connect(ui->addButton, SIGNAL(clicked()), this, SLOT(addEntry()));
     } else if (about)
     {
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));

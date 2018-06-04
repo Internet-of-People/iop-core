@@ -111,7 +111,7 @@ PlatformStyle::PlatformStyle(const QString &_name, bool _imagesOnButtons, bool _
     {   
         //TODO: may be obsolete
         //dark theme
-        imagesOnButtons = true;
+        imagesOnButtons = false;
         colorizeIcons = true;
         singleColor = c_iopLightTurqoise; 
         textColor = c_iopLightTurqoise;         

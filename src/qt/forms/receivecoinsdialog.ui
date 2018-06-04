@@ -64,7 +64,7 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
+        <item row="2" column="0" colspan="3">
          <widget class="QLabel" name="label_5">
           <property name="text">
            <string>Use this form to request payments. All fields are &lt;b&gt;optional&lt;/b&gt;.</string>
@@ -178,10 +178,7 @@
             <property name="text">
              <string>&amp;Request payment</string>
             </property>
-            <property name="icon">
-             <iconset resource="../iop.qrc">
-              <normaloff>:/icons/receiving_addresses</normaloff>:/icons/receiving_addresses</iconset>
-            </property>
+
            </widget>
           </item>
           <item>
@@ -197,10 +194,6 @@
             </property>
             <property name="text">
              <string>Clear</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../iop.qrc">
-              <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -312,10 +305,6 @@
           <property name="text">
            <string>Show</string>
           </property>
-          <property name="icon">
-           <iconset resource="../iop.qrc">
-            <normaloff>:/icons/edit</normaloff>:/icons/edit</iconset>
-          </property>
           <property name="autoDefault">
            <bool>false</bool>
           </property>
@@ -331,10 +320,6 @@
           </property>
           <property name="text">
            <string>Remove</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../iop.qrc">
-            <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
           </property>
           <property name="autoDefault">
            <bool>false</bool>

@@ -442,7 +442,7 @@ RPCConsole::RPCConsole(const PlatformStyle *_platformStyle, QWidget *parent) :
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));
 
     if (platformStyle->getImagesOnButtons()) {
-        ui->openDebugLogfileButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
+        //ui->openDebugLogfileButton->setIcon(platformStyle->SingleColorIcon(":/icons/export"));
     }
     ui->clearButton->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
     ui->fontBiggerButton->setIcon(platformStyle->SingleColorIcon(":/icons/fontbigger"));

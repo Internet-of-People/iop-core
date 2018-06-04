@@ -526,7 +526,7 @@ void IoPGUI::createToolBars()
         toolbar->addWidget(frameBlocks);
         
         actProgressBarLabel = new QWidgetAction(this);
-        progressBarLabel->setStyleSheet("background: transparent;");
+        progressBarLabel->setStyleSheet("background: transparent; color: " + s_placeHolderText + ";");
         //actProgressBarLabel->setDefaultWidget(progressBarLabel);
         //toolbar->addAction(actProgressBarLabel);
         actProgressBar = new QWidgetAction(this);
@@ -745,10 +745,14 @@ void IoPGUI::checkForUpdate()
 
 bool IoPGUI::updateAvailable()
 {
+    
     //CHECK AVAILABILITY
-    HelpMessageDialog dlg(this, true, true, true);
-    dlg.exec();
-    return true;
+    if(false){
+        HelpMessageDialog dlg(this, true, true, true);
+        dlg.exec();
+        return true;
+    }
+    return false;
 }
 
 void IoPGUI::showDebugWindow()
@@ -830,21 +834,21 @@ void IoPGUI::updateNetworkState()
         break;
     case 1:
     case 2:
-    case 3:
         icon = ":/icons/connect_1";
         break;
+    case 3:
     case 4:
-    case 5:
-    case 6:
         icon = ":/icons/connect_2";
         break;
+    case 5:
+    case 6:
+        icon = ":/icons/connect_3";
     case 7:
     case 8:
-    case 9:
-        icon = ":/icons/connect_3";
+        icon = ":/icons/connect_4";
         break;
     default:
-        icon = ":/icons/connect_4";
+        icon = ":/icons/connect_5";
         break;
     }
 
