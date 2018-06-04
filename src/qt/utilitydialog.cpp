@@ -23,6 +23,8 @@
 
 #include <QCloseEvent>
 #include <QLabel>
+#include <QRect>
+#include <QPushButton>
 #include <QRegExp>
 #include <QTextTable>
 #include <QTextCursor>
@@ -37,7 +39,9 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
     ui(new Ui::HelpMessageDialog)
 {
     ui->setupUi(this);
+    
     ui->okButton->button(QDialogButtonBox::Ok)->setIcon(QIcon());
+
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
     /* On x86 add a bit specifier to the version so that users can distinguish between
      * 32 and 64 bit builds. On other architectures, 32/64 bit may be more ambiguous.
@@ -52,12 +56,19 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         
         //ui->horizontalSpacerButtons->setVisible(true);
         QString updateInfo;
+        QString changelog = QString("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<br/> At vero eos et accusam et justo duo dolores et ea rebum.<br/> Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br/> Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.<br/> At vero eos et accusam et justo duo dolores et ea rebum.<br/> Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.<br/>");
         if(available)
         {
             setWindowTitle(tr("Update Available"));
-            updateInfo = tr("A new Update is available!\n\n<br><br>You can download it < a href=\"https://github.com/Internet-of-People/iop-core/releases\">here</a>\n");
-            ui->downloadButton->setVisible(true);
-            connect(ui->downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
+            updateInfo = tr("A new Update is available!");
+            updateInfo.append("<br/><br/>\n");
+            updateInfo.append(tr("Changelog: "));
+            updateInfo.append("<br/>\n");
+            updateInfo.append(changelog);
+            resize(780,400);
+            downloadButton = new QPushButton(tr("download"));
+            ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
+            connect(downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
 
         } else {
             setWindowTitle(tr("Latest Version"));
@@ -82,8 +93,6 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         licenseInfoHTML.replace(uri, "<a href=\"\\1\">\\1</a>");
         // Replace newlines with HTML breaks
         licenseInfoHTML.replace("\n", "<br>");
-        
-
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         text = version + "\n" + licenseInfo;
@@ -92,6 +101,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         ui->helpMessage->setVisible(false);
     } else {
         setWindowTitle(tr("Command-line options"));
+        resize(780,400);
         QString header = tr("Usage:") + "\n" +
             "  iop-qt [" + tr("command-line options") + "]                     " + "\n";
         QTextCursor cursor(ui->helpMessage->document());

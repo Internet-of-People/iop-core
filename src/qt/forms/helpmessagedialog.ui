@@ -2,14 +2,6 @@
 <ui version="4.0">
   <class>HelpMessageDialog</class>
   <widget class="QDialog" name="HelpMessageDialog">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>780</width>
-        <height>400</height>
-      </rect>
-    </property>
     <property name="styleSheet">
       <string notr="true">#frame { border: none }</string>
     </property>
@@ -143,16 +135,6 @@
                 </size>
               </property>
             </spacer>
-          </item>
-          <item>
-            <widget class="QPushButton" name="downloadButton">
-              <property name="text">
-                <string>download</string>
-              </property>
-              <property name="visible">
-                <bool>false</bool>
-              </property>
-            </widget>
           </item>
           <item>
             <widget class="QDialogButtonBox" name="okButton">

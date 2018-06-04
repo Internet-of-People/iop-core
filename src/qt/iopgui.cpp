@@ -747,7 +747,7 @@ bool IoPGUI::updateAvailable()
 {
     
     //CHECK AVAILABILITY
-    if(false){
+    if(true){
         HelpMessageDialog dlg(this, true, true, true);
         dlg.exec();
         return true;

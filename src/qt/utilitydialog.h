@@ -25,6 +25,7 @@ public:
 
     void printToConsole();
     void showOrPrint();
+    QPushButton* downloadButton;
 
 private:
     Ui::HelpMessageDialog *ui;
