@@ -137,7 +137,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
     } else if (about)
     {
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
-
+        resize(780,400);
         /// HTML-format the license message from the core
         QString licenseInfo = QString::fromStdString(LicenseInfo());
         QString licenseInfoHTML = licenseInfo;

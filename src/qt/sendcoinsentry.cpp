@@ -42,7 +42,7 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     ui->payTo->setPlaceholderText(tr("Type here"));
     // just a label for displaying iop address(es)
     //ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
-    ui->payAmount->setMaximumWidth(1500);
+    //ui->payAmount->setMaximumWidth(500);
     //ui->payTo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // Connect signals

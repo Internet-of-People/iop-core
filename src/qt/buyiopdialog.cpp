@@ -72,14 +72,14 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     IOPLabel = new QLabel("IOP");
     IOPLabel->setObjectName("buy_IOPLabel");
-    IOPLabel->setMaximumWidth(500);
+    //IOPLabel->setMaximumWidth(500);
 
     currency = new QComboBox(this);
     currency->addItem("USD");
     currency->addItem("EUR");
     currency->addItem("RUB");
     currency->setObjectName("buy_currency");
-    currency->setMaximumWidth(500);
+    //currency->setMaximumWidth(500);
 
     paySpinBox = new QDoubleSpinBox();
     paySpinBox->setObjectName("pay_spinbox");
@@ -87,7 +87,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     paySpinBox->setDecimals(2);
     paySpinBox->setSingleStep(1);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
-    paySpinBox->setMaximumWidth(350);
+    //paySpinBox->setMaximumWidth(350);
     paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
 
     buyButton = new QPushButton(tr("buy"));

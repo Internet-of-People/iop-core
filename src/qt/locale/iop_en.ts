@@ -6,7 +6,7 @@
     <message>
         <location filename="../forms/addressbookpage.ui" line="+30"/>
         <source>Right-click to edit address or label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Right click to edit adress or label</translation>
     </message>
     <message>
         <location line="+27"/>
@@ -16,7 +16,7 @@
     <message>
         <location line="+3"/>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;New</translation>
     </message>
     <message>
         <location line="+14"/>
@@ -26,12 +26,12 @@
     <message>
         <location line="+3"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Copy</translation>
     </message>
     <message>
         <location line="+67"/>
         <source>C&amp;lose</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">C&amp;lose</translation>
     </message>
     <message>
         <location line="-53"/>
@@ -56,72 +56,72 @@
     <message>
         <location filename="../addressbookpage.cpp" line="+50"/>
         <source>Choose the address to send coins to</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Choose the address to send coins to</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Choose the address to receive coins with</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Choose the address to receive coins with</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>C&amp;hoose</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">C&amp;hoose</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Sending addresses</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sending addresses</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Receiving addresses</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Receiving addresses</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>These are your IoP addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">These are your IoP addresses for sending payments. Always check the amount and the receiving address before sending coins.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>These are your IoP addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">These are your IoP addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>&amp;Copy Address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Copy Address</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copy &amp;Label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copy &amp;Label</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Edit</translation>
     </message>
     <message>
         <location line="+193"/>
         <source>Export Address List</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Export Address List</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Comma separated file (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Comma separated file (*.csv)</translation>
     </message>
     <message>
         <location line="+13"/>
         <source>Exporting Failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporting Failed</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">There was an error trying to save the address list to %1. Please try again.</translation>
     </message>
 </context>
 <context>
