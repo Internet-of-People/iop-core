@@ -50,17 +50,17 @@
      </widget>
     </item>
     <item row="0" column="1">
-     <layout class="QHBoxLayout" name="payToLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item>
        <widget class="QValidatedLineEdit" name="payTo">
         <property name="toolTip">
          <string>The IoP address to send the payment to</string>
         </property>
        </widget>
       </item>
+    <item row="0" column="2">
+      <layout class="QHBoxLayout" name="payToLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QToolButton" name="addressBookButton">
         <property name="toolTip">
@@ -75,8 +75,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>22</width>
-          <height>22</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="shortcut">
@@ -98,8 +98,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>22</width>
-          <height>22</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
         <property name="shortcut">
@@ -121,8 +121,8 @@
         </property>
         <property name="iconSize">
          <size>
-          <width>22</width>
-          <height>22</height>
+          <width>32</width>
+          <height>32</height>
          </size>
         </property>
        </widget>

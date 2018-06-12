@@ -67,7 +67,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     amountIOP = new QLabel();
     amountIOP->setMaximumWidth(350);
-    amountIOP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
+    amountIOP->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     amountIOP->setObjectName("buy_amountIOP");
 
     IOPLabel = new QLabel("IOP");
@@ -88,7 +88,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     paySpinBox->setSingleStep(1);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
     //paySpinBox->setMaximumWidth(350);
-    paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
+    paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     buyButton = new QPushButton(tr("buy"));
     buyButton->setObjectName("buyButton");
