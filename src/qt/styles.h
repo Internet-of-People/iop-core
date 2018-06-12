@@ -54,10 +54,10 @@
     static const QString styleSheetString =  QString(
             //General
             "QFrame "
-            "{ background-color: " + s_iopantrazith + "; border: none; font-family: Encode Sans Expanded;}"
+            "{ background-color: " + s_iopantrazith + "; border: none; font-family: Encode Sans Expanded; font-size: 14px;}"
             
             "QWidget "
-            "{ background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-family: Encode Sans Expanded;}"
+            "{ background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-family: Encode Sans Expanded; font-size: 14px;}"
 
             "#addressBookButton, #pasteButton, #deleteButton "
             "{ width: 50px; height:50px; background: transparent; border: 1px outset " + s_highlight_light_anthrazith + "; }"
@@ -69,7 +69,7 @@
             "{ font-size: 16px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightGrey + ";}"                   
             
             "#buy_amountIOP, #pay_spinbox "
-            "{ font-size: 32px; padding-right: 0; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+            "{ height: 40px; font-size: 32px; padding-right: 0; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
 
             "#buy_IOPLabel, buy_currency, payAmount > QValueComboBox"
             "{ font-size: 16px; padding-right: 0; padding-top: 0; color: " +  s_placeHolderText +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
@@ -95,7 +95,7 @@
 
             
             "#payAmount > QAbstractSpinBox "
-            "{ font-size: 32px; color: " +  s_iopLightBlue +"; font-weight: light;}"
+            "{ height: 40px; font-size: 32px; color: " +  s_iopLightBlue +"; font-weight: light;}"
             "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo "
             "{ color: " + s_placeHolderText + ";}"
             
@@ -114,13 +114,18 @@
             
             //Checkbox & RadioButton
             "QCheckBox {spacing: 5px}"
-            "QCheckBox::indicator { width: 13px; height: 13px } "
+            "QCheckBox::indicator { width: 14px; height: 14px } "
             "QCheckBox::indicator:unchecked { image: url(:icons/checkbox_empty) }"
             "QCheckBox::indicator:checked { image: url(:icons/checkbox_filled) }"
+            "QCheckBox::indicator:unchecked:hover {image: url(:icons/checkbox_empty_hover)}"
+            "QCheckBox::indicator:checked:hover {image: url(:icons/checkbox_filled_hover)}"
 
-            "QRadioButton::indicator { width: 13px; height: 13px } "
+
+            "QRadioButton::indicator { width: 14px; height: 14px } "
             "QRadioButton::indicator:unchecked { image: url(:icons/radio_empty) }"
             "QRadioButton::indicator:checked { image: url(:icons/radio_filled) }"
+            "QRadioButton::indicator:unchecked:hover { image: url(:icons/radio_empty_hover) }"
+            "QRadioButton::indicator:checked:hover { image: url(:icons/radio_filled_hover) }"
 
             //Spinbox
             "QAbstractSpinBox { background: " + s_iopantrazith + "; maximum-width: 500px; color: " +  s_iopLightBlue +"; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none}"

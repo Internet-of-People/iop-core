@@ -29,8 +29,8 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *_platformS
     ui->setupUi(this);
 
     ui->addressBookButton_SM->setIcon(QIcon(":/icons/address-book"));
-    ui->pasteButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/editpaste"));
-    ui->copySignatureButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/editcopy"));
+    ui->pasteButton_SM->setIcon(QIcon(":/icons/editpaste"));
+    ui->copySignatureButton_SM->setIcon(QIcon(":/icons/editcopy"));
     //ui->signMessageButton_SM->setIcon(QIcon(":/icons/edit"));
     //ui->clearButton_SM->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
     ui->addressBookButton_VM->setIcon(QIcon(":/icons/address-book"));

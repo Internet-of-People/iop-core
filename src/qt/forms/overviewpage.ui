@@ -95,7 +95,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>39</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -110,7 +110,7 @@
                                                                 <property name="iconSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>42</height>
+                                                                        <height>39</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="styleSheet">
@@ -222,7 +222,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -231,7 +231,7 @@
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
                                                                         <normaloff>:/icons/total</normaloff>
-                                                                        <disabledoff>:/icons/total</disabledoff>:/icons/balance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                        <disabledoff>:/icons/total</disabledoff>:/icons/total                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -349,7 +349,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -456,6 +456,9 @@
                                                 <!-- IMMATURE -->
                                                 <item>
                                                 <widget class="QWidget" name="immature">
+                                                    <property name="visible">
+                                                        <bool>false</bool>
+                                                    </property>
                                                     <layout class="QGridLayout" name="gridImmature">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -477,7 +480,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -633,7 +636,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>39</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -641,14 +644,14 @@
                                                                 </property>
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
-                                                                        <normaloff>:/icons/balance</normaloff>
-                                                                        <disabledoff>:/icons/balance</disabledoff>:/icons/balance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                        <normaloff>:/icons/balance_watch</normaloff>
+                                                                        <disabledoff>:/icons/balance_watch</disabledoff>:/icons/balance_watch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>42</height>
+                                                                        <height>39</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="styleSheet">
@@ -760,7 +763,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -768,8 +771,8 @@
                                                                 </property>
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
-                                                                        <normaloff>:/icons/total</normaloff>
-                                                                        <disabledoff>:/icons/total</disabledoff>:/icons/balance                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                        <normaloff>:/icons/total_watch</normaloff>
+                                                                        <disabledoff>:/icons/total_watch</disabledoff>:/icons/balance_watch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -887,7 +890,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -895,8 +898,8 @@
                                                                 </property>
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
-                                                                        <normaloff>:/icons/pending</normaloff>
-                                                                        <disabledoff>:/icons/pending</disabledoff>:/icons/pending                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                        <normaloff>:/icons/pending_watch</normaloff>
+                                                                        <disabledoff>:/icons/pending_watch</disabledoff>:/icons/pending_watch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
@@ -994,6 +997,9 @@
                                                 <!-- IMMATURE -->
                                                 <item>
                                                 <widget class="QWidget" name="watchImmature">
+                                                    <property name="visible">
+                                                        <bool>false</bool>
+                                                    </property>
                                                     <layout class="QGridLayout" name="gridWatchImmature">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -1015,7 +1021,7 @@
                                                                 <property name="maximumSize">
                                                                     <size>
                                                                         <width>42</width>
-                                                                        <height>16777215</height>
+                                                                        <height>42</height>
                                                                     </size>
                                                                 </property>
                                                                 <property name="text">
@@ -1023,8 +1029,8 @@
                                                                 </property>
                                                                 <property name="icon">
                                                                     <iconset resource="../iop.qrc">
-                                                                        <normaloff>:/icons/pending</normaloff>
-                                                                        <disabledoff>:/icons/pending</disabledoff>:/icons/pending                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                        <normaloff>:/icons/pending_watch</normaloff>
+                                                                        <disabledoff>:/icons/pending_watch</disabledoff>:/icons/pending_watch                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
                                                                     </iconset>
                                                                 </property>
                                                                 <property name="iconSize">
