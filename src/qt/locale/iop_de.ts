@@ -1312,7 +1312,7 @@
     </message>
     <message>
         <source>&amp;Theme:</source>
-        <translation type="unfinished">&amp;Theme:</translation>
+        <translation>&amp;Thema:</translation>
     </message>
     <message>
         <source>Choose the color theme to use.</source>
@@ -1399,7 +1399,7 @@
     </message>
     <message>
         <source>Immature</source>
-        <translation type="unfinished">Unreif</translation>
+        <translation>Unreif</translation>
     </message>
     <message>
         <source>Available (watch only)</source>
@@ -1415,7 +1415,7 @@
     </message>
     <message>
         <source>Immature (watch only)</source>
-        <translation>unreif (nur beobachtet)</translation>
+        <translation type="unfinished">Unreif (nur beobachtet)</translation>
     </message>
 </context>
 <context>
