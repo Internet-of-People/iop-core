@@ -543,6 +543,14 @@ void IoPGUI::createToolBars()
         actProgressBarLabel->setDefaultWidget(progressBarLabel);
 
         toolbar->addWidget(frameBlocks);
+
+        QWidget* spacerWidget3 = new QWidget(this);
+        spacerWidget3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        spacerWidget3->setFixedHeight(5);
+        spacerWidget3->setVisible(true);
+        spacerWidget3->setStyleSheet("background: transparent;");
+        toolbar->addWidget(spacerWidget3);
+
         toolbar->addAction(actProgressBar);
         toolbar->addAction(actProgressBarLabel);
 
