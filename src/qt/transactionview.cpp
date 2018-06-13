@@ -58,6 +58,7 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     watchOnlyWidget = new QComboBox(this);
     watchOnlyWidget->setFixedWidth(24);
     watchOnlyWidget->addItem("", TransactionFilterProxy::WatchOnlyFilter_All);
+    watchOnlyWidget->setIconSize(QSize(14,14));
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye"), "", TransactionFilterProxy::WatchOnlyFilter_Yes);
     watchOnlyWidget->addItem(platformStyle->SingleColorIcon(":/icons/eye_minus"), "", TransactionFilterProxy::WatchOnlyFilter_No);
     hlayout->addWidget(watchOnlyWidget);
@@ -225,6 +226,7 @@ void TransactionView::setModel(WalletModel *_model)
 
         transactionView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         transactionView->setMaximumHeight(133700);
+        transactionView->setIconSize(QSize(14,14));
         transactionView->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Expanding);
         transactionView->setModel(transactionProxyModel);
         transactionView->setAlternatingRowColors(true);

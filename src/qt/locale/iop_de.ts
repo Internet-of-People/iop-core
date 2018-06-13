@@ -135,7 +135,7 @@
     </message>
     <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation type="unfinished">Geben Sie die neue Passphrase für das Wallet ein.&lt;br&gt;Bitte benutzen Sie eine Passphrase bestehend aus &lt;b&gt;zehn oder mehr zufälligen Zeichen&lt;/b&gt; oder &lt;b&gt;acht oder mehr Wörtern&lt;/b&gt;.</translation>
+        <translation>Geben Sie die neue Passphrase für das Wallet ein.&lt;br&gt;Bitte benutzen Sie eine Passphrase bestehend aus &lt;b&gt;zehn oder mehr zufälligen Zeichen&lt;/b&gt; oder &lt;b&gt;acht oder mehr Wörtern&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>Encrypt wallet</source>
@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation type="unfinished">Dieser Vorgang benötigt ihre Passphrase, um das Wallet zu entsperren.</translation>
+        <translation>Dieser Vorgang benötigt ihre Passphrase, um das Wallet zu entsperren.</translation>
     </message>
     <message>
         <source>Unlock wallet</source>
@@ -151,11 +151,11 @@
     </message>
     <message>
         <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation type="unfinished">Dieser Vorgang benötigt Ihre Passphrase, um das Wallet zu entschlüsseln.</translation>
+        <translation>Dieser Vorgang benötigt Ihre Passphrase, um das Wallet zu entschlüsseln.</translation>
     </message>
     <message>
         <source>Decrypt wallet</source>
-        <translation type="unfinished">Wallet entschlüsseln</translation>
+        <translation>Wallet entschlüsseln</translation>
     </message>
     <message>
         <source>Change passphrase</source>
@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase to the wallet.</source>
-        <translation type="unfinished">Geben Sie die alte und neue Wallet-Passphrase ein.</translation>
+        <translation>Geben Sie die alte und neue Wallet-Passphrase ein.</translation>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
@@ -237,31 +237,31 @@
     <name>BuyIoPDialog</name>
     <message>
         <source>choose adress or paste your own</source>
-        <translation type="unfinished">Wähle eine adresse, oder füge eine eigene ein</translation>
+        <translation>Wählen Sie eine Adresse, oder fügen Sie eine eigene ein</translation>
     </message>
     <message>
         <source>choose</source>
-        <translation type="unfinished">wähle</translation>
+        <translation>wählen Sie</translation>
     </message>
     <message>
         <source>your email adress</source>
-        <translation type="unfinished">deine E-mail Adresse</translation>
+        <translation>Ihre E-mail Adresse</translation>
     </message>
     <message>
         <source>exchange service provided by indacoin.com</source>
-        <translation type="unfinished">Austauschservice bereitgestellt von indacoin.com</translation>
-    </message>
-    <message>
-        <source>minimum exchange value</source>
-        <translation type="unfinished">minimaler Wert</translation>
+        <translation>Service bereitgestellt von indacoin.com</translation>
     </message>
     <message>
         <source>the amount may vary</source>
-        <translation type="unfinished">der Betrag kann variieren</translation>
+        <translation>der Betrag kann variieren</translation>
     </message>
     <message>
         <source>buy</source>
-        <translation type="unfinished">kaufen</translation>
+        <translation>Kaufen</translation>
+    </message>
+    <message>
+        <source>minimum exchange value: </source>
+        <translation>Minimaler Einkaufswert: </translation>
     </message>
 </context>
 <context>
@@ -549,27 +549,37 @@
     </message>
     <message>
         <source>Update Available</source>
-        <translation type="unfinished">Update Verfügbar</translation>
-    </message>
-    <message>
-        <source>A new Update is available!</source>
-        <translation type="unfinished">Ein neues Update ist verfügbar!</translation>
-    </message>
-    <message>
-        <source>Changelog: </source>
-        <translation type="unfinished">Changelog: </translation>
+        <translation>Aktualisierung Verfügbar</translation>
     </message>
     <message>
         <source>download</source>
-        <translation type="unfinished">herunterladen</translation>
+        <translation>Herunterladen</translation>
     </message>
     <message>
         <source>Latest Version</source>
-        <translation type="unfinished">Neuste Version</translation>
+        <translation>Neuste Version</translation>
     </message>
     <message>
         <source>You have the current Version!&lt;br&gt;&lt;br&gt;</source>
-        <translation type="unfinished">Sie haben bereits die neuste Version &lt;br&gt;&lt;br&gt;</translation>
+        <translation>Sie haben bereits die neuste Version &lt;br&gt;&lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>A new Update is available!
+</source>
+        <translation>Eine neue Version ist verfügbar!
+</translation>
+    </message>
+    <message>
+        <source>Version: 
+</source>
+        <translation>Version: 
+</translation>
+    </message>
+    <message>
+        <source>Changelog: 
+</source>
+        <translation>Änderungen: 
+</translation>
     </message>
 </context>
 <context>
@@ -611,39 +621,39 @@
     </message>
     <message>
         <source>When you click OK, %1 will begin to download and process the full %4 block chain (%2MB) starting with the earliest transactions in %3 when %4 initially launched.</source>
-        <translation type="unfinished">Wenn sie OK klicken, wird %1 den download beginnen und die komplette %4 Blockchain (%2MB) wird verarbeitet. Angefangen mit den ersten Transaktionen von %3 als %4 ursprünglich startete.</translation>
+        <translation>Wenn sie OK klicken, wird %1 den download beginnen und die komplette %4 Blockchain (%2MB) wird verarbeitet. Angefangen mit den ersten Transaktionen aus %3 als %4 ursprünglich startete.</translation>
     </message>
     <message>
         <source>This initial synchronisation is very demanding, and may expose hardware problems with your computer that had previously gone unnoticed. Each time you run %1, it will continue downloading where it left off.</source>
-        <translation type="unfinished">Diese erste Synchronisation ist sehr aufwändig und könnte Hardwareprobleme mit Ihrem Computer aufzeigen, die zuvor unbemerkt blieben. Jedes mal wenn sie %1 starten wird es den download fortsetzen.</translation>
+        <translation>Diese erste Synchronisation ist sehr aufwändig und könnte Hardwareprobleme mit Ihrem Computer aufzeigen, die zuvor unbemerkt blieben. Jedes mal wenn sie %1 starten wird es den download fortsetzen.</translation>
     </message>
     <message>
         <source>If you have chosen to limit block chain storage (pruning), the historical data must still be downloaded and processed, but will be deleted afterward to keep your disk usage low.</source>
-        <translation type="unfinished">Wenn sie wählten den Blockchainspeicher zu limitieren (pruning), müssen die historischen Daten trotzdem heruntergeladen und verarbeitet werden, werden dannach aber gelöscht um den Speicherverbrauch gering zu halten.</translation>
+        <translation>Wenn sie wählten den Blockchainspeicher zu limitieren (pruning), müssen die historischen Daten trotzdem heruntergeladen und verarbeitet werden, werden dannach aber gelöscht um den Speicherverbrauch gering zu halten.</translation>
     </message>
     <message>
         <source>IoP</source>
-        <translation type="unfinished">IoP</translation>
+        <translation>IoP</translation>
     </message>
     <message>
         <source>At least %1 MB of data will be stored in this directory, and it will grow over time.</source>
-        <translation type="unfinished">Mindestens %1 MB werden in diesem Verzeichnis gespeichert. Sie werden über Zeit wachsen.</translation>
+        <translation>Mindestens %1 MB werden in diesem Verzeichnis gespeichert. Die Daten werden über Zeit wachsen.</translation>
     </message>
     <message>
         <source>Approximately %1 MB of data will be stored in this directory.</source>
-        <translation type="unfinished">Ungefähr %1 MB werden in diesem Verzeichnis gespeichert.</translation>
+        <translation>Ungefähr %1 MB werden in diesem Verzeichnis gespeichert.</translation>
     </message>
     <message>
         <source>%1 will download and store a copy of the IoP block chain.</source>
-        <translation type="unfinished">%1 wird eine Kopie der IoP Blockchain herunterladen und speichern.</translation>
+        <translation>%1 wird eine Kopie der IoP Blockchain herunterladen und speichern.</translation>
     </message>
     <message>
         <source>The wallet will also be stored in this directory.</source>
-        <translation type="unfinished">Das Wallet wird ebenfalls in diesem Verzeichnis gespeichert.</translation>
+        <translation>Das Wallet wird ebenfalls in diesem Verzeichnis gespeichert.</translation>
     </message>
     <message numerus="yes">
         <source>(of %n MB needed)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>(von benötigten %n MB)</numerusform>
             <numerusform></numerusform>
         </translation>
@@ -965,31 +975,31 @@
     </message>
     <message>
         <source>Send coins to an IoP address</source>
-        <translation type="unfinished">Münzen an eine IoP Adresse senden</translation>
+        <translation>Münzen an eine IOP Adresse senden</translation>
     </message>
     <message>
         <source>&amp;Buy</source>
-        <translation type="unfinished">&amp;Kaufen</translation>
+        <translation>&amp;Kaufen</translation>
     </message>
     <message>
         <source>Buy IOP at Indacoin</source>
-        <translation type="unfinished">IOP bei Indacoin kaufen</translation>
+        <translation>IOP bei Indacoin kaufen</translation>
     </message>
     <message>
         <source>check for updates</source>
-        <translation type="unfinished">Auf Updates prüfen</translation>
+        <translation>Auf Updates prüfen</translation>
     </message>
     <message>
         <source>Check if new Wallet version is online</source>
-        <translation type="unfinished">Überprüfen ob die neue Wallet Version online ist</translation>
+        <translation>Überprüfen ob die neue Wallet Version online ist</translation>
     </message>
     <message>
         <source>iop.global</source>
-        <translation type="unfinished">iop.global</translation>
+        <translation>iop.global</translation>
     </message>
     <message>
         <source>Fully synchronized!</source>
-        <translation type="unfinished">Vollständig synchronisiert!</translation>
+        <translation>Vollständig synchronisiert!</translation>
     </message>
 </context>
 <context>
@@ -1298,43 +1308,43 @@
     </message>
     <message>
         <source>Shows if the supplied default SOCKS5 proxy is used to reach peers via this network type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeigt ob der bereitgestellte standard SOCKS5 proxy benutzt wird um peers über diesen Netzwerktyp zu erreichen.</translation>
     </message>
     <message>
         <source>&amp;Theme:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Theme:</translation>
     </message>
     <message>
         <source>Choose the color theme to use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen die das Farbthema, das Sie beuntzen möchten</translation>
     </message>
     <message>
         <source>Open the %1 configuration file from the working directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die %1 Konfiguationsdatei aus dem Arbeitsverzeichnis öffnen.</translation>
     </message>
     <message>
         <source>Open Configuration File</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationsdatei öffnen</translation>
     </message>
     <message>
         <source>dark</source>
-        <translation type="unfinished"></translation>
+        <translation>dunkel</translation>
     </message>
     <message>
         <source>Configuration options</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurationsoptionen</translation>
     </message>
     <message>
         <source>The configuration file is used to specify advanced user options which override GUI settings. Additionally, any command-line options will override this configuration file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Konfigurationsdatei wird benutzt um erweiterte Benutzereinstellungen, die die GUI Einstellungen überschreiben festzulegen. Zusätzlich werden alle Kommandozeilenargumente von dieser Datei überschrieben.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>The configuration file could not be opened.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Konfigurationsdatei konnte nicht geöffnet werden.</translation>
     </message>
 </context>
 <context>
@@ -1377,15 +1387,15 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Verfügbar</translation>
+        <translation>Verfügbar</translation>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished">Insgesamt</translation>
+        <translation>Insgesamt</translation>
     </message>
     <message>
         <source>Pending</source>
-        <translation type="unfinished">Unterwegs</translation>
+        <translation>Ausstehend</translation>
     </message>
     <message>
         <source>Immature</source>
@@ -1393,19 +1403,19 @@
     </message>
     <message>
         <source>Available (watch only)</source>
-        <translation type="unfinished">Verfügbar (nur beobachtet)</translation>
+        <translation>Verfügbar (nur beobachtet)</translation>
     </message>
     <message>
         <source>Total (watch only)</source>
-        <translation type="unfinished">Insgesammt (nur beobachtet)</translation>
+        <translation>Insgesamt (nur beobachtet)</translation>
     </message>
     <message>
         <source>Pending (watch only)</source>
-        <translation type="unfinished">Unterwegs (nur beobachtet)</translation>
+        <translation>Ausstehend (nur beobachtet)</translation>
     </message>
     <message>
         <source>Immature (watch only)</source>
-        <translation type="unfinished">unreif (nur beobachtet)</translation>
+        <translation>unreif (nur beobachtet)</translation>
     </message>
 </context>
 <context>
@@ -1597,14 +1607,14 @@
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Jahr(e)</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished">unbekannt</translation>
+        <translation>unbekannt</translation>
     </message>
 </context>
 <context>
@@ -1933,15 +1943,15 @@
     </message>
     <message>
         <source>&amp;Reset</source>
-        <translation type="unfinished">&amp;Zurücksetzen</translation>
+        <translation>&amp;Zurücksetzen</translation>
     </message>
     <message>
         <source>Use up and down arrows to navigate history, and %1 to clear screen.</source>
-        <translation type="unfinished">Benutzen sie die Hoch- und Runtertasten um durch die Historie zu navigieren und %1 um die Anzeige zu leeren.</translation>
+        <translation>Benutzen sie die Hoch- und Runtertasten um durch die Historie zu navigieren und %1 um die Anzeige zu leeren.</translation>
     </message>
     <message>
         <source>WARNING: Scammers have been active, telling users to type commands here, stealing their wallet contents. Do not use this console without fully understanding the ramifications of a command.</source>
-        <translation type="unfinished">ACHTUNG: Betrüger sagen Benutzern, hier Befehle einzugeben um ihre Münzen zu stehlen. Benutzen Sie die Konsole nicht wenn sie die Konsequenzen eines Befehls nicht vollständig verstanden haben.</translation>
+        <translation>ACHTUNG: Betrüger sagten Benutzern hier Befehle einzugeben um ihr Walletinhalt zu stehlen. Benutzen Sie die Konsole nicht wenn sie die Konsequenzen eines Befehls nicht vollständig verstanden haben.</translation>
     </message>
 </context>
 <context>
@@ -2345,15 +2355,15 @@
     </message>
     <message>
         <source>Request Replace-By-Fee</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Replace By Fee&quot; anfordern</translation>
     </message>
     <message>
         <source>Indicates that the sender may wish to replace this transaction with a new one paying higher fees (prior to being confirmed).</source>
-        <translation type="unfinished"></translation>
+        <translation>Gibt an, dass der Sender diese Transaktion eventuell durch eine neue, mit einer höheren Gebühr, ersetzen will (um die bestätigungszeit zu verringern).</translation>
     </message>
     <message>
         <source>This transaction signals replaceability (optin-RBF).</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Transaktion signalisiert austauschbarkeit (optin-RBF).</translation>
     </message>
 </context>
 <context>
@@ -2436,7 +2446,7 @@
     </message>
     <message>
         <source>Type here</source>
-        <translation type="unfinished">Hier eingeben</translation>
+        <translation>Hier eingeben</translation>
     </message>
 </context>
 <context>
@@ -3079,7 +3089,7 @@
     </message>
     <message>
         <source>Increase transaction fee</source>
-        <translation type="unfinished">Transaktionsgebühr erhöhen</translation>
+        <translation>Transaktionsgebühr erhöhen</translation>
     </message>
 </context>
 <context>
@@ -3104,39 +3114,39 @@
     </message>
     <message>
         <source>Fee bump error</source>
-        <translation type="unfinished">Gebührenänderungsfehler</translation>
+        <translation>Gebührenänderungsfehler</translation>
     </message>
     <message>
         <source>Increasing transaction fee failed</source>
-        <translation type="unfinished">Konnte die Transaktionsgebühr nicht erhöhen</translation>
+        <translation>Konnte die Transaktionsgebühr nicht erhöhen</translation>
     </message>
     <message>
         <source>Do you want to increase the fee?</source>
-        <translation type="unfinished">Wollen sie die Gebühr erhöhen?</translation>
+        <translation>Wollen Sie die Gebühr erhöhen?</translation>
     </message>
     <message>
         <source>Current fee:</source>
-        <translation type="unfinished">Derzeitige Gebühr:</translation>
+        <translation>Derzeitige Gebühr:</translation>
     </message>
     <message>
         <source>Increase:</source>
-        <translation type="unfinished">Erhöhen:</translation>
+        <translation>Erhöhen:</translation>
     </message>
     <message>
         <source>New fee:</source>
-        <translation type="unfinished">Neue Gebühr:</translation>
+        <translation>Neue Gebühr:</translation>
     </message>
     <message>
         <source>Confirm fee bump</source>
-        <translation type="unfinished">Gebührenänderung bestätigen</translation>
+        <translation>Gebührenänderung bestätigen</translation>
     </message>
     <message>
         <source>Can&apos;t sign transaction.</source>
-        <translation type="unfinished">Kann die transaktion nicht signieren.</translation>
+        <translation>Kann die transaktion nicht signieren.</translation>
     </message>
     <message>
         <source>Could not commit transaction</source>
-        <translation type="unfinished">Kann die transaktion nicht einsenden</translation>
+        <translation>Kann die transaktion nicht einsenden</translation>
     </message>
 </context>
 <context>
@@ -4042,27 +4052,27 @@
     </message>
     <message>
         <source>Bind to given address to listen for JSON-RPC connections. This option is ignored unless -rpcallowip is also passed. Port is optional and overrides -rpcport. Use [host]:port notation for IPv6. This option can be specified multiple times (default: 127.0.0.1 and ::1 i.e., localhost, or if -rpcallowip has been specified, 0.0.0.0 and :: i.e., all addresses)</source>
-        <translation type="unfinished"></translation>
+        <translation>An gegebene Adresse binden um nach JSON-RPC verbindungen zu lauschen. Diese option wird ignoriert bis -rpcallowip auch übergeben wird. Port ist optional und überschreibt -rpcport. Nutzen Sie die [host]:port Notation für IPv6. Diese Option kann mehrfach spezifiziert werden. (standard: 127.0.0.1 und ::1 z.B. , localhost, oder falls -rpcallowip gesetzt ist, 0.0.0.0 und :: z.B. , alle Adressen)</translation>
     </message>
     <message>
         <source>Connect only to the specified node(s); -connect=0 disables automatic connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Nur zu festgelegten Node(s) verbinden; -connect=0 deaktiviert automatische Verbindungen</translation>
     </message>
     <message>
         <source>Error loading %s: You can&apos;t enable HD on an already existing non-HD wallet</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Laden von %s: Sie können HD nicht auf bereits existierenden nicht-HD Wallets aktivieren</translation>
     </message>
     <message>
         <source>Error loading wallet %s. -wallet parameter must only specify a filename (not a path).</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim laden des Wallets %s. -wallet parameter darf nur einen Dateinamen angeben (keinen Pfad)</translation>
     </message>
     <message>
         <source>Exclude debugging information for a category. Can be used in conjunction with -debug=1 to output debug logs for all categories except one or more specified categories.</source>
-        <translation type="unfinished"></translation>
+        <translation>debugging Informationen einer Kategorie ausschliesen. Kann in verbindung mit -debug=1 genutzt werden um debug-logs für alle Kategorieen außer einer oder mehreren Kategorieen auszugeben.</translation>
     </message>
     <message>
         <source>Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect used)</source>
-        <translation type="unfinished"></translation>
+        <translation>Peer adressen via DNS lookup einreihen, wenn wenige Adressen zur verfügung stehen (standard: 1 außer -connect angegeben)</translation>
     </message>
     <message>
         <source>The fee rate (in %s/kB) that indicates your tolerance for discarding change by adding it to the fee (default: %s). Note: An output is discarded if it is dust at this rate, but we will always discard up to the dust relay fee and a discard fee above that is limited by the fee estimate for the longest target</source>
@@ -4074,7 +4084,7 @@
     </message>
     <message>
         <source>This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit %s and cryptographic software written by Eric Young and UPnP software written by Thomas Bernard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Produkt beinhaltet Software die vom OpenSSL Projekt für die Nutzung in dem OpenSSL Toolkit entwickelt wurde %s und kryptografische Software von Eric Young und UPnP software von Thomas Bernard.</translation>
     </message>
     <message>
         <source>Unable to replay blocks. You will need to rebuild the database using -reindex-chainstate.</source>
@@ -4082,7 +4092,7 @@
     </message>
     <message>
         <source>Warning: Wallet file corrupt, data salvaged! Original %s saved as %s in %s; if your balance or transactions are incorrect you should restore from a backup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Wallet datei korrumpiert, daten gelöscht! Original %s als %s in %s gepeichert, Falls Ihr Guthaben oder Ihre Transaktionen inkorrekt sind sollten sie ein Backup laden.</translation>
     </message>
     <message>
         <source>Whether to save the mempool on shutdown and load on restart (default: %u)</source>

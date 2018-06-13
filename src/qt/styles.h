@@ -90,7 +90,6 @@
             
             "QTableView::item "
             "{ border-right: none; border-bottom: none; }"                    
-
             
             "#payAmount > QAbstractSpinBox, #payAmount > QComboBox"
             "{ min-height: 48px; font-size: 32px; color: " +  s_iopLightBlue +"; font-weight: light;}"

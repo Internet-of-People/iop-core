@@ -150,7 +150,7 @@ void OptionsModel::Init(bool resetSettings)
 
     language = settings.value("language").toString();
 
-    if (!settings.contains("theme") ||settings.value("theme").toString() != "dark") 
+    if (!settings.contains("theme") || settings.value("theme").toString() != "dark") 
         settings.setValue("theme", "dark"); 
     if (!gArgs.SoftSetArg("-theme", settings.value("theme").toString().toStdString())) 
         addOverriddenOption("-theme"); 
