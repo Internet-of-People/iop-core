@@ -17,6 +17,8 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QPoint>
 #include <QSystemTrayIcon>
 #include <QDesktopServices>
@@ -121,7 +123,8 @@ private:
     QAction *showHelpMessageAction;
     QWidgetAction *actProgressBar;
     QWidgetAction *actProgressBarLabel;
-    
+    QNetworkAccessManager* updateNAM;
+
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -129,6 +132,9 @@ private:
     RPCConsole *rpcConsole;
     HelpMessageDialog *helpMessageDialog;
     ModalOverlay *modalOverlay;
+
+    const QString UPDATE_URL = QString("http://api.iop.global/core-wallet/checkversion?version=");
+    bool openUpdateDialog;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;
@@ -146,7 +152,8 @@ private:
     void createTrayIcon(const NetworkStyle *networkStyle);
     /** Create system tray menu (or setup the dock menu) */
     void createTrayIconMenu();
-
+    
+    void checkForUpdate(bool show);
     /** Enable or disable all wallet-related actions */
     void setWalletActionsEnabled(bool enabled);
 
@@ -173,6 +180,8 @@ public Q_SLOTS:
     void setNetworkActive(bool networkActive);
     /** Set number of blocks and last block date shown in the UI */
     void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool headers);
+
+    void gotUpdateVersion(QNetworkReply* reply);
 
     /** Notify the user of an event from the core network or transaction handling code.
        @param[in] title     the message box / notification title
@@ -226,7 +235,7 @@ private Q_SLOTS:
     /** Show about dialog */
     void aboutClicked();
     /** Show debug window */
-    void checkForUpdate();
+    void checkForUpdateDialog();
     /** Check if update is available */
     void showDebugWindow();
     /** Show debug window and set focus to the console */

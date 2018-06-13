@@ -20,7 +20,7 @@ class HelpMessageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = false, bool available = false);
+    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = false, bool available = false, QString latestVersion = QString(), QString changeLog = QString());
     ~HelpMessageDialog();
 
     void printToConsole();

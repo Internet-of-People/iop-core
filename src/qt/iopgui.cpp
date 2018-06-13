@@ -9,6 +9,7 @@
 #include "iopgui.h"
 
 #include "clientmodel.h"
+#include "clientversion.h"
 #include "guiconstants.h"
 #include "guiutil.h"
 #include "iopunits.h"
@@ -58,6 +59,8 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <QWidgetAction>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #if QT_VERSION < 0x050000
 #include <QTextDocument>
@@ -187,6 +190,8 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
     // Accept D&D of URIs
     setAcceptDrops(true);
 
+    updateNAM = new QNetworkAccessManager();
+
     // Create actions for the toolbar, menu bar and tray/dock icon
     // Needs walletFrame to be initialized
     createActions();
@@ -248,6 +253,9 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
         connect(progressBar, SIGNAL(clicked(QPoint)), this, SLOT(showModalOverlay()));
     }
 #endif
+
+
+    checkForUpdate(false);
 }
 
 IoPGUI::~IoPGUI()
@@ -389,11 +397,12 @@ void IoPGUI::createActions()
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-    connect(updateAction, SIGNAL(triggered()), this, SLOT(checkForUpdate()));
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(checkForUpdateDialog()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
     connect(openRPCConsoleAction, SIGNAL(triggered()), this, SLOT(showDebugWindow()));
+    connect(updateNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotUpdateVersion(QNetworkReply*)));
     // prevents an open debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
@@ -516,22 +525,27 @@ void IoPGUI::createToolBars()
         frameBlocksLayout->addStretch();
 
 
-        frameBlocksLayout->addWidget(progressBarLabel);
-        frameBlocksLayout->addStretch();
+        /* frameBlocksLayout->addWidget(progressBarLabel);
+        frameBlocksLayout->addStretch(); */
         //frameBlocksLayout->addSpacing(30);
         //QWidgetAction* spacerWidgetAction = new QWidgetAction(this);
         //spacerWidgetAction->setDefaultWidget(spacerWidget);
 
 
-        toolbar->addWidget(frameBlocks);
         
-        actProgressBarLabel = new QWidgetAction(this);
-        progressBarLabel->setStyleSheet("background: transparent; color: " + s_placeHolderText + ";");
+        progressBarLabel->setStyleSheet("background: transparent; color: " + s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
         //actProgressBarLabel->setDefaultWidget(progressBarLabel);
         //toolbar->addAction(actProgressBarLabel);
         actProgressBar = new QWidgetAction(this);
         actProgressBar->setDefaultWidget(progressBar);
+
+        actProgressBarLabel = new QWidgetAction(this);
+        actProgressBarLabel->setDefaultWidget(progressBarLabel);
+
+        toolbar->addWidget(frameBlocks);
         toolbar->addAction(actProgressBar);
+        toolbar->addAction(actProgressBarLabel);
+
         
         QWidget* spacerWidget2 = new QWidget(this);
         spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -731,29 +745,54 @@ void IoPGUI::aboutClicked()
     dlg.exec();
 }
 
-void IoPGUI::checkForUpdate()
+void IoPGUI::checkForUpdateDialog(){
+    checkForUpdate(true);
+}
+
+void IoPGUI::checkForUpdate(bool show)
 {
-    if (!clientModel)
-        return;
-
-    if (updateAvailable())
-        return;
-
-    HelpMessageDialog dlg(this, true, true, false);
-    dlg.exec();
+    openUpdateDialog = show;
+    QString version = clientModel->formatSubVersion();
+    QNetworkRequest request(QUrl(QString(UPDATE_URL).append(version)));
+    updateNAM->get(request);    
 }
 
 bool IoPGUI::updateAvailable()
 {
-    
-    //CHECK AVAILABILITY
-    if(true){
-        HelpMessageDialog dlg(this, true, true, true);
-        dlg.exec();
-        return true;
-    }
-    return false;
+    /* #if defined(__x86_64__)
+    QString version = QString("(%1-bit)").arg(64);
+    #elif defined(__i386__ )
+    QString version = QString("(%1-bit)").arg(32);
+    #else
+    QString version = QString();
+    #endif
+    QNetworkRequest request(QUrl(UPDATE_URL.append(version)));
+    //std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
+    updateNAM->get(request); */
 }
+
+void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
+    QString answer = reply->readAll();
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(answer.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+
+    bool latest = jsonObject["latest"].toBool();
+    QString changelog = jsonObject["change_log"].toString();
+    QString version = jsonObject["current_version"].toString();
+//CHECK AVAILABILITY
+    if(latest){
+        if(openUpdateDialog){
+        HelpMessageDialog dlg(this, true, true, false);
+        dlg.exec();
+        }
+    }else{
+        HelpMessageDialog dlg(this, true, true, true, version, changelog);
+        dlg.exec();
+    }
+    openUpdateDialog = false;
+}
+
 
 void IoPGUI::showDebugWindow()
 {

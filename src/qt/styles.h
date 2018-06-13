@@ -26,6 +26,7 @@
     static const QString s_white = "rgb(255,255,255)";
 
     static const QString s_highlight_light_anthrazith = "rgba(30,30,30)";
+    static const QString s_highlight_dark_anthrazith = "rgba(15,15,15)";
 
     static const QString s_highlight_light_midgrey = "rgba(63,63,63)";
     static const QString s_highlight_dark_midgrey = "rgba(47,47,47)";
@@ -71,15 +72,6 @@
             "QLineEdit "
             "{ background: " + s_iopantrazith + "; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
             
-            "#payTo, #reqLabel, #reqMessage, #reqAmount, #addAsLabel, #label_Label, #label_amount, #label_message "
-            "{ font-size: 14px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightGrey + ";}"                   
-            
-            "#buy_amountIOP, #pay_spinbox "
-            "{ min-height: 48px; font-size: 32px; padding-right: 0; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
-
-            "#buy_IOPLabel, buy_currency, payAmount > QValueComboBox"
-            "{ font-size: 16px; padding-right: 0; padding-top: 0; color: " +  s_placeHolderText +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
-     
             "#warningIcon "
             "{ border: none; background: transparent }"
 
@@ -100,7 +92,7 @@
             "{ border-right: none; border-bottom: none; }"                    
 
             
-            "#payAmount > QAbstractSpinBox "
+            "#payAmount > QAbstractSpinBox, #payAmount > QComboBox"
             "{ min-height: 48px; font-size: 32px; color: " +  s_iopLightBlue +"; font-weight: light;}"
             "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo "
             "{ color: " + s_placeHolderText + ";}"
@@ -146,8 +138,10 @@
 
             //Combobox
             "QComboBox {color: " + s_placeHolderText + "; background: " + s_iopantrazith + "; border-style: solid; border-width: 1px;  border-color: " + s_iopLightBlue + "; border-top: none; border-left: none; border-right: none; min-width: 45px;}"
-            "QComboBox QAbstractItemView { border: 1px outset " + s_iopMidGrey + "}"//border-style: outset; border-width: 1px;  border-color: " + s_iopMidGrey + "; }"
-            "QComboBox::drop-down { border: none;}"
+            //border-style: outset; border-width: 1px;  border-color: " + s_iopMidGrey + "; }"
+            "QComboBox QAbstractItemView { border: 1px outset " + s_iopMidGrey + "; background-color: " + s_highlight_dark_anthrazith + "}"//border-style: outset; border-width: 1px;  border-color: " + s_iopMidGrey + "; }"
+            "QComboBox::drop-down { border: none; }"
+
             "QComboBox::down-arrow { image: url(:/icons/down_arrow) 1; width: 24; height: 24; border: none;}"
 
             //Menu
@@ -188,6 +182,16 @@
             "QPushButton:hover {border: 1px solid "+ s_iopLightBlue + "}"
             "QPushButton:pressed {background-color: " + s_iopantrazith + "; border: 1px solid "+ s_iopLightBlue + "}"
             "QPushButton:disabled { color: " + s_iopMidGrey + "}"
+
+            "#payTo, #reqLabel, #reqMessage, #reqAmount, #addAsLabel, #label_Label, #label_amount, #label_message "
+            "{ font-size: 14px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightGrey + ";}"                   
+            
+            "#buy_amountIOP, #pay_spinbox "
+            "{ min-height: 48px; font-size: 32px; padding-right: 0; color: " +  s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+
+            "#buy_IOPLabel, #buy_currency, #payAmount > QValueComboBox"
+            "{ min-height: 48px; font-size: 32px; padding-right: 0; padding-top: 0; color: " +  s_placeHolderText +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
+     
 
             //Disturbing borders
             "#labelWalletStatus { border: none; background: transparent}"

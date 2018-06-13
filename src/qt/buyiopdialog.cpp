@@ -59,7 +59,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     layout->addSpacing(30);
 
     // AMOUNT SELECTION
-    QLabel* amountInfoLabel = new QLabel(tr("minimum exchange value"));
+    amountInfoLabel = new QLabel();
     QLabel* amountVaryInfoLabel = new QLabel(tr("the amount may vary"));
     amountInfoLabel->setObjectName("buy_amountInfo");
     amountVaryInfoLabel->setObjectName("buy_amountVaryInfo");
@@ -122,7 +122,8 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     layout->addWidget(bottomWidget);
     
-    
+    amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]));
+
     
     QFrame* lineb1 = new QFrame(this);
     lineb1->setObjectName(QStringLiteral("lineb1"));
@@ -132,6 +133,8 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     layout->addSpacing(20);
 
+
+    
     //network management
     iopPriceNAM = new QNetworkAccessManager();
 
@@ -186,13 +189,17 @@ void BuyIoPDialog::physicalUpdated(int i)
 
 void BuyIoPDialog::physicalUpdated(double i)
 {
+
+    amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]));
+  
     if (i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
         updateIoPPrice(i);
     else {
-        if (i <= MIN_PRICE[currency->currentIndex()])
+        paySpinBox->setRange(MIN_PRICE[currency->currentIndex()], MAX_PRICE[currency->currentIndex()]);
+        /* if (i <= MIN_PRICE[currency->currentIndex()])
             paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
         if (i >= MAX_PRICE[currency->currentIndex()])
-            paySpinBox->setValue(MAX_PRICE[currency->currentIndex()]);
+            paySpinBox->setValue(MAX_PRICE[currency->currentIndex()]); */
     }
 }
 

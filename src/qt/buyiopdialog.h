@@ -52,6 +52,7 @@ public:
     QComboBox* currency;
     QLabel* amountIOP;
     QLabel* IOPLabel;
+    QLabel* amountInfoLabel;
     QNetworkAccessManager* iopPriceNAM;
 
 

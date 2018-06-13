@@ -34,7 +34,7 @@
 #include <iostream>
 
 /** "Help message" or "About" dialog box */
-HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available) :
+HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available, QString latestVersion, QString changeLog) :
     QDialog(parent),
     ui(new Ui::HelpMessageDialog)
 {
@@ -56,69 +56,17 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         
         //ui->horizontalSpacerButtons->setVisible(true);
         QString updateInfo;
-        QString changelog = QString(" <p>The IoP Blockchain client version <em>6.1.0</em> is now available</p>\n"
-"<h1>News</h1>\n"
-"<p>This version introduces two new themes for the IoP Core client.  They are accurately called the <em>light</em> and <em>dark</em> theme. When you first start the new version, you are greeted by our new splash screen. After that, you will find the familiar standard wallet interface. To activate one of the new themes, navigate to <em>Preferences</em>-<em>Display</em> and select them from the drop-down menu. After a restart of the client, the wallet will greet you with a sleek, new interface. The default theme will remain the standard until we are completely sure that all interface bugs are weeded out.</p>\n"
-"<p>All the newest changes from Bitcoin Core 0.15 have been implemented.</p>\n"
-"<h1>Fixes</h1>\n"
-"<p>This release adds updated seed servers. This fixes an issue where the client might not see peers on the network after a fresh install.</p>\n"
-"<h1>Notice</h1>\n"
-"<p>From now on, please consider the Ubuntu packages <em>deprecated</em>. We will still provide them for the next few minor releases, but they are superseded by the tar.gz files produced by gitian. To install these, extract them to a location of your choice, e.g. <code>/usr/local/bin/</code> or your home directory.</p>\n"
-"<h1>General Information on 6.x.x</h1>\n"
-"<p>This is a new major version release, including new features, various bugfixes<br>\n"
-"and performance improvements, as well as updated translations. See below for more information.<br>\n"
-"We have decided to drop the <em>IoP HD</em> name in favor of completely replacing the old client.<br>\n"
-"This software will from now on be referred to as <strong>IoP Core</strong>.</p>\n"
-"<p>While the consensus of the blockchain stays the same, the structure of the data directory <strong>does not</strong>. Therefore, <strong>a full reindex of the blockchain is necessary</strong> (see below for instructions). Additionally, the naming scheme of both executables and data files has been streamlined a bit, as detailed in the next section.</p>\n"
-"<p>Removing all previous <em>IoP HD</em> or <code>iop-blockchain</code> packages is recommended to prevent possible confusion, but is not strictly necessary. Please be aware that you cannot use both v5.0.1 and v6.0.0 interchangeably with the same data directory.</p>\n"
-"<h1>Naming Scheme</h1>\n"
-"<p>The binaries are <code>iopd</code>, <code>iop-cli</code>, <code>iop-tx</code> and <code>iop-qt</code>, while the Windows and macOS executables are <code>iop-qt.exe</code> and <code>IoP-Qt.app</code>, respectively. The configuration file is called <code>iop.conf</code>.</p>\n"
-"<p>The default data directory for both the command line and the Qt Wallet is</p>\n"
-"<ul>\n"
-"<li><code>~/.iop</code> on Linux,</li>\n"
-"<li><code>%APPDATA%\\IoP</code> on Windows, and</li>\n"
-"<li><code>~/Library/Application Support/IoP</code> on macOS.</li>\n"
-"</ul>\n"
-"<p>The Qt Wallet (<strong>NOT</strong> the command line utilities) will pick up your previously used data directory.</p>\n"
-"<h1>How to update</h1>\n"
-"<p>For most users, the relevant packages are the .dmg file (macOS), the .exe file for your CPU architecture (Windows 32-bit and 64-bit), and the .deb packages (Ubuntu 64-bit). Other Linux users should download i686-pc-linux (32-bit) or x86_64-linux (64-bit). The rest of the tar.gz files contain the command line utilities separately or are intended for uncommon architectures (these are untested, feedback is appreciated).</p>\n"
-"<h1>Upgrading from <em>v5.0.1</em> or below</h1>\n"
-"<p>A full reindex of the blockchain is necessary if you upgrade from <em>v5.0.1</em> or below. The recommended procedure is as follows:</p>\n"
-"<ul>\n"
-"<li>make a full backup of your data directory and then move it somewhere else.</li>\n"
-"<li>create a new directory at the default location for your platform, containing only a copy of the files <code>wallet.dat</code> and (if applicable) <code>iop.conf</code>.</li>\n"
-"<li>start the software.</li>\n"
-"</ul>\n"
-"<h1>How to use the new version for mining</h1>\n"
-"<p>The miner is now multi-threaded and supports up to 128 threads. You should never use more threads than your CPU has logical cores. Some CPUs have more logical cores than physical ones, e.g. an Intel i5 dual-core processor has four logical cores. It is recommended to leave one thread free so your computer remains responsive to your input. The configuration file takes the following parameters related to mining :</p>\n"
-"<pre><code># mine=1 tells IoP Core to use your CPU to try and find new blocks for the network\n"
-"mine=0\n"
-"\n"
-"# You need to have the private key for a whitelisted address inside your wallet\n"
-"# to mine new blocks. If your wallet is encrypted, you need to unlock it for about\n"
-"# ten seconds to start mining (see below).\n"
-"minewhitelistaddr=YOUR_ADDRESS_HERE\n"
-"\n"
-"# Optionally, you can also specify a target adress for the block reward associated \n"
-"# with finding a new block.\n"
-"minetoaddr=TARGET_ADDRESS_HERE\n"
-"\n"
-"# Specify the number of independent miners. They will all do unique work.\n"
-"# When not specified, one thread is used.\n"
-"minethreads=X\n"
-"</code></pre>\n"
-"<p>If you are using iopd for mining, you can unlock the wallet using</p>\n"
-"<pre><code>iop-cli -datadir=/specify/non/standard/data/directory walletpassphrase YOUR_PASSPHRASE n\n"
-"</code></pre>\n"
-"<p>where <code>n</code> indicates the number of seconds you want to unlock (15 is sufficient for the miners to load the private key in the memory).</p>");
+        
         if(available)
         {
             setWindowTitle(tr("Update Available"));
-            updateInfo = tr("A new Update is available!");
+            updateInfo = tr("A new Update is available!\n");
             updateInfo.append("<br/><br/>\n");
-            updateInfo.append(tr("Changelog: "));
+            updateInfo.append(tr("Version: \n")).append(latestVersion);
+            updateInfo.append("<br/><br/>\n");
+            updateInfo.append(tr("Changelog: \n"));
             updateInfo.append("<br/>\n");
-            updateInfo.append(changelog);
+            updateInfo.append(changeLog);
             resize(780,400);
             downloadButton = new QPushButton(tr("download"));
             ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
@@ -127,6 +75,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         } else {
             setWindowTitle(tr("Latest Version"));
             updateInfo = tr("You have the current Version!<br><br>") + version;
+            resize(780,200);
         }
 
         ui->aboutMessage->setTextFormat(Qt::RichText);
