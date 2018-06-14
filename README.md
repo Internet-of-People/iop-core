@@ -6,6 +6,12 @@ IoP Core integration/staging tree
 https://iop.global
 
 
+**RELEASE NOTE v6.2.0**
+-----------------------
+We are proud to announce a complete redesign of the IoP Core wallet. 
+You can now buy IOP directly from inside the wallet software thanks to our collaboration with Indacoin.
+
+
 **RELEASE NOTE v6.1.0**
 -----------------------
 

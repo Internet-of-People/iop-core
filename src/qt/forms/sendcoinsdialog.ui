@@ -675,6 +675,13 @@
         <property name="topMargin">
          <number>0</number>
         </property>
+         <item>
+              <widget class="Line" name="lineb">
+                  <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                  </property>
+              </widget>
+          </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayoutFee1">
           <property name="bottomMargin">
@@ -759,7 +766,7 @@
             </item>
            </layout>
           </item>
-          <item>
+          <!--<item>
            <widget class="QLabel" name="fallbackFeeWarningLabel">
             <property name="toolTip">
              <string>Using the fallbackfee can result in sending a transaction that will take several hours or days (or never) to confirm. Consider choosing your fee manually or wait until you have validated the complete chain.</string>
@@ -777,7 +784,7 @@
              <bool>false</bool>
             </property>
            </widget>
-          </item>
+          </item>-->
           <item>
            <spacer name="horizontalSpacer_4">
             <property name="orientation">
@@ -873,6 +880,7 @@
                  </item>
                 </layout>
                </item>
+               <!--
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayoutFee8">
                  <item>
@@ -916,6 +924,7 @@
                  </item>
                 </layout>
                </item>
+               -->
               </layout>
              </item>
              <item row="0" column="0">
@@ -1002,7 +1011,7 @@
                    </property>
                   </widget>
                  </item>
-                 <item>
+                 <!--<item>
                   <widget class="QLabel" name="labelSmartFee2">
                    <property name="text">
                     <string>(Smart fee not initialized yet. This usually takes a few blocks...)</string>
@@ -1011,7 +1020,7 @@
                     <number>2</number>
                    </property>
                   </widget>
-                 </item>
+                 </item>-->
                  <item>
                   <spacer name="horizontalSpacer_5">
                    <property name="orientation">
@@ -1027,7 +1036,7 @@
                  </item>
                 </layout>
                </item>
-               <item>
+               <!--<item>
                 <layout class="QHBoxLayout" name="horizontalLayoutFee9">
                  <item>
                   <layout class="QVBoxLayout" name="verticalLayoutFee6">
@@ -1087,7 +1096,7 @@
                   </layout>
                  </item>
                 </layout>
-               </item>
+               </item>-->
                <item>
                 <spacer name="verticalSpacer_4">
                  <property name="orientation">
@@ -1100,7 +1109,7 @@
                   </size>
                  </property>
                 </spacer>
-               </item>
+               </item>-->
               </layout>
              </item>
             </layout>
@@ -1118,6 +1127,7 @@
           </layout>
          </widget>
         </item>
+        
         <item>
          <spacer name="verticalSpacerFee">
           <property name="orientation">
@@ -1152,10 +1162,6 @@
        <property name="text">
         <string>S&amp;end</string>
        </property>
-       <property name="icon">
-        <iconset resource="../iop.qrc">
-         <normaloff>:/icons/send</normaloff>:/icons/send</iconset>
-       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
@@ -1178,10 +1184,6 @@
        <property name="text">
         <string>Clear &amp;All</string>
        </property>
-       <property name="icon">
-        <iconset resource="../iop.qrc">
-         <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
-       </property>
        <property name="autoDefault">
         <bool>false</bool>
        </property>
@@ -1194,10 +1196,6 @@
        </property>
        <property name="text">
         <string>Add &amp;Recipient</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../iop.qrc">
-         <normaloff>:/icons/add</normaloff>:/icons/add</iconset>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -1258,6 +1256,26 @@
      </item>
     </layout>
    </item>
+   <item>
+      <widget class="Line" name="lineb">
+        <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+        </property>
+      </widget>
+    </item>
+    <item>
+      <spacer name="verticalBottomSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
   </layout>
  </widget>
  <customwidgets>

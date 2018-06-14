@@ -115,12 +115,6 @@ void WalletFrame::gotoOverviewPage()
         i.value()->gotoOverviewPage();
 }
 
-void WalletFrame::gotoHistoryPage()
-{
-    QMap<QString, WalletView*>::const_iterator i;
-    for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
-        i.value()->gotoHistoryPage();
-}
 
 void WalletFrame::gotoReceiveCoinsPage()
 {
@@ -134,6 +128,13 @@ void WalletFrame::gotoSendCoinsPage(QString addr)
     QMap<QString, WalletView*>::const_iterator i;
     for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
         i.value()->gotoSendCoinsPage(addr);
+}
+
+void WalletFrame::gotoBuyIoPPage()
+{
+    QMap<QString, WalletView*>::const_iterator i;
+    for (i = mapWalletViews.constBegin(); i != mapWalletViews.constEnd(); ++i)
+        i.value()->gotoBuyIoPPage();
 }
 
 void WalletFrame::gotoSignMessageTab(QString addr)

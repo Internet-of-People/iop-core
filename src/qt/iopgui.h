@@ -10,13 +10,20 @@
 #endif
 
 #include "amount.h"
+#include "styles.h"
 
 #include <QLabel>
+#include <QWidgetAction>
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QPoint>
 #include <QSystemTrayIcon>
+#include <QDesktopServices>
+#include <QGuiApplication>
+#include <QUrl>
 
 class ClientModel;
 class NetworkStyle;
@@ -48,10 +55,11 @@ class IoPGUI : public QMainWindow
 public:
     static const QString DEFAULT_WALLET;
     static const std::string DEFAULT_UIPLATFORM;
-
     explicit IoPGUI(const PlatformStyle *platformStyle, const NetworkStyle *networkStyle, QWidget *parent = 0);
     ~IoPGUI();
 
+
+    int getConnectedNodeCount();
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
@@ -90,11 +98,12 @@ private:
     QProgressDialog *progressDialog;
 
     QMenuBar *appMenuBar;
+    QAction *iopLogoAction;
     QAction *overviewAction;
-    QAction *historyAction;
     QAction *quitAction;
     QAction *sendCoinsAction;
     QAction *sendCoinsMenuAction;
+    QAction *buyIoPAction;
     QAction *usedSendingAddressesAction;
     QAction *usedReceivingAddressesAction;
     QAction *signMessageAction;
@@ -108,9 +117,14 @@ private:
     QAction *backupWalletAction;
     QAction *changePassphraseAction;
     QAction *aboutQtAction;
+    QAction *updateAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
+    QWidgetAction *actProgressBar;
+    QWidgetAction *actProgressBarLabel;
+    QNetworkAccessManager* updateNAM;
+
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
@@ -118,6 +132,9 @@ private:
     RPCConsole *rpcConsole;
     HelpMessageDialog *helpMessageDialog;
     ModalOverlay *modalOverlay;
+
+    const QString UPDATE_URL = QString("http://api.iop.global/core-wallet/checkversion?version=");
+    bool openUpdateDialog;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;
@@ -135,7 +152,8 @@ private:
     void createTrayIcon(const NetworkStyle *networkStyle);
     /** Create system tray menu (or setup the dock menu) */
     void createTrayIconMenu();
-
+    
+    void checkForUpdate(bool show);
     /** Enable or disable all wallet-related actions */
     void setWalletActionsEnabled(bool enabled);
 
@@ -149,6 +167,8 @@ private:
 
     void updateHeadersSyncProgressLabel();
 
+    bool updateAvailable();
+
 Q_SIGNALS:
     /** Signal raised when a URI was entered or dragged to the GUI */
     void receivedURI(const QString &uri);
@@ -160,6 +180,8 @@ public Q_SLOTS:
     void setNetworkActive(bool networkActive);
     /** Set number of blocks and last block date shown in the UI */
     void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool headers);
+
+    void gotUpdateVersion(QNetworkReply* reply);
 
     /** Notify the user of an event from the core network or transaction handling code.
        @param[in] title     the message box / notification title
@@ -191,15 +213,15 @@ public Q_SLOTS:
 
 private Q_SLOTS:
 #ifdef ENABLE_WALLET
+    void openIOP_global();
     /** Switch to overview (home) page */
     void gotoOverviewPage();
-    /** Switch to history (transactions) page */
-    void gotoHistoryPage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
 
+    void gotoBuyIoPPage();
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");
     /** Show Sign/Verify Message dialog and switch to verify message tab */
@@ -213,6 +235,8 @@ private Q_SLOTS:
     /** Show about dialog */
     void aboutClicked();
     /** Show debug window */
+    void checkForUpdateDialog();
+    /** Check if update is available */
     void showDebugWindow();
     /** Show debug window and set focus to the console */
     void showDebugWindowActivateConsole();

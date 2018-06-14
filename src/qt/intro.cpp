@@ -11,6 +11,7 @@
 #include "intro.h"
 #include "ui_intro.h"
 
+#include "styles.h"
 #include "guiutil.h"
 
 #include "util.h"
@@ -121,10 +122,10 @@ Intro::Intro(QWidget *parent) :
     thread(0),
     signalled(false)
 {
-    if(GUIUtil::customThemeIsSet()) {
+    if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(GUIUtil::getThemeStyleSheet());
+        setStyleSheet(styleSheetString);
     } 
     ui->setupUi(this);
     ui->welcomeLabel->setText(ui->welcomeLabel->text().arg(tr(PACKAGE_NAME)));

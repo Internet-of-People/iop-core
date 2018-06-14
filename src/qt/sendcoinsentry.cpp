@@ -23,24 +23,27 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
 {
     ui->setupUi(this);
 
-    ui->addressBookButton->setIcon(platformStyle->SingleColorIcon(":/icons/address-book"));
-    ui->pasteButton->setIcon(platformStyle->SingleColorIcon(":/icons/editpaste"));
-    ui->deleteButton->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
-    ui->deleteButton_is->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
-    ui->deleteButton_s->setIcon(platformStyle->SingleColorIcon(":/icons/remove"));
+    ui->addressBookButton->setIcon(QIcon(":/icons/address-book"));
+    ui->pasteButton->setIcon(QIcon(":/icons/editpaste"));
+    ui->deleteButton->setIcon(QIcon(":/icons/remove"));
+    ui->deleteButton_is->setIcon(QIcon(":/icons/remove"));
+    ui->deleteButton_s->setIcon(QIcon(":/icons/remove"));
 
     setCurrentWidget(ui->SendCoins);
 
     if (platformStyle->getUseExtraSpacing())
         ui->payToLayout->setSpacing(4);
 #if QT_VERSION >= 0x040700
-    ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
+    ui->addAsLabel->setPlaceholderText(tr("Type here"));
 #endif
 
     // normal iop address field
     GUIUtil::setupAddressWidget(ui->payTo, this);
+    ui->payTo->setPlaceholderText(tr("Type here"));
     // just a label for displaying iop address(es)
-    ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
+    //ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
+    //ui->payAmount->setMaximumWidth(500);
+    //ui->payTo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // Connect signals
     connect(ui->payAmount, SIGNAL(valueChanged()), this, SIGNAL(payAmountChanged()));

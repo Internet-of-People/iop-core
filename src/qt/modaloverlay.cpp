@@ -5,6 +5,7 @@
 #include "modaloverlay.h"
 #include "ui_modaloverlay.h"
 
+#include "styles.h"
 #include "guiutil.h"
 
 #include "chainparams.h"
@@ -23,10 +24,10 @@ userClosed(false),
 platformStyle(_platformStyle)
 {
     ui->setupUi(this); 
-    if(GUIUtil::customThemeIsSet()) {
+    if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(GUIUtil::getThemeStyleSheet()); 
+        setStyleSheet(styleSheetString); 
         
         if (platformStyle->getImagesOnButtons()) { 
             QIcon icon = platformStyle->SingleColorIcon(":/icons/warning"); 
