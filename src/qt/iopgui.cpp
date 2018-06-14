@@ -8,10 +8,11 @@
 
 #include "iopgui.h"
 
-#include "iopunits.h"
 #include "clientmodel.h"
+#include "clientversion.h"
 #include "guiconstants.h"
 #include "guiutil.h"
+#include "iopunits.h"
 #include "modaloverlay.h"
 #include "networkstyle.h"
 #include "notificator.h"
@@ -20,6 +21,7 @@
 #include "optionsmodel.h"
 #include "platformstyle.h"
 #include "rpcconsole.h"
+#include "styles.h"
 #include "utilitydialog.h"
 
 #ifdef ENABLE_WALLET
@@ -56,6 +58,9 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
+#include <QWidgetAction>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #if QT_VERSION < 0x050000
 #include <QTextDocument>
@@ -66,62 +71,62 @@
 
 const std::string IoPGUI::DEFAULT_UIPLATFORM =
 #if defined(Q_OS_MAC)
-        "macosx"
+    "macosx"
 #elif defined(Q_OS_WIN)
-        "windows"
+    "windows"
 #else
-        "other"
+    "other"
 #endif
-        ;
+    ;
 
 /** Display name for default wallet name. Uses tilde to avoid name
  * collisions in the future with additional wallets */
 const QString IoPGUI::DEFAULT_WALLET = "~Default";
 
-IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkStyle, QWidget *parent) :
-    QMainWindow(parent),
-    enableWallet(false),
-    clientModel(0),
-    walletFrame(0),
-    unitDisplayControl(0),
-    labelWalletEncryptionIcon(0),
-    labelWalletHDStatusIcon(0),
-    connectionsControl(0),
-    labelBlocksIcon(0),
-    progressBarLabel(0),
-    progressBar(0),
-    progressDialog(0),
-    appMenuBar(0),
-    overviewAction(0),
-    historyAction(0),
-    quitAction(0),
-    sendCoinsAction(0),
-    sendCoinsMenuAction(0),
-    usedSendingAddressesAction(0),
-    usedReceivingAddressesAction(0),
-    signMessageAction(0),
-    verifyMessageAction(0),
-    aboutAction(0),
-    receiveCoinsAction(0),
-    receiveCoinsMenuAction(0),
-    optionsAction(0),
-    toggleHideAction(0),
-    encryptWalletAction(0),
-    backupWalletAction(0),
-    changePassphraseAction(0),
-    aboutQtAction(0),
-    openRPCConsoleAction(0),
-    openAction(0),
-    showHelpMessageAction(0),
-    trayIcon(0),
-    trayIconMenu(0),
-    notificator(0),
-    rpcConsole(0),
-    helpMessageDialog(0),
-    modalOverlay(0),
-    prevBlocks(0),
-    spinnerFrame(0),
-    platformStyle(_platformStyle)
+IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkStyle, QWidget* parent) : QMainWindow(parent),
+                                                                                                         enableWallet(false),
+                                                                                                         clientModel(0),
+                                                                                                         walletFrame(0),
+                                                                                                         unitDisplayControl(0),
+                                                                                                         labelWalletEncryptionIcon(0),
+                                                                                                         labelWalletHDStatusIcon(0),
+                                                                                                         connectionsControl(0),
+                                                                                                         labelBlocksIcon(0),
+                                                                                                         progressBarLabel(0),
+                                                                                                         progressBar(0),
+                                                                                                         progressDialog(0),
+                                                                                                         appMenuBar(0),
+                                                                                                         iopLogoAction(0),
+                                                                                                         overviewAction(0),
+                                                                                                         quitAction(0),
+                                                                                                         sendCoinsAction(0),
+                                                                                                         sendCoinsMenuAction(0),
+                                                                                                         usedSendingAddressesAction(0),
+                                                                                                         usedReceivingAddressesAction(0),
+                                                                                                         signMessageAction(0),
+                                                                                                         verifyMessageAction(0),
+                                                                                                         aboutAction(0),
+                                                                                                         updateAction(0),
+                                                                                                         receiveCoinsAction(0),
+                                                                                                         receiveCoinsMenuAction(0),
+                                                                                                         optionsAction(0),
+                                                                                                         toggleHideAction(0),
+                                                                                                         encryptWalletAction(0),
+                                                                                                         backupWalletAction(0),
+                                                                                                         changePassphraseAction(0),
+                                                                                                         aboutQtAction(0),
+                                                                                                         openRPCConsoleAction(0),
+                                                                                                         openAction(0),
+                                                                                                         showHelpMessageAction(0),
+                                                                                                         trayIcon(0),
+                                                                                                         trayIconMenu(0),
+                                                                                                         notificator(0),
+                                                                                                         rpcConsole(0),
+                                                                                                         helpMessageDialog(0),
+                                                                                                         modalOverlay(0),
+                                                                                                         prevBlocks(0),
+                                                                                                         spinnerFrame(0),
+                                                                                                         platformStyle(_platformStyle)
 {
     QSettings settings;
     if (!restoreGeometry(settings.value("MainWindowGeometry").toByteArray())) {
@@ -129,18 +134,24 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
         move(QApplication::desktop()->availableGeometry().center() - frameGeometry().center());
     }
 
-    if(GUIUtil::customThemeIsSet()) {
+
+    if (IoPStyles::customThemeIsSet()) {
+        IoPStyles::addFonts();
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(GUIUtil::getThemeStyleSheet());
+        QPalette newPal(qApp->palette());
+        newPal.setColor(QPalette::Link, QColor(41, 128, 185));
+        newPal.setColor(QPalette::LinkVisited, QColor(41, 99, 185));
+        qApp->setPalette(newPal);
+        setStyleSheet(styleSheetString);
+        ensurePolished();
     }
 
     QString windowTitle = tr(PACKAGE_NAME) + " - ";
 #ifdef ENABLE_WALLET
     enableWallet = WalletModel::isWalletEnabled();
 #endif // ENABLE_WALLET
-    if(enableWallet)
-    {
+    if (enableWallet) {
         windowTitle += tr("Wallet");
     } else {
         windowTitle += tr("Node");
@@ -163,8 +174,7 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     rpcConsole = new RPCConsole(_platformStyle, 0);
     helpMessageDialog = new HelpMessageDialog(this, false);
 #ifdef ENABLE_WALLET
-    if(enableWallet)
-    {
+    if (enableWallet) {
         /** Create wallet frame and make it the central widget */
         walletFrame = new WalletFrame(_platformStyle, this);
         setCentralWidget(walletFrame);
@@ -180,6 +190,8 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     // Accept D&D of URIs
     setAcceptDrops(true);
 
+    updateNAM = new QNetworkAccessManager();
+
     // Create actions for the toolbar, menu bar and tray/dock icon
     // Needs walletFrame to be initialized
     createActions();
@@ -187,64 +199,40 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
     // Create application menu bar
     createMenuBar();
 
-    // Create the toolbars
+    // Progress bar and label for blocks download
+    progressBarLabel = new QLabel();
+    //progressBarLabel->setVisible(false);
+    progressBar = new GUIUtil::ProgressBar();
+    progressBar->setAlignment(Qt::AlignLeft);
+    progressBar->setMaximumHeight(12);
+    //progressBar->setVisible(false);
+
+    // Create tool bars
     createToolBars();
 
     // Create system tray icon and notification
     createTrayIcon(networkStyle);
 
     // Create status bar
-    statusBar();
+    //statusBar();
 
     // Disable size grip because it looks ugly and nobody needs it
-    statusBar()->setSizeGripEnabled(false);
-
-    // Status bar notification icons
-    QFrame *frameBlocks = new QFrame();
-    frameBlocks->setContentsMargins(0,0,0,0);
-    frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    frameBlocks->setStyleSheet("border: none");
-    QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
-    frameBlocksLayout->setContentsMargins(3,0,3,0);
-    frameBlocksLayout->setSpacing(3);
-    unitDisplayControl = new UnitDisplayStatusBarControl(platformStyle);
-    labelWalletEncryptionIcon = new QLabel();
-    labelWalletHDStatusIcon = new QLabel();
-    connectionsControl = new GUIUtil::ClickableLabel();
-    labelBlocksIcon = new GUIUtil::ClickableLabel();
-    if(enableWallet)
-    {
-        frameBlocksLayout->addStretch();
-        frameBlocksLayout->addWidget(unitDisplayControl);
-        frameBlocksLayout->addStretch();
-        frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
-        frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
-    }
-    frameBlocksLayout->addStretch();
-    frameBlocksLayout->addWidget(connectionsControl);
-    frameBlocksLayout->addStretch();
-    frameBlocksLayout->addWidget(labelBlocksIcon);
-    frameBlocksLayout->addStretch();
-
-    // Progress bar and label for blocks download
-    progressBarLabel = new QLabel();
-    progressBarLabel->setVisible(false);
-    progressBar = new GUIUtil::ProgressBar();
-    progressBar->setAlignment(Qt::AlignCenter);
-    progressBar->setVisible(false);
-
+    //statusBar()->setSizeGripEnabled(false);
     // Override style sheet for progress bar for styles that have a segmented progress bar,
     // as they make the text unreadable (workaround for issue #1071)
     // See https://qt-project.org/doc/qt-4.8/gallery.html
-    QString curStyle = QApplication::style()->metaObject()->className();
-    if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
-    {
-        progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
-    }
+    //QString curStyle = QApplication::style()->metaObject()->className();
+    //if(curStyle == "QWindowsStyle" || curStyle == "QWindowsXPStyle")
+    //{
+    //progressBar->setStyleSheet("QProgressBar { background-color: #e8e8e8; border: 1px solid grey; border-radius: 7px; padding: 1px; text-align: center; } QProgressBar::chunk { background: QLinearGradient(x1: 0, y1: 0, x2: 1, y2: 0, stop: 0 #FF8000, stop: 1 orange); border-radius: 7px; margin: 0px; }");
+    //}
 
-    statusBar()->addWidget(progressBarLabel);
-    statusBar()->addWidget(progressBar);
-    statusBar()->addPermanentWidget(frameBlocks);
+    //statusBar()->addWidget(progressBarLabel);
+    //statusBar()->addWidget(progressBar);
+    //statusBar()->addPermanentWidget(frameBlocks);
+
+    // Create the toolbars after statusbar!
+
 
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
     this->installEventFilter(this);
@@ -259,12 +247,15 @@ IoPGUI::IoPGUI(const PlatformStyle *_platformStyle, const NetworkStyle *networkS
 
     modalOverlay = new ModalOverlay(platformStyle, this->centralWidget());
 #ifdef ENABLE_WALLET
-    if(enableWallet) {
+    if (enableWallet) {
         connect(walletFrame, SIGNAL(requestedSyncWarningInfo()), this, SLOT(showModalOverlay()));
         connect(labelBlocksIcon, SIGNAL(clicked(QPoint)), this, SLOT(showModalOverlay()));
         connect(progressBar, SIGNAL(clicked(QPoint)), this, SLOT(showModalOverlay()));
     }
 #endif
+
+
+    checkForUpdate(false);
 }
 
 IoPGUI::~IoPGUI()
@@ -274,7 +265,7 @@ IoPGUI::~IoPGUI()
 
     QSettings settings;
     settings.setValue("MainWindowGeometry", saveGeometry());
-    if(trayIcon) // Hide tray icon, as deleting will let it linger until quit (on Ubuntu)
+    if (trayIcon) // Hide tray icon, as deleting will let it linger until quit (on Ubuntu)
         trayIcon->hide();
 #ifdef Q_OS_MAC
     delete appMenuBar;
@@ -286,120 +277,137 @@ IoPGUI::~IoPGUI()
 
 void IoPGUI::createActions()
 {
-    QActionGroup *tabGroup = new QActionGroup(this);
-    overviewAction = new QAction(platformStyle->SingleColorIcon(":/icons/overview"), tr("&Overview"), this);
+    QActionGroup* tabGroup = new QActionGroup(this);
+
+    iopLogoAction = new QAction("", this);
+    //iopLogoAction->setStatusTip(tr("open IOP website"));
+    //iopLogoAction->setToolTip();
+    iopLogoAction->setCheckable(false);
+    //iopLogoAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
+    tabGroup->addAction(iopLogoAction);
+
+    overviewAction = new QAction(QIcon(":/icons/overview"), tr("&Overview"), this);
     overviewAction->setStatusTip(tr("Show general overview of wallet"));
     overviewAction->setToolTip(overviewAction->statusTip());
     overviewAction->setCheckable(true);
+    //overviewAction->setIconSize(ICONSIZE);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
 
-    sendCoinsAction = new QAction(platformStyle->SingleColorIcon(":/icons/send"), tr("&Send"), this);
+    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
     sendCoinsAction->setStatusTip(tr("Send coins to an IoP address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
+    //sendCoinsAction->setIconSize(ICONSIZE);
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
     tabGroup->addAction(sendCoinsAction);
 
-    sendCoinsMenuAction = new QAction(platformStyle->TextColorIcon(":/icons/send"), sendCoinsAction->text(), this);
+    buyIoPAction = new QAction(QIcon(":/icons/buy"), tr("&Buy"), this);
+    buyIoPAction->setStatusTip(tr("Buy IOP at Indacoin"));
+    buyIoPAction->setToolTip(buyIoPAction->statusTip());
+    buyIoPAction->setCheckable(true);
+    buyIoPAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
+    tabGroup->addAction(buyIoPAction);
+
+    sendCoinsMenuAction = new QAction(sendCoinsAction->text(), this);
     sendCoinsMenuAction->setStatusTip(sendCoinsAction->statusTip());
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
-    receiveCoinsAction = new QAction(platformStyle->SingleColorIcon(":/icons/receiving_addresses"), tr("&Receive"), this);
+    receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive"), this);
     receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and iop: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
+    //receiveCoinsAction->setIconSize(ICONSIZE);
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    receiveCoinsMenuAction = new QAction(platformStyle->TextColorIcon(":/icons/receiving_addresses"), receiveCoinsAction->text(), this);
+    receiveCoinsMenuAction = new QAction(receiveCoinsAction->text(), this);
     receiveCoinsMenuAction->setStatusTip(receiveCoinsAction->statusTip());
     receiveCoinsMenuAction->setToolTip(receiveCoinsMenuAction->statusTip());
 
-    historyAction = new QAction(platformStyle->SingleColorIcon(":/icons/history"), tr("&Transactions"), this);
-    historyAction->setStatusTip(tr("Browse transaction history"));
-    historyAction->setToolTip(historyAction->statusTip());
-    historyAction->setCheckable(true);
-    historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
-    tabGroup->addAction(historyAction);
 
 #ifdef ENABLE_WALLET
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
+    connect(iopLogoAction, SIGNAL(triggered()), this, SLOT(openIOP_global()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
-    connect(sendCoinsMenuAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(sendCoinsMenuAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
+    connect(buyIoPAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(buyIoPAction, SIGNAL(triggered()), this, SLOT(gotoBuyIoPPage()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(receiveCoinsMenuAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(receiveCoinsMenuAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
-    connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
-    connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
+    //connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    //connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
 #endif // ENABLE_WALLET
 
-    quitAction = new QAction(platformStyle->TextColorIcon(":/icons/quit"), tr("E&xit"), this);
+    quitAction = new QAction(tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(platformStyle->TextColorIcon(":/icons/about"), tr("&About %1").arg(tr(PACKAGE_NAME)), this);
+    aboutAction = new QAction(tr("&About %1").arg(tr(PACKAGE_NAME)), this);
     aboutAction->setStatusTip(tr("Show information about %1").arg(tr(PACKAGE_NAME)));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
-    aboutQtAction = new QAction(platformStyle->TextColorIcon(":/icons/about_qt"), tr("About &Qt"), this);
+    aboutQtAction = new QAction(tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
-    optionsAction = new QAction(platformStyle->TextColorIcon(":/icons/options"), tr("&Options..."), this);
+    updateAction = new QAction(tr("check for updates"), this);
+    updateAction->setStatusTip(tr("Check if new Wallet version is online"));
+    //updateAction->setMenuRole(QAction::AboutQtRole);
+    optionsAction = new QAction(tr("&Options..."), this);
     optionsAction->setStatusTip(tr("Modify configuration options for %1").arg(tr(PACKAGE_NAME)));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     optionsAction->setEnabled(false);
-    toggleHideAction = new QAction(platformStyle->TextColorIcon(":/icons/about"), tr("&Show / Hide"), this);
+    toggleHideAction = new QAction(tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
 
-    encryptWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
+    encryptWalletAction = new QAction(tr("&Encrypt Wallet..."), this);
     encryptWalletAction->setStatusTip(tr("Encrypt the private keys that belong to your wallet"));
     encryptWalletAction->setCheckable(true);
-    backupWalletAction = new QAction(platformStyle->TextColorIcon(":/icons/filesave"), tr("&Backup Wallet..."), this);
+    backupWalletAction = new QAction(tr("&Backup Wallet..."), this);
     backupWalletAction->setStatusTip(tr("Backup wallet to another location"));
-    changePassphraseAction = new QAction(platformStyle->TextColorIcon(":/icons/key"), tr("&Change Passphrase..."), this);
+    changePassphraseAction = new QAction(tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
-    signMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/edit"), tr("Sign &message..."), this);
+    signMessageAction = new QAction(tr("Sign &message..."),this);
     signMessageAction->setStatusTip(tr("Sign messages with your IoP addresses to prove you own them"));
-    verifyMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/verify"), tr("&Verify message..."), this);
+    verifyMessageAction = new QAction(tr("&Verify message..."), this);
     verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified IoP addresses"));
 
-    openRPCConsoleAction = new QAction(platformStyle->TextColorIcon(":/icons/debugwindow"), tr("&Debug window"), this);
+    openRPCConsoleAction = new QAction(tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
     // initially disable the debug window menu item
     openRPCConsoleAction->setEnabled(false);
 
-    usedSendingAddressesAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&Sending addresses..."), this);
+    usedSendingAddressesAction = new QAction(tr("&Sending addresses..."), this);
     usedSendingAddressesAction->setStatusTip(tr("Show the list of used sending addresses and labels"));
-    usedReceivingAddressesAction = new QAction(platformStyle->TextColorIcon(":/icons/address-book"), tr("&Receiving addresses..."), this);
+    usedReceivingAddressesAction = new QAction(tr("&Receiving addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
-    openAction = new QAction(platformStyle->TextColorIcon(":/icons/open"), tr("Open &URI..."), this);
+    openAction = new QAction(tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a iop: URI or payment request"));
 
-    showHelpMessageAction = new QAction(platformStyle->TextColorIcon(":/icons/info"), tr("&Command-line options"), this);
+    showHelpMessageAction = new QAction(tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
     showHelpMessageAction->setStatusTip(tr("Show the %1 help message to get a list with possible IoP command-line options").arg(tr(PACKAGE_NAME)));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(checkForUpdateDialog()));
     connect(optionsAction, SIGNAL(triggered()), this, SLOT(optionsClicked()));
     connect(toggleHideAction, SIGNAL(triggered()), this, SLOT(toggleHidden()));
     connect(showHelpMessageAction, SIGNAL(triggered()), this, SLOT(showHelpMessageClicked()));
     connect(openRPCConsoleAction, SIGNAL(triggered()), this, SLOT(showDebugWindow()));
+    connect(updateNAM, SIGNAL(finished(QNetworkReply*)), this, SLOT(gotUpdateVersion(QNetworkReply*)));
     // prevents an open debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
 #ifdef ENABLE_WALLET
-    if(walletFrame)
-    {
+    if (walletFrame) {
         connect(encryptWalletAction, SIGNAL(triggered(bool)), walletFrame, SLOT(encryptWallet(bool)));
         connect(backupWalletAction, SIGNAL(triggered()), walletFrame, SLOT(backupWallet()));
         connect(changePassphraseAction, SIGNAL(triggered()), walletFrame, SLOT(changePassphrase()));
@@ -426,9 +434,8 @@ void IoPGUI::createMenuBar()
 #endif
 
     // Configure the menus
-    QMenu *file = appMenuBar->addMenu(tr("&File"));
-    if(walletFrame)
-    {
+    QMenu* file = appMenuBar->addMenu(tr("&File"));
+    if (walletFrame) {
         file->addAction(openAction);
         file->addAction(backupWalletAction);
         file->addAction(signMessageAction);
@@ -440,21 +447,23 @@ void IoPGUI::createMenuBar()
     }
     file->addAction(quitAction);
 
-    QMenu *settings = appMenuBar->addMenu(tr("&Settings"));
-    if(walletFrame)
-    {
+    QMenu* settings = appMenuBar->addMenu(tr("&Settings"));
+    if (walletFrame) {
         settings->addAction(encryptWalletAction);
         settings->addAction(changePassphraseAction);
         settings->addSeparator();
     }
     settings->addAction(optionsAction);
 
-    QMenu *help = appMenuBar->addMenu(tr("&Help"));
-    if(walletFrame)
-    {
+    QMenu* help = appMenuBar->addMenu(tr("&Help"));
+    if (walletFrame) {
         help->addAction(openRPCConsoleAction);
     }
     help->addAction(showHelpMessageAction);
+    help->addSeparator();
+
+    help->addAction(updateAction);
+
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
@@ -462,25 +471,113 @@ void IoPGUI::createMenuBar()
 
 void IoPGUI::createToolBars()
 {
-    if(walletFrame)
-    {
-        QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+    if (walletFrame) {
+        QToolBar* toolbar = new QToolBar(tr("Tabs toolbar"), this);
+        addToolBar(Qt::LeftToolBarArea, toolbar);
+        //toolbar->setLayoutDirection(Qt::TopToBottom);
         toolbar->setObjectName("toolbar");
+        toolbar->setOrientation(Qt::Vertical);
+        //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        toolbar->setContextMenuPolicy(Qt::PreventContextMenu); 
         toolbar->setMovable(false);
+        toolbar->setIconSize(TOOLBAR_ICONSIZE);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+        toolbar->addAction(iopLogoAction);
         toolbar->addAction(overviewAction);
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
-        toolbar->addAction(historyAction);
+        toolbar->addAction(buyIoPAction);
+        toolbar->widgetForAction(iopLogoAction)->setStyleSheet("background: transparent; width: 108; height: 108; padding:30; margin: 20px; border: none; image: url(:/icons/iop_t)");
+        toolbar->widgetForAction(iopLogoAction)->setToolTip(tr("iop.global"));
+        QWidget* spacerWidget = new QWidget(this);
+        spacerWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        spacerWidget->setVisible(true);
+        spacerWidget->setStyleSheet("background: transparent; width: 275");
+        toolbar->addWidget(spacerWidget);
+
+        // Status bar notification icons
+        QFrame* frameBlocks = new QFrame();
+        frameBlocks->setContentsMargins(0, 0, 0, 0);
+        frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        frameBlocks->setStyleSheet("border: none; background: transparent; padding-top: 10px; font-size: 8px; font-weight: bold;");
+
+        QHBoxLayout* frameBlocksLayout = new QHBoxLayout(frameBlocks);
+        frameBlocksLayout->setContentsMargins(3, 0, 3, 0);
+        frameBlocksLayout->addSpacing(30);
+        frameBlocksLayout->setSpacing(3);
+        unitDisplayControl = new UnitDisplayStatusBarControl(platformStyle);
+        labelWalletEncryptionIcon = new QLabel();
+        labelWalletHDStatusIcon = new QLabel();
+        connectionsControl = new GUIUtil::ClickableLabel();
+        labelBlocksIcon = new GUIUtil::ClickableLabel();
+
+        if (enableWallet) {
+            //frameBlocksLayout->addStretch();
+            //frameBlocksLayout->addWidget(unitDisplayControl);
+            frameBlocksLayout->addStretch();
+            frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
+            //frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
+        }
+        frameBlocksLayout->addStretch();
+        frameBlocksLayout->addWidget(connectionsControl);
+        frameBlocksLayout->addStretch();
+        frameBlocksLayout->addWidget(labelBlocksIcon);
+        frameBlocksLayout->addStretch();
+
+
+        /* frameBlocksLayout->addWidget(progressBarLabel);
+        frameBlocksLayout->addStretch(); */
+        //frameBlocksLayout->addSpacing(30);
+        //QWidgetAction* spacerWidgetAction = new QWidgetAction(this);
+        //spacerWidgetAction->setDefaultWidget(spacerWidget);
+
+
+        
+        progressBarLabel->setStyleSheet("background: transparent; color: " + s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
+        //actProgressBarLabel->setDefaultWidget(progressBarLabel);
+        //toolbar->addAction(actProgressBarLabel);
+        actProgressBar = new QWidgetAction(this);
+        actProgressBar->setDefaultWidget(progressBar);
+
+        actProgressBarLabel = new QWidgetAction(this);
+        actProgressBarLabel->setDefaultWidget(progressBarLabel);
+
+        toolbar->addWidget(frameBlocks);
+
+        QWidget* spacerWidget3 = new QWidget(this);
+        spacerWidget3->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        spacerWidget3->setFixedHeight(5);
+        spacerWidget3->setVisible(true);
+        spacerWidget3->setStyleSheet("background: transparent;");
+        toolbar->addWidget(spacerWidget3);
+
+        toolbar->addAction(actProgressBar);
+        toolbar->addAction(actProgressBarLabel);
+
+        
+        QWidget* spacerWidget2 = new QWidget(this);
+        spacerWidget2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        spacerWidget2->setFixedHeight(15);
+        spacerWidget2->setVisible(true);
+        spacerWidget2->setStyleSheet("background: transparent;");
+        toolbar->addWidget(spacerWidget2);
+
         overviewAction->setChecked(true);
     }
 }
 
-void IoPGUI::setClientModel(ClientModel *_clientModel)
+int IoPGUI::getConnectedNodeCount()
+{
+    std::vector<CNodeStats> vstats;
+    if (g_connman)
+        g_connman->GetNodeStats(vstats);
+    return vstats.size();
+}
+
+void IoPGUI::setClientModel(ClientModel* _clientModel)
 {
     this->clientModel = _clientModel;
-    if(_clientModel)
-    {
+    if (_clientModel) {
         // Create system tray menu (or setup the dock menu) that late to prevent users from calling actions,
         // while the client has not yet fully loaded
         createTrayIconMenu();
@@ -492,45 +589,41 @@ void IoPGUI::setClientModel(ClientModel *_clientModel)
 
         modalOverlay->setKnownBestHeight(_clientModel->getHeaderTipHeight(), QDateTime::fromTime_t(_clientModel->getHeaderTipTime()));
         setNumBlocks(_clientModel->getNumBlocks(), _clientModel->getLastBlockDate(), _clientModel->getVerificationProgress(nullptr), false);
-        connect(_clientModel, SIGNAL(numBlocksChanged(int,QDateTime,double,bool)), this, SLOT(setNumBlocks(int,QDateTime,double,bool)));
+        connect(_clientModel, SIGNAL(numBlocksChanged(int, QDateTime, double, bool)), this, SLOT(setNumBlocks(int, QDateTime, double, bool)));
 
         // Receive and report messages from client model
-        connect(_clientModel, SIGNAL(message(QString,QString,unsigned int)), this, SLOT(message(QString,QString,unsigned int)));
+        connect(_clientModel, SIGNAL(message(QString, QString, unsigned int)), this, SLOT(message(QString, QString, unsigned int)));
 
         // Show progress dialog
-        connect(_clientModel, SIGNAL(showProgress(QString,int)), this, SLOT(showProgress(QString,int)));
+        connect(_clientModel, SIGNAL(showProgress(QString, int)), this, SLOT(showProgress(QString, int)));
 
         rpcConsole->setClientModel(_clientModel);
 #ifdef ENABLE_WALLET
-        if(walletFrame)
-        {
+        if (walletFrame) {
             walletFrame->setClientModel(_clientModel);
         }
 #endif // ENABLE_WALLET
         unitDisplayControl->setOptionsModel(_clientModel->getOptionsModel());
-        
+
         OptionsModel* optionsModel = _clientModel->getOptionsModel();
-        if(optionsModel)
-        {
+        if (optionsModel) {
             // be aware of the tray icon disable state change reported by the OptionsModel object.
-            connect(optionsModel,SIGNAL(hideTrayIconChanged(bool)),this,SLOT(setTrayIconVisible(bool)));
-        
+            connect(optionsModel, SIGNAL(hideTrayIconChanged(bool)), this, SLOT(setTrayIconVisible(bool)));
+
             // initialize the disable state of the tray icon with the current value in the model.
             setTrayIconVisible(optionsModel->getHideTrayIcon());
         }
     } else {
         // Disable possibility to show main window via action
         toggleHideAction->setEnabled(false);
-        if(trayIconMenu)
-        {
+        if (trayIconMenu) {
             // Disable context menu on tray icon
             trayIconMenu->clear();
         }
         // Propagate cleared model to child objects
         rpcConsole->setClientModel(nullptr);
 #ifdef ENABLE_WALLET
-        if (walletFrame)
-        {
+        if (walletFrame) {
             walletFrame->setClientModel(nullptr);
         }
 #endif // ENABLE_WALLET
@@ -539,9 +632,9 @@ void IoPGUI::setClientModel(ClientModel *_clientModel)
 }
 
 #ifdef ENABLE_WALLET
-bool IoPGUI::addWallet(const QString& name, WalletModel *walletModel)
+bool IoPGUI::addWallet(const QString& name, WalletModel* walletModel)
 {
-    if(!walletFrame)
+    if (!walletFrame)
         return false;
     setWalletActionsEnabled(true);
     return walletFrame->addWallet(name, walletModel);
@@ -549,14 +642,14 @@ bool IoPGUI::addWallet(const QString& name, WalletModel *walletModel)
 
 bool IoPGUI::setCurrentWallet(const QString& name)
 {
-    if(!walletFrame)
+    if (!walletFrame)
         return false;
     return walletFrame->setCurrentWallet(name);
 }
 
 void IoPGUI::removeAllWallets()
 {
-    if(!walletFrame)
+    if (!walletFrame)
         return;
     setWalletActionsEnabled(false);
     walletFrame->removeAllWallets();
@@ -565,12 +658,13 @@ void IoPGUI::removeAllWallets()
 
 void IoPGUI::setWalletActionsEnabled(bool enabled)
 {
+    iopLogoAction->setEnabled(enabled);
     overviewAction->setEnabled(enabled);
     sendCoinsAction->setEnabled(enabled);
     sendCoinsMenuAction->setEnabled(enabled);
+    buyIoPAction->setEnabled(enabled);
     receiveCoinsAction->setEnabled(enabled);
     receiveCoinsMenuAction->setEnabled(enabled);
-    historyAction->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
@@ -581,7 +675,7 @@ void IoPGUI::setWalletActionsEnabled(bool enabled)
     openAction->setEnabled(enabled);
 }
 
-void IoPGUI::createTrayIcon(const NetworkStyle *networkStyle)
+void IoPGUI::createTrayIcon(const NetworkStyle* networkStyle)
 {
 #ifndef Q_OS_MAC
     trayIcon = new QSystemTrayIcon(this);
@@ -605,11 +699,11 @@ void IoPGUI::createTrayIconMenu()
     trayIcon->setContextMenu(trayIconMenu);
 
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+        this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
 #else
     // Note: On Mac, the dock icon is used to provide the tray's functionality.
-    MacDockIconHandler *dockIconHandler = MacDockIconHandler::instance();
-    dockIconHandler->setMainWindow((QMainWindow *)this);
+    MacDockIconHandler* dockIconHandler = MacDockIconHandler::instance();
+    dockIconHandler->setMainWindow((QMainWindow*)this);
     trayIconMenu = dockIconHandler->dockMenu();
 #endif
 
@@ -633,8 +727,7 @@ void IoPGUI::createTrayIconMenu()
 #ifndef Q_OS_MAC
 void IoPGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    if(reason == QSystemTrayIcon::Trigger)
-    {
+    if (reason == QSystemTrayIcon::Trigger) {
         // Click on system tray icon triggers show/hide of the main window
         toggleHidden();
     }
@@ -643,7 +736,7 @@ void IoPGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void IoPGUI::optionsClicked()
 {
-    if(!clientModel || !clientModel->getOptionsModel())
+    if (!clientModel || !clientModel->getOptionsModel())
         return;
 
     OptionsDialog dlg(this, enableWallet);
@@ -653,12 +746,61 @@ void IoPGUI::optionsClicked()
 
 void IoPGUI::aboutClicked()
 {
-    if(!clientModel)
+    if (!clientModel)
         return;
 
     HelpMessageDialog dlg(this, true);
     dlg.exec();
 }
+
+void IoPGUI::checkForUpdateDialog(){
+    checkForUpdate(true);
+}
+
+void IoPGUI::checkForUpdate(bool show)
+{
+    openUpdateDialog = show;
+    QString version = clientModel->formatSubVersion();
+    QNetworkRequest request(QUrl(QString(UPDATE_URL).append(version)));
+    updateNAM->get(request);    
+}
+
+bool IoPGUI::updateAvailable()
+{
+    /* #if defined(__x86_64__)
+    QString version = QString("(%1-bit)").arg(64);
+    #elif defined(__i386__ )
+    QString version = QString("(%1-bit)").arg(32);
+    #else
+    QString version = QString();
+    #endif
+    QNetworkRequest request(QUrl(UPDATE_URL.append(version)));
+    //std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
+    updateNAM->get(request); */
+}
+
+void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
+    QString answer = reply->readAll();
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(answer.toUtf8());
+    QJsonObject jsonObject = jsonResponse.object();
+
+    bool latest = jsonObject["latest"].toBool();
+    QString changelog = jsonObject["change_log"].toString();
+    QString version = jsonObject["current_version"].toString();
+//CHECK AVAILABILITY
+    if(latest){
+        if(openUpdateDialog){
+        HelpMessageDialog dlg(this, true, true, false);
+        dlg.exec();
+        }
+    }else{
+        HelpMessageDialog dlg(this, true, true, true, version, changelog);
+        dlg.exec();
+    }
+    openUpdateDialog = false;
+}
+
 
 void IoPGUI::showDebugWindow()
 {
@@ -683,8 +825,7 @@ void IoPGUI::showHelpMessageClicked()
 void IoPGUI::openClicked()
 {
     OpenURIDialog dlg(this);
-    if(dlg.exec())
-    {
+    if (dlg.exec()) {
         Q_EMIT receivedURI(dlg.getURI());
     }
 }
@@ -695,11 +836,11 @@ void IoPGUI::gotoOverviewPage()
     if (walletFrame) walletFrame->gotoOverviewPage();
 }
 
-void IoPGUI::gotoHistoryPage()
+void IoPGUI::openIOP_global()
 {
-    historyAction->setChecked(true);
-    if (walletFrame) walletFrame->gotoHistoryPage();
+    QDesktopServices::openUrl(QUrl("http://iop.global", QUrl::TolerantMode));
 }
+
 
 void IoPGUI::gotoReceiveCoinsPage()
 {
@@ -711,6 +852,12 @@ void IoPGUI::gotoSendCoinsPage(QString addr)
 {
     sendCoinsAction->setChecked(true);
     if (walletFrame) walletFrame->gotoSendCoinsPage(addr);
+}
+
+void IoPGUI::gotoBuyIoPPage()
+{
+    buyIoPAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoBuyIoPPage();
 }
 
 void IoPGUI::gotoSignMessageTab(QString addr)
@@ -728,13 +875,28 @@ void IoPGUI::updateNetworkState()
 {
     int count = clientModel->getNumConnections();
     QString icon;
-    switch(count)
-    {
-    case 0: icon = ":/icons/connect_0"; break;
-    case 1: case 2: case 3: icon = ":/icons/connect_1"; break;
-    case 4: case 5: case 6: icon = ":/icons/connect_2"; break;
-    case 7: case 8: case 9: icon = ":/icons/connect_3"; break;
-    default: icon = ":/icons/connect_4"; break;
+    switch (count) {
+    case 0:
+        icon = ":/icons/connect_0";
+        break;
+    case 1:
+    case 2:
+        icon = ":/icons/connect_1";
+        break;
+    case 3:
+    case 4:
+        icon = ":/icons/connect_2";
+        break;
+    case 5:
+    case 6:
+        icon = ":/icons/connect_3";
+    case 7:
+    case 8:
+        icon = ":/icons/connect_4";
+        break;
+    default:
+        icon = ":/icons/connect_5";
+        break;
     }
 
     QString tooltip;
@@ -750,7 +912,7 @@ void IoPGUI::updateNetworkState()
     tooltip = QString("<nobr>") + tooltip + QString("</nobr>");
     connectionsControl->setToolTip(tooltip);
 
-    connectionsControl->setPixmap(platformStyle->SingleColorIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+    connectionsControl->setPixmap(platformStyle->SingleColorIcon(icon).pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
 }
 
 void IoPGUI::setNumConnections(int count)
@@ -769,13 +931,12 @@ void IoPGUI::updateHeadersSyncProgressLabel()
     int headersTipHeight = clientModel->getHeaderTipHeight();
     int estHeadersLeft = (GetTime() - headersTipTime) / Params().GetConsensus().nPowTargetSpacing;
     if (estHeadersLeft > HEADER_HEIGHT_DELTA_SYNC)
-        progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight+estHeadersLeft)*headersTipHeight, 'f', 1)));
+        progressBarLabel->setText(tr("Syncing Headers (%1%)...").arg(QString::number(100.0 / (headersTipHeight + estHeadersLeft) * headersTipHeight, 'f', 1)));
 }
 
 void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool header)
 {
-    if (modalOverlay)
-    {
+    if (modalOverlay) {
         if (header)
             modalOverlay->setKnownBestHeight(count, blockDate);
         else
@@ -785,35 +946,39 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
         return;
 
     // Prevent orphan statusbar messages (e.g. hover Quit in main menu, wait until chain-sync starts -> garbled text)
-    statusBar()->clearMessage();
+    //statusBar()->clearMessage();
+
+    actProgressBarLabel->setVisible(true);
+    actProgressBar->setVisible(true);
+
 
     // Acquire current block source
     enum BlockSource blockSource = clientModel->getBlockSource();
     switch (blockSource) {
-        case BLOCK_SOURCE_NETWORK:
-            if (header) {
-                updateHeadersSyncProgressLabel();
-                return;
-            }
-            progressBarLabel->setText(tr("Synchronizing with network..."));
+    case BLOCK_SOURCE_NETWORK:
+        if (header) {
             updateHeadersSyncProgressLabel();
-            break;
-        case BLOCK_SOURCE_DISK:
-            if (header) {
-                progressBarLabel->setText(tr("Indexing blocks on disk..."));
-            } else {
-                progressBarLabel->setText(tr("Processing blocks on disk..."));
-            }
-            break;
-        case BLOCK_SOURCE_REINDEX:
-            progressBarLabel->setText(tr("Reindexing blocks on disk..."));
-            break;
-        case BLOCK_SOURCE_NONE:
-            if (header) {
-                return;
-            }
-            progressBarLabel->setText(tr("Connecting to peers..."));
-            break;
+            return;
+        }
+        progressBarLabel->setText(tr("Synchronizing with network..."));
+        updateHeadersSyncProgressLabel();
+        break;
+    case BLOCK_SOURCE_DISK:
+        if (header) {
+            progressBarLabel->setText(tr("Indexing blocks on disk..."));
+        } else {
+            progressBarLabel->setText(tr("Processing blocks on disk..."));
+        }
+        break;
+    case BLOCK_SOURCE_REINDEX:
+        progressBarLabel->setText(tr("Reindexing blocks on disk..."));
+        break;
+    case BLOCK_SOURCE_NONE:
+        if (header) {
+            return;
+        }
+        progressBarLabel->setText(tr("Connecting to peers..."));
+        break;
     }
 
     QString tooltip;
@@ -824,45 +989,43 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
     tooltip = tr("Processed %n block(s) of transaction history.", "", count);
 
     // Set icon state: spinning if catching up, tick otherwise
-    if(secs < 90*60)
-    {
+    if (secs < 90 * 60) {
         tooltip = tr("Up to date") + QString(".<br>") + tooltip;
         labelBlocksIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/synced").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
 
 #ifdef ENABLE_WALLET
-        if(walletFrame)
-        {
+        if (walletFrame) {
             walletFrame->showOutOfSyncWarning(false);
             modalOverlay->showHide(true, true);
         }
 #endif // ENABLE_WALLET
 
-        progressBarLabel->setVisible(false);
-        progressBar->setVisible(false);
-    }
-    else
-    {
+        actProgressBarLabel->setVisible(true);
+        actProgressBar->setVisible(true);
+        progressBar->setMaximum(1000000000);
+        progressBar->setValue(1000000000);
+        progressBarLabel->setText(tr("Fully synchronized!"));
+    } else {
         QString timeBehindText = GUIUtil::formatNiceTimeOffset(secs);
 
-        progressBarLabel->setVisible(true);
+        actProgressBarLabel->setVisible(true);
         progressBar->setFormat(tr("%1 behind").arg(timeBehindText));
         progressBar->setMaximum(1000000000);
         progressBar->setValue(nVerificationProgress * 1000000000.0 + 0.5);
-        progressBar->setVisible(true);
+        actProgressBar->setVisible(true);
 
         tooltip = tr("Catching up...") + QString("<br>") + tooltip;
-        if(count != prevBlocks)
-        {
+        if (count != prevBlocks) {
             labelBlocksIcon->setPixmap(platformStyle->SingleColorIcon(QString(
-                ":/movies/spinner-%1").arg(spinnerFrame, 3, 10, QChar('0')))
-                .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
+                                                                          ":/movies/spinner-%1")
+                                                                          .arg(spinnerFrame, 3, 10, QChar('0')))
+                                           .pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
             spinnerFrame = (spinnerFrame + 1) % SPINNER_FRAMES;
         }
         prevBlocks = count;
 
 #ifdef ENABLE_WALLET
-        if(walletFrame)
-        {
+        if (walletFrame) {
             walletFrame->showOutOfSyncWarning(true);
             modalOverlay->showHide();
         }
@@ -882,7 +1045,7 @@ void IoPGUI::setNumBlocks(int count, const QDateTime& blockDate, double nVerific
     progressBar->setToolTip(tooltip);
 }
 
-void IoPGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
+void IoPGUI::message(const QString& title, const QString& message, unsigned int style, bool* ret)
 {
     QString strTitle = tr("IoP"); // default title
     // Default to information icon
@@ -894,8 +1057,7 @@ void IoPGUI::message(const QString &title, const QString &message, unsigned int 
     // Prefer supplied title over style based title
     if (!title.isEmpty()) {
         msgType = title;
-    }
-    else {
+    } else {
         switch (style) {
         case CClientUIInterface::MSG_ERROR:
             msgType = tr("Error");
@@ -918,8 +1080,7 @@ void IoPGUI::message(const QString &title, const QString &message, unsigned int 
     if (style & CClientUIInterface::ICON_ERROR) {
         nMBoxIcon = QMessageBox::Critical;
         nNotifyIcon = Notificator::Critical;
-    }
-    else if (style & CClientUIInterface::ICON_WARNING) {
+    } else if (style & CClientUIInterface::ICON_WARNING) {
         nMBoxIcon = QMessageBox::Warning;
         nNotifyIcon = Notificator::Warning;
     }
@@ -936,22 +1097,18 @@ void IoPGUI::message(const QString &title, const QString &message, unsigned int 
         int r = mBox.exec();
         if (ret != nullptr)
             *ret = r == QMessageBox::Ok;
-    }
-    else
+    } else
         notificator->notify((Notificator::Class)nNotifyIcon, strTitle, message);
 }
 
-void IoPGUI::changeEvent(QEvent *e)
+void IoPGUI::changeEvent(QEvent* e)
 {
     QMainWindow::changeEvent(e);
 #ifndef Q_OS_MAC // Ignored on Mac
-    if(e->type() == QEvent::WindowStateChange)
-    {
-        if(clientModel && clientModel->getOptionsModel() && clientModel->getOptionsModel()->getMinimizeToTray())
-        {
-            QWindowStateChangeEvent *wsevt = static_cast<QWindowStateChangeEvent*>(e);
-            if(!(wsevt->oldState() & Qt::WindowMinimized) && isMinimized())
-            {
+    if (e->type() == QEvent::WindowStateChange) {
+        if (clientModel && clientModel->getOptionsModel() && clientModel->getOptionsModel()->getMinimizeToTray()) {
+            QWindowStateChangeEvent* wsevt = static_cast<QWindowStateChangeEvent*>(e);
+            if (!(wsevt->oldState() & Qt::WindowMinimized) && isMinimized()) {
                 QTimer::singleShot(0, this, SLOT(hide()));
                 e->ignore();
             }
@@ -960,20 +1117,16 @@ void IoPGUI::changeEvent(QEvent *e)
 #endif
 }
 
-void IoPGUI::closeEvent(QCloseEvent *event)
+void IoPGUI::closeEvent(QCloseEvent* event)
 {
 #ifndef Q_OS_MAC // Ignored on Mac
-    if(clientModel && clientModel->getOptionsModel())
-    {
-        if(!clientModel->getOptionsModel()->getMinimizeOnClose())
-        {
+    if (clientModel && clientModel->getOptionsModel()) {
+        if (!clientModel->getOptionsModel()->getMinimizeOnClose()) {
             // close rpcConsole in case it was open to make some space for the shutdown window
             rpcConsole->close();
 
             QApplication::quit();
-        }
-        else
-        {
+        } else {
             QMainWindow::showMinimized();
             event->ignore();
         }
@@ -983,11 +1136,12 @@ void IoPGUI::closeEvent(QCloseEvent *event)
 #endif
 }
 
-void IoPGUI::showEvent(QShowEvent *event)
+void IoPGUI::showEvent(QShowEvent* event)
 {
     // enable the debug window when the main window shows up
     openRPCConsoleAction->setEnabled(true);
     aboutAction->setEnabled(true);
+    //updateAction->setEnabled(true);
     optionsAction->setEnabled(true);
 }
 
@@ -1002,35 +1156,32 @@ void IoPGUI::incomingTransaction(const QString& date, int unit, const CAmount& a
         msg += tr("Label: %1\n").arg(label);
     else if (!address.isEmpty())
         msg += tr("Address: %1\n").arg(address);
-    message((amount)<0 ? tr("Sent transaction") : tr("Incoming transaction"),
-             msg, CClientUIInterface::MSG_INFORMATION);
+    message((amount) < 0 ? tr("Sent transaction") : tr("Incoming transaction"),
+        msg, CClientUIInterface::MSG_INFORMATION);
 }
 #endif // ENABLE_WALLET
 
-void IoPGUI::dragEnterEvent(QDragEnterEvent *event)
+void IoPGUI::dragEnterEvent(QDragEnterEvent* event)
 {
     // Accept only URIs
-    if(event->mimeData()->hasUrls())
+    if (event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void IoPGUI::dropEvent(QDropEvent *event)
+void IoPGUI::dropEvent(QDropEvent* event)
 {
-    if(event->mimeData()->hasUrls())
-    {
-        for (const QUrl &uri : event->mimeData()->urls())
-        {
+    if (event->mimeData()->hasUrls()) {
+        for (const QUrl& uri : event->mimeData()->urls()) {
             Q_EMIT receivedURI(uri.toString());
         }
     }
     event->acceptProposedAction();
 }
 
-bool IoPGUI::eventFilter(QObject *object, QEvent *event)
+bool IoPGUI::eventFilter(QObject* object, QEvent* event)
 {
     // Catch status tip events
-    if (event->type() == QEvent::StatusTip)
-    {
+    if (event->type() == QEvent::StatusTip) {
         // Prevent adding text from setStatusTip(), if we currently use the status bar for displaying other stuff
         if (progressBarLabel->isVisible() || progressBar->isVisible())
             return true;
@@ -1042,8 +1193,7 @@ bool IoPGUI::eventFilter(QObject *object, QEvent *event)
 bool IoPGUI::handlePaymentRequest(const SendCoinsRecipient& recipient)
 {
     // URI has to be valid
-    if (walletFrame && walletFrame->handlePaymentRequest(recipient))
-    {
+    if (walletFrame && walletFrame->handlePaymentRequest(recipient)) {
         showNormalIfMinimized();
         gotoSendCoinsPage();
         return true;
@@ -1053,17 +1203,16 @@ bool IoPGUI::handlePaymentRequest(const SendCoinsRecipient& recipient)
 
 void IoPGUI::setHDStatus(int hdEnabled)
 {
-    labelWalletHDStatusIcon->setPixmap(platformStyle->SingleColorIcon(hdEnabled ? ":/icons/hd_enabled" : ":/icons/hd_disabled").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+    labelWalletHDStatusIcon->setPixmap(platformStyle->SingleColorIcon(hdEnabled ? ":/icons/hd_enabled" : ":/icons/hd_disabled").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
     labelWalletHDStatusIcon->setToolTip(hdEnabled ? tr("HD key generation is <b>enabled</b>") : tr("HD key generation is <b>disabled</b>"));
 
-    // eventually disable the QLabel to set its opacity to 50% 
+    // eventually disable the QLabel to set its opacity to 50%
     labelWalletHDStatusIcon->setEnabled(hdEnabled);
 }
 
 void IoPGUI::setEncryptionStatus(int status)
 {
-    switch(status)
-    {
+    switch (status) {
     case WalletModel::Unencrypted:
         labelWalletEncryptionIcon->hide();
         encryptWalletAction->setChecked(false);
@@ -1072,7 +1221,7 @@ void IoPGUI::setEncryptionStatus(int status)
         break;
     case WalletModel::Unlocked:
         labelWalletEncryptionIcon->show();
-        labelWalletEncryptionIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelWalletEncryptionIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/lock_open").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
         labelWalletEncryptionIcon->setToolTip(tr("Wallet is <b>encrypted</b> and currently <b>unlocked</b>"));
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
@@ -1080,7 +1229,7 @@ void IoPGUI::setEncryptionStatus(int status)
         break;
     case WalletModel::Locked:
         labelWalletEncryptionIcon->show();
-        labelWalletEncryptionIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/lock_closed").pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
+        labelWalletEncryptionIcon->setPixmap(platformStyle->SingleColorIcon(":/icons/lock_closed").pixmap(STATUSBAR_ICONSIZE, STATUSBAR_ICONSIZE));
         labelWalletEncryptionIcon->setToolTip(tr("Wallet is <b>encrypted</b> and currently <b>locked</b>"));
         encryptWalletAction->setChecked(true);
         changePassphraseAction->setEnabled(true);
@@ -1092,26 +1241,20 @@ void IoPGUI::setEncryptionStatus(int status)
 
 void IoPGUI::showNormalIfMinimized(bool fToggleHidden)
 {
-    if(!clientModel)
+    if (!clientModel)
         return;
 
     // activateWindow() (sometimes) helps with keyboard focus on Windows
-    if (isHidden())
-    {
+    if (isHidden()) {
         show();
         activateWindow();
-    }
-    else if (isMinimized())
-    {
+    } else if (isMinimized()) {
         showNormal();
         activateWindow();
-    }
-    else if (GUIUtil::isObscured(this))
-    {
+    } else if (GUIUtil::isObscured(this)) {
         raise();
         activateWindow();
-    }
-    else if(fToggleHidden)
+    } else if (fToggleHidden)
         hide();
 }
 
@@ -1122,41 +1265,34 @@ void IoPGUI::toggleHidden()
 
 void IoPGUI::detectShutdown()
 {
-    if (ShutdownRequested())
-    {
-        if(rpcConsole)
+    if (ShutdownRequested()) {
+        if (rpcConsole)
             rpcConsole->hide();
         qApp->quit();
     }
 }
 
-void IoPGUI::showProgress(const QString &title, int nProgress)
+void IoPGUI::showProgress(const QString& title, int nProgress)
 {
-    if (nProgress == 0)
-    {
+    if (nProgress == 0) {
         progressDialog = new QProgressDialog(title, "", 0, 100);
         progressDialog->setWindowModality(Qt::ApplicationModal);
         progressDialog->setMinimumDuration(0);
         progressDialog->setCancelButton(0);
         progressDialog->setAutoClose(false);
         progressDialog->setValue(0);
-    }
-    else if (nProgress == 100)
-    {
-        if (progressDialog)
-        {
+    } else if (nProgress == 100) {
+        if (progressDialog) {
             progressDialog->close();
             progressDialog->deleteLater();
         }
-    }
-    else if (progressDialog)
+    } else if (progressDialog)
         progressDialog->setValue(nProgress);
 }
 
 void IoPGUI::setTrayIconVisible(bool fHideTrayIcon)
 {
-    if (trayIcon)
-    {
+    if (trayIcon) {
         trayIcon->setVisible(!fHideTrayIcon);
     }
 }
@@ -1167,7 +1303,7 @@ void IoPGUI::showModalOverlay()
         modalOverlay->toggleVisibility();
 }
 
-static bool ThreadSafeMessageBox(IoPGUI *gui, const std::string& message, const std::string& caption, unsigned int style)
+static bool ThreadSafeMessageBox(IoPGUI* gui, const std::string& message, const std::string& caption, unsigned int style)
 {
     bool modal = (style & CClientUIInterface::MODAL);
     // The SECURE flag has no effect in the Qt GUI.
@@ -1176,11 +1312,11 @@ static bool ThreadSafeMessageBox(IoPGUI *gui, const std::string& message, const 
     bool ret = false;
     // In case of modal message, use blocking connection to wait for user to click a button
     QMetaObject::invokeMethod(gui, "message",
-                               modal ? GUIUtil::blockingGUIThreadConnection() : Qt::QueuedConnection,
-                               Q_ARG(QString, QString::fromStdString(caption)),
-                               Q_ARG(QString, QString::fromStdString(message)),
-                               Q_ARG(unsigned int, style),
-                               Q_ARG(bool*, &ret));
+        modal ? GUIUtil::blockingGUIThreadConnection() : Qt::QueuedConnection,
+        Q_ARG(QString, QString::fromStdString(caption)),
+        Q_ARG(QString, QString::fromStdString(message)),
+        Q_ARG(unsigned int, style),
+        Q_ARG(bool*, &ret));
     return ret;
 }
 
@@ -1205,17 +1341,15 @@ void IoPGUI::toggleNetworkActive()
     }
 }
 
-UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *platformStyle) :
-    optionsModel(0),
-    menu(0)
+UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle* platformStyle) : optionsModel(0),
+                                                                                               menu(0)
 {
     createContextMenu();
     setToolTip(tr("Unit to show amounts in. Click to select another unit."));
     QList<IoPUnits::Unit> units = IoPUnits::availableUnits();
     int max_width = 0;
     const QFontMetrics fm(font());
-    for (const IoPUnits::Unit unit : units)
-    {
+    for (const IoPUnits::Unit unit : units) {
         max_width = qMax(max_width, fm.width(IoPUnits::name(unit)));
     }
     setMinimumSize(max_width, 0);
@@ -1224,7 +1358,7 @@ UnitDisplayStatusBarControl::UnitDisplayStatusBarControl(const PlatformStyle *pl
 }
 
 /** So that it responds to button clicks */
-void UnitDisplayStatusBarControl::mousePressEvent(QMouseEvent *event)
+void UnitDisplayStatusBarControl::mousePressEvent(QMouseEvent* event)
 {
     onDisplayUnitsClicked(event->pos());
 }
@@ -1233,24 +1367,22 @@ void UnitDisplayStatusBarControl::mousePressEvent(QMouseEvent *event)
 void UnitDisplayStatusBarControl::createContextMenu()
 {
     menu = new QMenu(this);
-    for (IoPUnits::Unit u : IoPUnits::availableUnits())
-    {
-        QAction *menuAction = new QAction(QString(IoPUnits::name(u)), this);
+    for (IoPUnits::Unit u : IoPUnits::availableUnits()) {
+        QAction* menuAction = new QAction(QString(IoPUnits::name(u)), this);
         menuAction->setData(QVariant(u));
         menu->addAction(menuAction);
     }
-    connect(menu,SIGNAL(triggered(QAction*)),this,SLOT(onMenuSelection(QAction*)));
+    connect(menu, SIGNAL(triggered(QAction*)), this, SLOT(onMenuSelection(QAction*)));
 }
 
 /** Lets the control know about the Options Model (and its signals) */
-void UnitDisplayStatusBarControl::setOptionsModel(OptionsModel *_optionsModel)
+void UnitDisplayStatusBarControl::setOptionsModel(OptionsModel* _optionsModel)
 {
-    if (_optionsModel)
-    {
+    if (_optionsModel) {
         this->optionsModel = _optionsModel;
 
         // be aware of a display unit change reported by the OptionsModel object.
-        connect(_optionsModel,SIGNAL(displayUnitChanged(int)),this,SLOT(updateDisplayUnit(int)));
+        connect(_optionsModel, SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit(int)));
 
         // initialize the display units label with the current value in the model.
         updateDisplayUnit(_optionsModel->getDisplayUnit());
@@ -1273,8 +1405,7 @@ void UnitDisplayStatusBarControl::onDisplayUnitsClicked(const QPoint& point)
 /** Tells underlying optionsModel to update its current display unit. */
 void UnitDisplayStatusBarControl::onMenuSelection(QAction* action)
 {
-    if (action)
-    {
+    if (action) {
         optionsModel->setDisplayUnit(action->data());
     }
 }

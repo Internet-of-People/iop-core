@@ -6,6 +6,7 @@
 
 #include "guiconstants.h"
 #include "guiutil.h"
+#include "styles.h"
 
 #include <QApplication>
 #include <QColor>
@@ -36,11 +37,10 @@ namespace {
 
 void MakeSingleColorImage(QImage& img, const QColor& colorbase)
 {   
-    if(GUIUtil::customThemeIsSet()) 
+    if(IoPStyles::customThemeIsSet()) 
     { 
-        QColor colorLeft = QColor(108,200,239);
-        QColor colorMid = QColor(102,204,204);
-        QColor colorRight = QColor(12,175,165);
+        QColor colorLeft = c_iopLightTurqoise;
+        QColor colorRight = c_iopLightBlue;
         
         img = img.convertToFormat(QImage::Format_ARGB32);
         for (int x = img.width(); x--; )
@@ -50,21 +50,12 @@ void MakeSingleColorImage(QImage& img, const QColor& colorbase)
                 const QRgb rgb = img.pixel(x, y);
                 QColor col;
                 float r;
-                if(y < x) {
-                    r = (x*1.0/img.width()-y*1.0/img.height())*1.25;
-                    col = QColor(
-                        colorMid.red()* (1-r) + colorRight.red()*r,
-                        colorMid.green()* (1-r) + colorRight.green()*r,
-                        colorMid.blue()* (1-r) + colorRight.blue()*r,
-                        255);
-                } else {
-                    r = (y*1.0/img.height()-x*1.0/img.width())*1.25;
-                    col = QColor(
-                        colorMid.red()* (1-r) + colorLeft.red()*r,
-                        colorMid.green()* (1-r) + colorLeft.green()*r,
-                        colorMid.blue()* (1-r) + colorLeft.blue()*r,
-                        255);
-                }
+                r = 0.5*(x*1.0/img.width()+1-y*1.0/img.height());
+                col = QColor(
+                    colorLeft.red()* (1-r) + colorRight.red()*r,
+                    colorLeft.green()* (1-r) + colorRight.green()*r,
+                    colorLeft.blue()* (1-r) + colorRight.blue()*r,
+                    255);
                 img.setPixel(x, y, qRgba(col.red(), col.green(), col.blue(), qAlpha(rgb)));
             }
         }
@@ -116,14 +107,14 @@ PlatformStyle::PlatformStyle(const QString &_name, bool _imagesOnButtons, bool _
     singleColor(0,0,0),
     textColor(0,0,0)
 {
-    if(GUIUtil::customThemeIsSet()) 
+    if(IoPStyles::customThemeIsSet()) 
     {   
         //TODO: may be obsolete
         //dark theme
-        imagesOnButtons = true;
+        imagesOnButtons = false;
         colorizeIcons = true;
-        singleColor = QColor(12,175,165); 
-        textColor = QColor(12,175,165);         
+        singleColor = c_iopLightTurqoise; 
+        textColor = c_iopLightTurqoise;         
     } else {
         //default light theme
         // Determine icon highlighting color

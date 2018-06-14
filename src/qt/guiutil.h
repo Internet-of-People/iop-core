@@ -199,9 +199,6 @@ namespace GUIUtil
 
     QString formatNiceTimeOffset(qint64 secs);
 
-    bool customThemeIsSet();
-    QString getThemeStyleSheet();
-
     class ClickableLabel : public QLabel
     {
         Q_OBJECT

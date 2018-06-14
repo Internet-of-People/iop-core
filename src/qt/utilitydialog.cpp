@@ -21,22 +21,26 @@
 #include "init.h"
 #include "util.h"
 
-#include <stdio.h>
-
 #include <QCloseEvent>
 #include <QLabel>
+#include <QRect>
+#include <QPushButton>
 #include <QRegExp>
 #include <QTextTable>
 #include <QTextCursor>
 #include <QVBoxLayout>
 #include <QSettings>
 
+#include <iostream>
+
 /** "Help message" or "About" dialog box */
-HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
+HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available, QString latestVersion, QString changeLog) :
     QDialog(parent),
     ui(new Ui::HelpMessageDialog)
 {
     ui->setupUi(this);
+    
+    ui->okButton->button(QDialogButtonBox::Ok)->setIcon(QIcon());
 
     QString version = tr(PACKAGE_NAME) + " " + tr("version") + " " + QString::fromStdString(FormatFullVersion());
     /* On x86 add a bit specifier to the version so that users can distinguish between
@@ -47,11 +51,42 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
 #elif defined(__i386__ )
     version += " " + tr("(%1-bit)").arg(32);
 #endif
+    if(update)
+    {
+        
+        //ui->horizontalSpacerButtons->setVisible(true);
+        QString updateInfo;
+        
+        if(available)
+        {
+            setWindowTitle(tr("Update Available"));
+            updateInfo = tr("A new Update is available!\n");
+            updateInfo.append("<br/><br/>\n");
+            updateInfo.append(tr("Version: \n")).append(latestVersion);
+            updateInfo.append("<br/><br/>\n");
+            updateInfo.append(tr("Changelog: \n"));
+            updateInfo.append("<br/>\n");
+            updateInfo.append(changeLog);
+            resize(780,400);
+            downloadButton = new QPushButton(tr("download"));
+            ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
+            connect(downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
 
-    if (about)
+        } else {
+            setWindowTitle(tr("Latest Version"));
+            updateInfo = tr("You have the current Version!<br><br>") + version;
+            resize(780,200);
+        }
+
+        ui->aboutMessage->setTextFormat(Qt::RichText);
+        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        text = updateInfo;
+        ui->aboutMessage->setText(updateInfo);
+        ui->helpMessage->setVisible(false);
+    } else if (about)
     {
         setWindowTitle(tr("About %1").arg(tr(PACKAGE_NAME)));
-
+        resize(780,400);
         /// HTML-format the license message from the core
         QString licenseInfo = QString::fromStdString(LicenseInfo());
         QString licenseInfoHTML = licenseInfo;
@@ -61,7 +96,6 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
         licenseInfoHTML.replace(uri, "<a href=\"\\1\">\\1</a>");
         // Replace newlines with HTML breaks
         licenseInfoHTML.replace("\n", "<br>");
-
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         text = version + "\n" + licenseInfo;
@@ -70,6 +104,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
         ui->helpMessage->setVisible(false);
     } else {
         setWindowTitle(tr("Command-line options"));
+        resize(780,400);
         QString header = tr("Usage:") + "\n" +
             "  iop-qt [" + tr("command-line options") + "]                     " + "\n";
         QTextCursor cursor(ui->helpMessage->document());
@@ -126,7 +161,6 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about) :
                 cursor.insertTable(1, 2, tf);
             }
         }
-
         ui->helpMessage->moveCursor(QTextCursor::Start);
         ui->scrollArea->setVisible(false);
         ui->aboutLogo->setVisible(false);
@@ -160,6 +194,10 @@ void HelpMessageDialog::on_okButton_accepted()
     close();
 }
 
+void HelpMessageDialog::on_downloadButton_accepted()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/Internet-of-People/iop-core/releases",QUrl::TolerantMode)); 
+}
 
 /** "Shutdown" window */
 ShutdownWindow::ShutdownWindow(QWidget *parent, Qt::WindowFlags f):

@@ -51,7 +51,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     // set reference point, paddings relative to size
     int paddingRight            = 50;
     int vSpace                  = 10;
-    int paddingTop              = 320*0.5 - vSpace;
+    int paddingTop              = 320*0.65 - vSpace;
     //float iconHeight              = 86;
 
 #if QT_VERSION > 0x050100
@@ -75,7 +75,7 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
         fontFactor = fontFactor * 176 / titleTextWidth;
     }
 
-    pixPaint.setFont(QFont(font, 33*fontFactor));
+    pixPaint.setFont(QFont(font, 20*fontFactor));
     fm = pixPaint.fontMetrics();
     titleTextWidth  = fm.width(titleText);
 
