@@ -768,6 +768,13 @@ void IoPGUI::checkForUpdate(bool show)
 }
 
 void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
+    if(reply->error() != QNetworkReply::NoError){
+        if(openUpdateDialog){
+            HelpMessageDialog dlg(this, true, true, false, QString(), QString(), true);
+        dlg.exec();
+        }
+        return;
+    }
     QString answer = reply->readAll();
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(answer.toUtf8());

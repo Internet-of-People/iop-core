@@ -34,7 +34,7 @@
 #include <iostream>
 
 /** "Help message" or "About" dialog box */
-HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available, QString latestVersion, QString changeLog) :
+HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available, QString latestVersion, QString changeLog, bool error) :
     QDialog(parent),
     ui(new Ui::HelpMessageDialog)
 {
@@ -57,7 +57,11 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         //ui->horizontalSpacerButtons->setVisible(true);
         QString updateInfo;
         
-        if(available)
+        if(error){
+            setWindowTitle(tr("Connection error"));
+            updateInfo = tr("Could not reach the update Server\n");
+            resize(780,200);
+        }else if(available)
         {
             setWindowTitle(tr("Update Available"));
             updateInfo = tr("A new Update is available!\n");
