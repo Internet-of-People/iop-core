@@ -91,10 +91,10 @@
             "QTableView::item "
             "{ border-right: none; border-bottom: none; }"                    
             
-            "QTreeView "
-            "{ border: none; border-right: 1px solid " + s_iopMidGrey + "; selection-background-color: " + s_highlight_dark_midgrey + "; selection-color: "+ s_iopLightBlue + "; alternate-background-color: " + s_highlight_light_anthrazith + ";}"
+            "#treeWidget"
+            "{ border: none; border-right: 1px solid " + s_iopMidGrey + "; selection-background-color: transparent; selection-color: "+ s_iopLightBlue + ";}"
             
-            "QTreeView::item "
+            "#treeWidget::item "
             "{ border-right: none; border-bottom: none; }"   
 
             "#payAmount > QAbstractSpinBox, #payAmount > QComboBox"
