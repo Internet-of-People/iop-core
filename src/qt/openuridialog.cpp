@@ -15,6 +15,9 @@ OpenURIDialog::OpenURIDialog(QWidget *parent) :
     ui(new Ui::OpenURIDialog)
 {
     ui->setupUi(this);
+    ui->buttonBox->button(QDialogButtonBox::Ok)->setIcon(QIcon());
+    ui->buttonBox->button(QDialogButtonBox::Cancel)->setIcon(QIcon());
+    
 #if QT_VERSION >= 0x040700
     ui->uriEdit->setPlaceholderText("iop:");
 #endif

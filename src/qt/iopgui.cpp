@@ -511,19 +511,20 @@ void IoPGUI::createToolBars()
         connectionsControl = new GUIUtil::ClickableLabel();
         labelBlocksIcon = new GUIUtil::ClickableLabel();
 
-        if (enableWallet) {
-            //frameBlocksLayout->addStretch();
-            //frameBlocksLayout->addWidget(unitDisplayControl);
-            frameBlocksLayout->addStretch();
-            frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
-            //frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
-        }
+       
         frameBlocksLayout->addStretch();
         frameBlocksLayout->addWidget(connectionsControl);
         frameBlocksLayout->addStretch();
         frameBlocksLayout->addWidget(labelBlocksIcon);
         frameBlocksLayout->addStretch();
 
+         if (enableWallet) {
+            //frameBlocksLayout->addStretch();
+            //frameBlocksLayout->addWidget(unitDisplayControl);
+            frameBlocksLayout->addStretch();
+            frameBlocksLayout->addWidget(labelWalletEncryptionIcon);
+            //frameBlocksLayout->addWidget(labelWalletHDStatusIcon);
+        }
 
         /* frameBlocksLayout->addWidget(progressBarLabel);
         frameBlocksLayout->addStretch(); */
@@ -761,7 +762,7 @@ void IoPGUI::checkForUpdate(bool show)
 {
     openUpdateDialog = show;
     QString version = QString::fromStdString(FormatCurrentVersion());
-    std::cout << version.toStdString() << std::endl;
+    //std::cout << version.toStdString() << std::endl;
     QNetworkRequest request(QUrl(QString(UPDATE_URL).append(version)));
     updateNAM->get(request);    
 }
