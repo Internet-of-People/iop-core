@@ -10,6 +10,7 @@
 #include "guiutil.h"
 #include "optionsmodel.h"
 #include "platformstyle.h"
+#include "styles.h"
 #include "txmempool.h"
 #include "walletmodel.h"
 
@@ -49,7 +50,12 @@ CoinControlDialog::CoinControlDialog(const PlatformStyle *_platformStyle, QWidge
     platformStyle(_platformStyle)
 {
     ui->setupUi(this);
-
+    if(IoPStyles::customThemeIsSet()) {
+        QString appstyle = "fusion";
+        QApplication::setStyle(appstyle);
+        setStyleSheet(styleSheetString); 
+    }
+    
     // context menu actions
     QAction *copyAddressAction = new QAction(tr("Copy address"), this);
     QAction *copyLabelAction = new QAction(tr("Copy label"), this);

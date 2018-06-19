@@ -760,23 +760,10 @@ void IoPGUI::checkForUpdateDialog(){
 void IoPGUI::checkForUpdate(bool show)
 {
     openUpdateDialog = show;
-    QString version = clientModel->formatSubVersion();
+    QString version = QString::fromStdString(FormatCurrentVersion());
+    std::cout << version.toStdString() << std::endl;
     QNetworkRequest request(QUrl(QString(UPDATE_URL).append(version)));
     updateNAM->get(request);    
-}
-
-bool IoPGUI::updateAvailable()
-{
-    /* #if defined(__x86_64__)
-    QString version = QString("(%1-bit)").arg(64);
-    #elif defined(__i386__ )
-    QString version = QString("(%1-bit)").arg(32);
-    #else
-    QString version = QString();
-    #endif
-    QNetworkRequest request(QUrl(UPDATE_URL.append(version)));
-    //std::cout << "iop price: " << request.url().toString().toStdString() << std::endl;
-    updateNAM->get(request); */
 }
 
 void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
@@ -788,7 +775,7 @@ void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
     bool latest = jsonObject["latest"].toBool();
     QString changelog = jsonObject["change_log"].toString();
     QString version = jsonObject["current_version"].toString();
-//CHECK AVAILABILITY
+    //test sucess
     if(latest){
         if(openUpdateDialog){
         HelpMessageDialog dlg(this, true, true, false);
