@@ -1010,7 +1010,7 @@
     </message>
     <message>
         <source>Recent transactions may not yet be visible, and therefore your wallet&apos;s balance might be incorrect. This information will be correct once your wallet has finished synchronizing with the iop network, as detailed below.</source>
-        <translation>Neueste Transaktionen werden eventuell noch nicht angezeigt, daher könnte Ihr Kontostand veraltet sein. Er wird korrigiert, sobald Ihr Wallet die Synchronisation mit dem IoP-Netzwerk erfolgreich abgeschlossen. Details dazu finden sich weiter unten.</translation>
+        <translation>Neueste Transaktionen werden eventuell noch nicht angezeigt, daher könnte Ihr Kontostand veraltet sein. Er wird korrigiert, sobald Ihr Wallet die Synchronisation mit dem IoP-Netzwerk erfolgreich abgeschlossen hat. Details dazu finden sich weiter unten.</translation>
     </message>
     <message>
         <source>Attempting to spend iops that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
@@ -1415,7 +1415,7 @@
     </message>
     <message>
         <source>Immature (watch only)</source>
-        <translation type="unfinished">Unreif (nur beobachtet)</translation>
+        <translation>Unreif (nur beobachtet)</translation>
     </message>
 </context>
 <context>

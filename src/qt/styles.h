@@ -91,6 +91,12 @@
             "QTableView::item "
             "{ border-right: none; border-bottom: none; }"                    
             
+            "#treeWidget"
+            "{ border: none; border-right: 1px solid " + s_iopMidGrey + "; selection-background-color: transparent; selection-color: "+ s_iopLightBlue + ";}"
+            
+            "#treeWidget::item "
+            "{ border-right: none; border-bottom: none; }"   
+
             "#payAmount > QAbstractSpinBox, #payAmount > QComboBox"
             "{ min-height: 48px; font-size: 32px; color: " +  s_iopLightBlue +"; font-weight: light;}"
             "#buy_adressInfo, #buy_amountInfo, #buy_amountVaryInfo "

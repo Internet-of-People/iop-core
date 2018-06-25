@@ -82,6 +82,13 @@ std::string FormatFullVersion()
     return CLIENT_BUILD;
 }
 
+std::string FormatCurrentVersion()
+{   
+    std::ostringstream ss;
+    ss << FormatVersion(CLIENT_VERSION);
+    return ss.str();   
+}
+
 /** 
  * Format the subversion field according to BIP 14 spec (https://github.com/iop/bips/blob/master/bip-0014.mediawiki) 
  */
