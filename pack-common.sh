@@ -7,7 +7,7 @@ sudo checkinstall \
     --pkglicense=MIT \
     --pkggroup=net \
     --pkgname=iop-core \
-    --pkgversion=6.2.0 \
+    --pkgversion=6.2.1 \
     --pkgarch=$(dpkg \
     --print-architecture) \
     $@

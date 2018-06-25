@@ -5,6 +5,10 @@ IoP Core integration/staging tree
 
 https://iop.global
 
+**RELEASE NOTE v6.2.1**
+-----------------------
+Some last minute bug fixes
+
 
 **RELEASE NOTE v6.2.0**
 -----------------------
