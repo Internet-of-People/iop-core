@@ -14,6 +14,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QLocale>
 #include <QNetworkRequest>
 #include <QObject>
 #include <QSizePolicy>
@@ -86,6 +87,7 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
     paySpinBox->setRange(50, 50000);
     paySpinBox->setDecimals(2);
     paySpinBox->setSingleStep(1);
+    paySpinBox->setLocale(QLocale::Language::English);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
     //paySpinBox->setMaximumWidth(350);
     paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
