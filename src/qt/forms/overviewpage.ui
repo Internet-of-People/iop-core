@@ -68,12 +68,12 @@
                                         </item>
                                         <!-- BALANCE -->
                                         <item>
-                                            <layout class="QHBoxLayout" name ="balancesLayout">
+                                            <layout class="QGridLayout" name ="balancesLayout">
                                                 <property name="spacing">
                                                     <number>50</number>
                                                 </property>
                                                 <!-- AVAILABLE -->
-                                                <item>
+                                                <item row="0" column="0">
                                                     <layout class="QGridLayout" name="gridAvailable">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -200,7 +200,7 @@
                                                     </layout>
                                                 </item>
                                                 <!-- TOTAL -->
-                                                <item>
+                                                <item row="0" column="1">
                                                     <layout class="QGridLayout" name="gridTotal">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -327,7 +327,7 @@
                                                     </layout>
                                                 </item>
                                                 <!-- PENDING -->
-                                                <item>
+                                                <item row="0" column="2">
                                                     <layout class="QGridLayout" name="gridPending">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -454,7 +454,7 @@
                                                     </layout>
                                                 </item>
                                                 <!-- IMMATURE -->
-                                                <item>
+                                                <item row="0" column="3">
                                                 <widget class="QWidget" name="immature">
                                                     <property name="visible">
                                                         <bool>false</bool>
@@ -585,36 +585,12 @@
                                                     </layout>
                                                 </widget>
                                                 </item>
-                                            </layout>
-                                        </item>
-                                        <item>
-                                            <spacer name="vSpacerBalance">
-                                                <property name="orientation">
-                                                    <enum>Qt::Vertical</enum>
-                                                </property>
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                                                        <horstretch>1</horstretch>
-                                                        <verstretch>1</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="sizeHint" stdset="0">
-                                                    <size>
-                                                        <width>20</width>
-                                                        <height>20</height>
-                                                    </size>
-                                                </property>
-                                            </spacer>
-                                        </item>
-                                        <item>
-                                        <widget class="QWidget" name="watchOnly">
-                                        <!-- WATCH ONLY BALANCES -->
-                                            <layout class="QHBoxLayout" name ="watchOnlyBalancesLayout">
-                                                <property name="spacing">
-                                                    <number>50</number>
-                                                </property>
                                                 <!-- AVAILABLE -->
-                                                <item>
+                                                <item row="1" column="0">
+                                                <widget class="QWidget" name="watch_available">
+                                                    <property name="visible">
+                                                        <bool>false</bool>
+                                                    </property>
                                                     <layout class="QGridLayout" name="gridAvailable">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -739,9 +715,14 @@
                                                             </widget>
                                                         </item>
                                                     </layout>
+                                                </widget>
                                                 </item>
                                                 <!-- TOTAL -->
-                                                <item>
+                                                <item row="1" column="1">
+                                                <widget class="QWidget" name="watch_total">
+                                                    <property name="visible">
+                                                        <bool>false</bool>
+                                                    </property>
                                                     <layout class="QGridLayout" name="gridTotal">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -866,9 +847,14 @@
                                                             </widget>
                                                         </item>
                                                     </layout>
+                                                </widget>
                                                 </item>
                                                 <!-- PENDING -->
-                                                <item>
+                                                <item row="1" column="2">
+                                                <widget class="QWidget" name="watch_pending">
+                                                    <property name="visible">
+                                                        <bool>false</bool>
+                                                    </property>
                                                     <layout class="QGridLayout" name="gridPending">
                                                         <property name="spacing">
                                                             <number>2</number>
@@ -993,9 +979,10 @@
                                                             </widget>
                                                         </item>
                                                     </layout>
+                                                </widget>
                                                 </item>
                                                 <!-- IMMATURE -->
-                                                <item>
+                                                <item row="1" column="3">
                                                 <widget class="QWidget" name="watchImmature">
                                                     <property name="visible">
                                                         <bool>false</bool>
@@ -1127,7 +1114,6 @@
                                                 </widget>
                                                 </item>
                                             </layout>
-                                        </widget>
                                         </item>
                                     </layout>
                                 </widget>
