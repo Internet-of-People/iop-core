@@ -20,7 +20,7 @@
 #include <QUrl>
 #include <iostream>
 
-BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent) : QDialog(parent), model(0), platformStyle(_platformStyle)
+BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent) : QDialog(parent), platformStyle(_platformStyle), model(0)
 {
     slotblock = false;
 
