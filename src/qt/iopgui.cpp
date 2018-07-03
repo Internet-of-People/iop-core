@@ -792,6 +792,11 @@ void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
         updateDialog->update(true, true, version, changelog);
         }
     }else{
+        if(!openUpdateDialog)
+        {
+            updateDialog = new HelpMessageDialog(this, true, true);
+            updateDialog->exec();
+        }
         updateDialog->update(true, false, version, changelog);
     }
     openUpdateDialog = false;
