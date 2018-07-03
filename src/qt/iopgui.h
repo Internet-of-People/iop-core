@@ -135,6 +135,7 @@ private:
 
     const QString UPDATE_URL = QString("http://api.iop.global/core-wallet/checkversion?version=");
     bool openUpdateDialog;
+    HelpMessageDialog *updateDialog;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;

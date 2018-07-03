@@ -20,12 +20,13 @@ class HelpMessageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = false, bool available = false, QString latestVersion = QString(), QString changeLog = QString(), bool error = false);
+    explicit HelpMessageDialog(QWidget *parent, bool about, bool update = false);
     ~HelpMessageDialog();
 
     void printToConsole();
     void showOrPrint();
     QPushButton* downloadButton;
+    void update(bool success, bool latest = true, QString latestVersion = QString(), QString changeLog = QString());
 
 private:
     Ui::HelpMessageDialog *ui;

@@ -765,13 +765,16 @@ void IoPGUI::checkForUpdate(bool show)
     //std::cout << version.toStdString() << std::endl;
     QNetworkRequest request(QUrl(QString(UPDATE_URL).append(version)));
     updateNAM->get(request);    
+    if(show){
+        updateDialog = new HelpMessageDialog(this, true, true);
+        updateDialog->exec();
+    }
 }
 
 void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
     if(reply->error() != QNetworkReply::NoError){
         if(openUpdateDialog){
-            HelpMessageDialog dlg(this, true, true, false, QString(), QString(), true);
-        dlg.exec();
+            updateDialog->update(false);
         }
         return;
     }
@@ -786,12 +789,10 @@ void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
     //test sucess
     if(latest){
         if(openUpdateDialog){
-        HelpMessageDialog dlg(this, true, true, false);
-        dlg.exec();
+        updateDialog->update(true, true, version, changelog);
         }
     }else{
-        HelpMessageDialog dlg(this, true, true, true, version, changelog);
-        dlg.exec();
+        updateDialog->update(true, false, version, changelog);
     }
     openUpdateDialog = false;
 }

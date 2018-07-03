@@ -34,7 +34,7 @@
 #include <iostream>
 
 /** "Help message" or "About" dialog box */
-HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, bool available, QString latestVersion, QString changeLog, bool error) :
+HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update) :
     QDialog(parent),
     ui(new Ui::HelpMessageDialog)
 {
@@ -54,34 +54,11 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
     if(update)
     {
         
+
+
         //ui->horizontalSpacerButtons->setVisible(true);
-        QString updateInfo;
-        
-        if(error){
-            setWindowTitle(tr("Connection error"));
-            updateInfo = tr("Could not reach the update Server\n");
-            resize(780,200);
-        }else if(available)
-        {
-            setWindowTitle(tr("Update Available"));
-            updateInfo = tr("A new Update is available!\n");
-            updateInfo.append("<br/><br/>\n");
-            updateInfo.append(tr("Version: \n")).append(latestVersion);
-            updateInfo.append("<br/><br/>\n");
-            updateInfo.append(tr("Changelog: \n"));
-            updateInfo.append("<br/>\n");
-            updateInfo.append(changeLog);
-            resize(780,400);
-            downloadButton = new QPushButton(tr("download"));
-            ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
-            connect(downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
-
-        } else {
-            setWindowTitle(tr("Latest Version"));
-            updateInfo = tr("You have the current Version!<br><br>") + version;
-            resize(780,200);
-        }
-
+        QString updateInfo = tr("checking for update...");
+        resize(780,200);
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         text = updateInfo;
@@ -170,6 +147,35 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update, b
         ui->aboutLogo->setVisible(false);
     }
 }
+
+void HelpMessageDialog::update(bool success, bool latest, QString latestVersion, QString changeLog)
+{
+    QString updateInfo;
+    if(!success){
+        setWindowTitle(tr("Connection error"));
+        updateInfo = tr("Could not reach the update Server\n");
+    }else if(!latest)
+    {
+        setWindowTitle(tr("Update Available"));
+        updateInfo = tr("A new Update is available!\n");
+        updateInfo.append("<br/><br/>\n");
+        updateInfo.append(tr("Version: \n")).append(latestVersion);
+        updateInfo.append("<br/><br/>\n");
+        updateInfo.append(tr("Changelog: \n"));
+        updateInfo.append("<br/>\n");
+        updateInfo.append(changeLog);
+        resize(780,400);
+        downloadButton = new QPushButton(tr("download"));
+        ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
+        connect(downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
+    } else
+    {
+        setWindowTitle(tr("Latest Version"));
+        updateInfo = tr("You have the current Version!<br><br>") + latestVersion;
+    }
+    ui->aboutMessage->setText(updateInfo);
+}
+
 
 HelpMessageDialog::~HelpMessageDialog()
 {
