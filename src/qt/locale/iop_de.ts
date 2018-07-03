@@ -581,6 +581,19 @@
         <translation>Änderungen: 
 </translation>
     </message>
+    <message>
+        <source>checking for update...</source>
+        <translation>suche nach Updates...</translation>
+    </message>
+    <message>
+        <source>Connection error</source>
+        <translation>Verbindungsfehler</translation>
+    </message>
+    <message>
+        <source>Could not reach the update Server
+</source>
+        <translation>Konnte den Updateserver nicht erreichen</translation>
+    </message>
 </context>
 <context>
     <name>Intro</name>
