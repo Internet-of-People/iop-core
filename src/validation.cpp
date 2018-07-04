@@ -1901,7 +1901,7 @@ static bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockInd
     txdata.reserve(block.vtx.size()); // Required so that pointers to individual PrecomputedTransactionData don't get invalidated
     
      // check if whitelist functionality is activated.
-    bool fIsMinerWhitelist = pindex->nHeight > chainparams.GetConsensus().minerWhiteListActivationHeight;
+    bool fIsMinerWhitelist = pindex->nHeight > (int)chainparams.GetConsensus().minerWhiteListActivationHeight;
      
     // get height of last checkpoint
     CBlockIndex* pcheckpoint = Checkpoints::GetLastCheckpoint(chainparams.Checkpoints());

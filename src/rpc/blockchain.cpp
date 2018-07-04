@@ -1557,7 +1557,7 @@ UniValue dumpminerstats(const JSONRPCRequest& request) {
     UniValue lastResult(UniValue::VOBJ);
     std::string key;
     int value;
-    for (int i = 0; i < minerVector.size() ; i++) {
+    for (unsigned int i = 0; i < minerVector.size() ; i++) {
         key = minerVector[i].first;
         value = minerVector[i].second;
         lastResult.push_back(Pair(key, value));
