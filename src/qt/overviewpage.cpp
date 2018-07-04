@@ -208,7 +208,7 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
 
     // for symmetry reasons also show immature label when the watch-only one is shown
     ui->immature->setVisible(showImmature || showWatchOnlyImmature);
-    ui->watchImmature->setVisible(showImmature || showWatchOnlyImmature);
+    ui->watchImmature->setVisible(showWatchOnlyImmature);
     //ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature);
     //ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
     //ui->labelWatchImmature->setVisible(showWatchOnlyImmature); // show watch-only immature balance

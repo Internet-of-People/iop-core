@@ -6,7 +6,7 @@
 #include "ui_transactiondescdialog.h"
 
 #include "transactiontablemodel.h"
-#include "styles.h"
+#include "uistyle.h"
 
 #include <QModelIndex>
 #include <QSettings>
@@ -19,7 +19,7 @@ TransactionDescDialog::TransactionDescDialog(const QModelIndex &idx, QWidget *pa
     if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(styleSheetString);
+        setStyleSheet(UIStyle::styleSheetString);
     }
     setWindowTitle(tr("Details for %1").arg(idx.data(TransactionTableModel::TxIDRole).toString()));
     QString desc = idx.data(TransactionTableModel::LongDescriptionRole).toString();

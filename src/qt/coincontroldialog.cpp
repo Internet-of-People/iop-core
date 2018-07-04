@@ -10,7 +10,7 @@
 #include "guiutil.h"
 #include "optionsmodel.h"
 #include "platformstyle.h"
-#include "styles.h"
+#include "uistyle.h"
 #include "txmempool.h"
 #include "walletmodel.h"
 
@@ -53,7 +53,7 @@ CoinControlDialog::CoinControlDialog(const PlatformStyle *_platformStyle, QWidge
     if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(styleSheetString); 
+        setStyleSheet(UIStyle::styleSheetString); 
     }
     
     // context menu actions

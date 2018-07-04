@@ -21,7 +21,7 @@
 #include "optionsmodel.h"
 #include "platformstyle.h"
 #include "rpcconsole.h"
-#include "styles.h"
+#include "uistyle.h"
 #include "utilitydialog.h"
 
 #ifdef ENABLE_WALLET
@@ -143,7 +143,7 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
         newPal.setColor(QPalette::Link, QColor(41, 128, 185));
         newPal.setColor(QPalette::LinkVisited, QColor(41, 99, 185));
         qApp->setPalette(newPal);
-        setStyleSheet(styleSheetString);
+        setStyleSheet(UIStyle::styleSheetString);
         ensurePolished();
     }
 
@@ -480,7 +480,7 @@ void IoPGUI::createToolBars()
         //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         toolbar->setContextMenuPolicy(Qt::PreventContextMenu); 
         toolbar->setMovable(false);
-        toolbar->setIconSize(TOOLBAR_ICONSIZE);
+        toolbar->setIconSize(UIStyle::TOOLBAR_ICONSIZE);
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolbar->addAction(iopLogoAction);
         toolbar->addAction(overviewAction);
@@ -534,7 +534,7 @@ void IoPGUI::createToolBars()
 
 
         
-        progressBarLabel->setStyleSheet("background: transparent; color: " + s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
+        progressBarLabel->setStyleSheet("background: transparent; color: " + UIStyle::s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
         //actProgressBarLabel->setDefaultWidget(progressBarLabel);
         //toolbar->addAction(actProgressBarLabel);
         actProgressBar = new QWidgetAction(this);

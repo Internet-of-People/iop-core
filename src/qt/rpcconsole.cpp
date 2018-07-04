@@ -11,7 +11,7 @@
 
 #include "bantablemodel.h"
 #include "clientmodel.h"
-#include "styles.h"
+#include "uistyle.h"
 #include "platformstyle.h"
 #include "chainparams.h"
 #include "netbase.h"
@@ -437,7 +437,7 @@ RPCConsole::RPCConsole(const PlatformStyle *_platformStyle, QWidget *parent) :
     if(IoPStyles::customThemeIsSet()) {
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
-        setStyleSheet(styleSheetString);
+        setStyleSheet(UIStyle::styleSheetString);
     }
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));
 
