@@ -12,11 +12,40 @@
 #include <QFontDatabase>
 #include <QSettings>
 
-namespace UIStyle {
-    const int ratio = 1;
+class IoPStyles 
+{
 
-    const QSize TOOLBAR_ICONSIZE = QSize(76*ratio,33*ratio);
-    const int BUTTON_DEFAULTWIDTH = 75*ratio;
+    public:
+
+
+        static float getDevicePixelRatio(){
+            float devicePixelRatio = 1.0;
+#if QT_VERSION > 0x050100
+    devicePixelRatio = ((QGuiApplication*)QCoreApplication::instance())->devicePixelRatio();
+#endif
+            return devicePixelRatio;
+        }
+
+        static void addFonts()
+        {
+        QFontDatabase::addApplicationFont(":/fonts/light");
+        QFontDatabase::addApplicationFont(":/fonts/regular");
+        QFontDatabase::addApplicationFont(":/fonts/medium");
+        QFontDatabase::addApplicationFont(":/fonts/bold");
+        }
+
+        static bool customThemeIsSet()
+        {
+            QSettings settings;
+            return (settings.value("theme").toString() != "default");
+    }
+};
+
+
+namespace UIStyle {
+
+    const QSize TOOLBAR_ICONSIZE = QSize(76*IoPStyles::getDevicePixelRatio(),33*IoPStyles::getDevicePixelRatio());
+    const int BUTTON_DEFAULTWIDTH = 75*IoPStyles::getDevicePixelRatio();
     const QString s_BUTTON_DEFAULTWIDTH = QString::number(BUTTON_DEFAULTWIDTH).append("px");
 
     const QString s_iopLightBlue = "rgb(108,200,240)";
@@ -220,24 +249,4 @@ namespace UIStyle {
 
         );
 }
-
-class IoPStyles 
-{
-
-    public:
-        static void addFonts()
-        {
-        QFontDatabase::addApplicationFont(":/fonts/light");
-        QFontDatabase::addApplicationFont(":/fonts/regular");
-        QFontDatabase::addApplicationFont(":/fonts/medium");
-        QFontDatabase::addApplicationFont(":/fonts/bold");
-        }
-
-        static bool customThemeIsSet()
-        {
-            QSettings settings;
-            return (settings.value("theme").toString() != "default");
-    }
-};
-
 #endif // IOP_STYLES_H
