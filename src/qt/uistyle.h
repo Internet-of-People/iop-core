@@ -13,11 +13,7 @@
 #include <QSettings>
 
 namespace UIStyle {
-#if QT_VERSION > 0x050100
-    const int ratio = ((QGuiApplication*)QCoreApplication::instance())->devicePixelRatio();
-#else
     const int ratio = 1;
-#endif
 
     const QSize TOOLBAR_ICONSIZE = QSize(76*ratio,33*ratio);
     const int BUTTON_DEFAULTWIDTH = 75*ratio;
