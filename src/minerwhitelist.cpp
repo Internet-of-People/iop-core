@@ -155,7 +155,7 @@ bool CMinerWhitelistDB::Init(bool fWipe){
         batch.Write(MinerEntry(DUMMY), MinerDetails(false,false)); 
 
 
-        for (int i=1; i <= Params().GetConsensus().minerWhiteListActivationHeight; i++) {
+        for (unsigned int i=1; i <= Params().GetConsensus().minerWhiteListActivationHeight; i++) {
             batch.Write(BlockEntry(i), BlockDetails(DUMMY, false, 0));
         }
         batch.Write(DB_HEIGHT, Params().GetConsensus().minerWhiteListActivationHeight);
@@ -208,7 +208,7 @@ bool CMinerWhitelistDB::IsCapEnabled() {
 }
 
 bool CMinerWhitelistDB::IsWhitelistEnabled() {
-    return chainActive.Height() >= Params().GetConsensus().minerWhiteListActivationHeight;
+    return chainActive.Height() >= (int)Params().GetConsensus().minerWhiteListActivationHeight;
 }
 
 
@@ -245,7 +245,7 @@ unsigned int CMinerWhitelistDB::GetCap() {
     unsigned int factor = GetCapFactor();
     unsigned int number = GetNumberOfWhitelistedMiners();
 
-    if (chainActive.Height() < Params().GetConsensus().minerCapSystemChangeHeight)
+    if (chainActive.Height() < (int)Params().GetConsensus().minerCapSystemChangeHeight)
         return factor*(2016/number);
 
     return (factor*2016)/number;
@@ -733,7 +733,7 @@ bool CMinerWhitelistDB::hasExceededCap(std::string address) {
     
     // There has been a bug in the previous implementation that did not take the current block 
     // into account when counting the number of blocks mined. Fix these manually.
-    if (blocks == cap + 1 && chainActive.Height() < Params().GetConsensus().minerCapSystemChangeHeight && address == getMinerforBlock(chainActive.Height()) ) {
+    if (blocks == cap + 1 && chainActive.Height() < (int)Params().GetConsensus().minerCapSystemChangeHeight && address == getMinerforBlock(chainActive.Height()) ) {
         LogPrintf("MinerCap: %s has exceeded cap. Exception because of two consecutive blocks from the same miner.\n", address);
         return false;
     } else if (blocks > cap) {
