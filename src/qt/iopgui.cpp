@@ -21,7 +21,7 @@
 #include "optionsmodel.h"
 #include "platformstyle.h"
 #include "rpcconsole.h"
-#include "uistyle.h"
+#include "iopstyle.h"
 #include "utilitydialog.h"
 
 #ifdef ENABLE_WALLET
@@ -135,15 +135,15 @@ IoPGUI::IoPGUI(const PlatformStyle* _platformStyle, const NetworkStyle* networkS
     }
 
 
-    if (IoPStyles::customThemeIsSet()) {
-        IoPStyles::addFonts();
+    if (IoPStyle::customThemeIsSet()) {
+        IoPStyle::addFonts();
         QString appstyle = "fusion";
         QApplication::setStyle(appstyle);
         QPalette newPal(qApp->palette());
         newPal.setColor(QPalette::Link, QColor(41, 128, 185));
         newPal.setColor(QPalette::LinkVisited, QColor(41, 99, 185));
         qApp->setPalette(newPal);
-        setStyleSheet(UIStyle::styleSheetString);
+        setStyleSheet(IoPStyle::styleSheetString);
         ensurePolished();
     }
 
@@ -480,7 +480,7 @@ void IoPGUI::createToolBars()
         //toolbar->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         toolbar->setContextMenuPolicy(Qt::PreventContextMenu); 
         toolbar->setMovable(false);
-        toolbar->setIconSize(UIStyle::TOOLBAR_ICONSIZE);
+        toolbar->setIconSize(IoPStyle::getToolbarIconSize());
         toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         toolbar->addAction(iopLogoAction);
         toolbar->addAction(overviewAction);
@@ -534,7 +534,7 @@ void IoPGUI::createToolBars()
 
 
         
-        progressBarLabel->setStyleSheet("background: transparent; color: " + UIStyle::s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
+        progressBarLabel->setStyleSheet("background: transparent; color: " + IoPStyle::s_placeHolderText + "; margin-left: 30px; margin-right: 30px;");
         //actProgressBarLabel->setDefaultWidget(progressBarLabel);
         //toolbar->addAction(actProgressBarLabel);
         actProgressBar = new QWidgetAction(this);

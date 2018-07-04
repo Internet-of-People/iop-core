@@ -10,7 +10,7 @@
 #endif
 
 #include "amount.h"
-#include "uistyle.h"
+#include "iopstyle.h"
 
 #include <QLabel>
 #include <QWidgetAction>
