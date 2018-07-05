@@ -7,7 +7,11 @@ https://iop.global
 
 **RELEASE NOTE v6.2.1**
 -----------------------
-Some last minute bug fixes
+After finishing version 6.2.0, we discovered a mistake in the style files that would lead to a segfault on binaries compiled with certain version of gcc. This issue is now fixed. We have temporarily deactivated the custom font because of a few scaling issues. 
+
+**KNOWN ISSUES**:
+Some Icons are drawn imperfectly because the pixel size is not an integer multiple of the rendered pixmap. This will be fixed in the next release.
+
 
 
 **RELEASE NOTE v6.2.0**

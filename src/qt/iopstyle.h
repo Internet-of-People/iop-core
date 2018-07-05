@@ -14,9 +14,11 @@
 
 class IoPStyle
 {
+    static qreal getDevicePixelRatio();
+
+    
     public:
 
-    static float getDevicePixelRatio();
     static QSize getToolbarIconSize(); 
 
     static void addFonts();

@@ -1,7 +1,7 @@
 #include "iopstyle.h"
 
-float IoPStyle::getDevicePixelRatio() {
-    float devicePixelRatio = 1.0;
+qreal IoPStyle::getDevicePixelRatio() {
+    qreal devicePixelRatio = 1.0;
 #if QT_VERSION > 0x050100
     devicePixelRatio = ((QGuiApplication*)QCoreApplication::instance())->devicePixelRatio();
 #endif
@@ -9,7 +9,9 @@ float IoPStyle::getDevicePixelRatio() {
 }
 
 QSize IoPStyle::getToolbarIconSize() {
-    return QSize(76*getDevicePixelRatio(),33*getDevicePixelRatio());
+    QSize size = QSize(76,33);
+    // size /= getDevicePixelRatio();
+    return size;
 }
 
 // QString IoPStyle::getButtonDefaultWidthString() {
@@ -18,10 +20,10 @@ QSize IoPStyle::getToolbarIconSize() {
 
 
 void IoPStyle::addFonts() {
-    QFontDatabase::addApplicationFont(":/fonts/light");
-    QFontDatabase::addApplicationFont(":/fonts/regular");
-    QFontDatabase::addApplicationFont(":/fonts/medium");
-    QFontDatabase::addApplicationFont(":/fonts/bold");
+    // QFontDatabase::addApplicationFont(":/fonts/light");
+    // QFontDatabase::addApplicationFont(":/fonts/regular");
+    // QFontDatabase::addApplicationFont(":/fonts/medium");
+    // QFontDatabase::addApplicationFont(":/fonts/bold");
 }
 
 bool IoPStyle::customThemeIsSet() {
@@ -63,10 +65,10 @@ const QColor IoPStyle::c_highlight_dark_midgrey = QColor(47,47,47);
 const QString IoPStyle::styleSheetString = QString(
     //General
     "QFrame "
-    "{ background-color: " + s_iopantrazith + "; border: none; font-family: Encode Sans Expanded; font-size: 14px;}"
+    "{ background-color: " + s_iopantrazith + "; border: none; font-size: 14px;}"
 
     "QWidget "
-    "{ background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-family: Encode Sans Expanded; font-size: 14px;}"
+    "{ background: " + s_iopantrazith + "; color: " + s_iopLightGrey + "; font-size: 14px;}"
 
     "#addressBookButton, #pasteButton, #deleteButton "
     "{ width: 35; height: 35; background-color: " + s_highlight_light_anthrazith + "; color: " + s_iopLightGrey + "; border: 1px outset rgb(33,33,33); padding: 6px; border-radius: 0px;}"
@@ -197,7 +199,7 @@ const QString IoPStyle::styleSheetString = QString(
     "QPushButton:disabled { color: " + s_iopMidGrey + "}"
 
     "#payTo, #reqLabel, #reqMessage, #reqAmount, #addAsLabel, #label_Label, #label_amount, #label_message "
-    "{ font-size: 14px; font-family: Encode Sans Expanded; font-weight: thin; color: " + s_iopLightGrey + ";}"          
+    "{ font-size: 14px; font-weight: thin; color: " + s_iopLightGrey + ";}"          
 
     "#buy_amountIOP, #pay_spinbox "
     "{ min-height: 48px; font-size: 32px; padding-right: 0; color: " + s_iopLightBlue +"; text-align: left; font-weight: light; border-style: solid; border-color: " + s_iopLightBlue + "; border-width: 1px; border-top: none; border-left: none; border-right: none;}"
