@@ -1,7 +1,7 @@
 #include "iopstyle.h"
 
-float IoPStyle::getDevicePixelRatio() {
-    float devicePixelRatio = 1.0;
+qreal IoPStyle::getDevicePixelRatio() {
+    qreal devicePixelRatio = 1.0;
 #if QT_VERSION > 0x050100
     devicePixelRatio = ((QGuiApplication*)QCoreApplication::instance())->devicePixelRatio();
 #endif
@@ -9,7 +9,9 @@ float IoPStyle::getDevicePixelRatio() {
 }
 
 QSize IoPStyle::getToolbarIconSize() {
-    return QSize(76*getDevicePixelRatio(),33*getDevicePixelRatio());
+    QSize size = QSize(76,33);
+    // size /= getDevicePixelRatio();
+    return size;
 }
 
 // QString IoPStyle::getButtonDefaultWidthString() {
