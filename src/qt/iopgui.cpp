@@ -786,21 +786,22 @@ void IoPGUI::gotUpdateVersion(QNetworkReply* reply){
     bool latest = jsonObject["latest"].toBool();
     QString changelog = jsonObject["change_log"].toString();
     QString version = jsonObject["current_version"].toString();
+    QString tag = jsonObject["tag"].toString();
     //test sucess
     if(latest){
         if(openUpdateDialog){
-        updateDialog->update(true, true, version, changelog);
+        updateDialog->update(true, true, version, changelog, tag);
         }
     }else{
         if(!openUpdateDialog)
         {
             updateDialog = new HelpMessageDialog(this, true, true);
-            updateDialog->update(true, false, version, changelog);
+            updateDialog->update(true, false, version, changelog, tag);
             openUpdateDialog = false;
             updateDialog->exec();
             return;
         }
-        updateDialog->update(true, false, version, changelog);
+        updateDialog->update(true, false, version, changelog, tag);
     }
     openUpdateDialog = false;
 }
