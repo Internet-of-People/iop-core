@@ -62,6 +62,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update) :
         ui->aboutMessage->setTextFormat(Qt::RichText);
         ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         text = updateInfo;
+        updateDownloadURL = "https://github.com/Internet-of-People/iop-core/releases/tag/";
         ui->aboutMessage->setText(updateInfo);
         ui->helpMessage->setVisible(false);
     } else if (about)
@@ -148,7 +149,7 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent, bool about, bool update) :
     }
 }
 
-void HelpMessageDialog::update(bool success, bool latest, QString latestVersion, QString changeLog)
+void HelpMessageDialog::update(bool success, bool latest, QString latestVersion, QString changeLog, QString tag)
 {
     QString updateInfo;
     if(!success){
@@ -164,6 +165,12 @@ void HelpMessageDialog::update(bool success, bool latest, QString latestVersion,
         updateInfo.append(tr("Changelog: \n"));
         updateInfo.append("<br/>\n");
         updateInfo.append(changeLog);
+        if (tag == QString("global")) {
+            updateDownloadURL = "https://iop.global/wallets/"
+        } else {
+            updateDownloadURL += tag;
+        }
+        QTextStream(stdout) << updateDownloadURL << endl;
         resize(780,400);
         downloadButton = new QPushButton(tr("download"));
         ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
@@ -206,7 +213,7 @@ void HelpMessageDialog::on_okButton_accepted()
 
 void HelpMessageDialog::on_downloadButton_accepted()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/Internet-of-People/iop-core/releases",QUrl::TolerantMode)); 
+    QDesktopServices::openUrl(QUrl(updateDownloadURL,QUrl::TolerantMode)); 
 }
 
 /** "Shutdown" window */

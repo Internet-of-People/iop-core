@@ -26,11 +26,12 @@ public:
     void printToConsole();
     void showOrPrint();
     QPushButton* downloadButton;
-    void update(bool success, bool latest = true, QString latestVersion = QString(), QString changeLog = QString());
+    void update(bool success, bool latest = true, QString latestVersion = QString(), QString changeLog = QString(), QString tag = QString());
 
 private:
     Ui::HelpMessageDialog *ui;
     QString text;
+    QString updateDownloadURL;
 
 private Q_SLOTS:
     void on_okButton_accepted();
