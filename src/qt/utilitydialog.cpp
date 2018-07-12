@@ -166,7 +166,7 @@ void HelpMessageDialog::update(bool success, bool latest, QString latestVersion,
         updateInfo.append("<br/>\n");
         updateInfo.append(changeLog);
         if (tag == QString("global")) {
-            updateDownloadURL = "https://iop.global/wallets/"
+            updateDownloadURL = "https://iop.global/wallets/";
         } else {
             updateDownloadURL += tag;
         }
