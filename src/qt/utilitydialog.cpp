@@ -170,7 +170,6 @@ void HelpMessageDialog::update(bool success, bool latest, QString latestVersion,
         } else {
             updateDownloadURL += tag;
         }
-        QTextStream(stdout) << updateDownloadURL << endl;
         resize(780,400);
         downloadButton = new QPushButton(tr("download"));
         ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
