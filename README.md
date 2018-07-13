@@ -5,13 +5,22 @@ IoP Core integration/staging tree
 
 https://iop.global
 
-**RELEASE NOTE v6.2.1**
+
+**RELEASE NOTE v6.2.2**
 -----------------------
-After finishing version 6.2.0, we discovered a mistake in the style files that would lead to a segfault on binaries compiled with certain version of gcc. This issue is now fixed. We have temporarily deactivated the custom font because of a few scaling issues. 
 
-**KNOWN ISSUES**:
-Some Icons are drawn imperfectly because the pixel size is not an integer multiple of the rendered pixmap. This will be fixed in the next release.
+The IoP Blockchain client version *6.2.2* is now available
 
+Fixes
+=====
+Fixed a bug in the update check routine
+Fixed some faulty icon rendering
+
+Known Issues
+============
+Toolbar icons still render imperfectly
+Scaling on Linux is broken. To work around it, start the program with `QT_SCALE_FACTOR=2 iop-qt` or equivalently.
+We received feedback about some possible UI improvements. Stay tuned!
 
 
 **RELEASE NOTE v6.2.0**
