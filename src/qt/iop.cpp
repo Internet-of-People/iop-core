@@ -612,6 +612,9 @@ int main(int argc, char *argv[])
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
     translationInterface.Translate.connect(Translate);
 
+    /// 4.5 Settings available --> init Platformstyle before parsing args
+    app.initPlatformStyle(); 
+
     // Show help message immediately after parsing command-line options (for "-lang") and setting locale,
     // but before showing splash screen.
     if (gArgs.IsArgSet("-?") || gArgs.IsArgSet("-h") || gArgs.IsArgSet("-help") || gArgs.IsArgSet("-version"))
@@ -620,9 +623,6 @@ int main(int argc, char *argv[])
         help.showOrPrint();
         return EXIT_SUCCESS;
     }
-
-    /// 4.5 Settings available --> init Platformstyle 
-    app.initPlatformStyle(); 
 
     /// 5. Now that settings and translations are available, ask user for data directory
     // User language is set up: pick a data directory

@@ -173,7 +173,7 @@ void HelpMessageDialog::update(bool success, bool latest, QString latestVersion,
         resize(780,400);
         downloadButton = new QPushButton(tr("download"));
         ui->okButton->addButton(downloadButton, QDialogButtonBox::AcceptRole);
-        connect(downloadButton, SIGNAL(clicked()), this, SLOT(on_downloadButton_accepted()));
+        connect(downloadButton, SIGNAL(clicked()), this, SLOT(downloadButton_accepted()));
     } else
     {
         setWindowTitle(tr("Latest Version"));
@@ -210,7 +210,7 @@ void HelpMessageDialog::on_okButton_accepted()
     close();
 }
 
-void HelpMessageDialog::on_downloadButton_accepted()
+void HelpMessageDialog::downloadButton_accepted()
 {
     QDesktopServices::openUrl(QUrl(updateDownloadURL,QUrl::TolerantMode)); 
 }
