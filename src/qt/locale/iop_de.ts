@@ -263,6 +263,10 @@
         <source>minimum exchange value: </source>
         <translation>Minimaler Einkaufswert: </translation>
     </message>
+    <message>
+        <source>maximum exchange value: </source>
+        <translation>Maximaler Einkaufswert: </translation>
+    </message>
 </context>
 <context>
     <name>CoinControlDialog</name>
