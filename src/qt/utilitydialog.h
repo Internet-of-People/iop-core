@@ -35,7 +35,7 @@ private:
 
 private Q_SLOTS:
     void on_okButton_accepted();
-    void on_downloadButton_accepted();
+    void downloadButton_accepted();
 };
 
 

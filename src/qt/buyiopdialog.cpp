@@ -84,11 +84,12 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     paySpinBox = new QDoubleSpinBox();
     paySpinBox->setObjectName("pay_spinbox");
-    paySpinBox->setRange(50, 50000);
+    //paySpinBox->setRange(50, 50000);
     paySpinBox->setDecimals(2);
     paySpinBox->setSingleStep(1);
     paySpinBox->setLocale(QLocale::Language::English);
     paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
+    paySpinBox->setRange(0,9999999);
     //paySpinBox->setMaximumWidth(350);
     paySpinBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
@@ -124,8 +125,8 @@ BuyIoPDialog::BuyIoPDialog(const PlatformStyle* _platformStyle, QWidget* parent)
 
     layout->addWidget(bottomWidget);
     
-    amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]));
-
+        amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]) 
+    .append("\n").append(tr("maximum exchange value: ").append(QString::number(MAX_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]))); 
     
     QFrame* lineb1 = new QFrame(this);
     lineb1->setObjectName(QStringLiteral("lineb1"));
@@ -192,12 +193,16 @@ void BuyIoPDialog::physicalUpdated(int i)
 void BuyIoPDialog::physicalUpdated(double i)
 {
 
-    amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]));
-  
-    if (i > MIN_PRICE[currency->currentIndex()] && i < MAX_PRICE[currency->currentIndex()])
-        updateIoPPrice(i);
-    else {
-        paySpinBox->setRange(MIN_PRICE[currency->currentIndex()], MAX_PRICE[currency->currentIndex()]);
+        amountInfoLabel->setText(tr("minimum exchange value: ").append(QString::number(MIN_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()]) 
+    .append("\n").append(tr("maximum exchange value: ").append(QString::number(MAX_PRICE[currency->currentIndex()])).append(" ").append(CURRENCY[currency->currentIndex()])));   
+    updateIoPPrice(i);
+    
+    if (i >= MIN_PRICE[currency->currentIndex()] && i <= MAX_PRICE[currency->currentIndex()]){
+        paySpinBox->setStyleSheet("");
+    } else {
+        paySpinBox->setStyleSheet("border-color: rgb(155,0,0);");
+        //paySpinBox->setRange(MIN_PRICE[currency->currentIndex()], MAX_PRICE[currency->currentIndex()]);
+        //
         /* if (i <= MIN_PRICE[currency->currentIndex()])
             paySpinBox->setValue(MIN_PRICE[currency->currentIndex()]);
         if (i >= MAX_PRICE[currency->currentIndex()])
@@ -224,7 +229,7 @@ void BuyIoPDialog::sendBuyRequest()
 void BuyIoPDialog::gotIoPPrice(QNetworkReply* reply)
 {
     if (reply->error()) {
-        std::cout << "ERROR! " << reply->errorString().toStdString() << std::endl; //Error handling
+        // std::cout << "ERROR! " << reply->errorString().toStdString() << std::endl; //Error handling
         responsed = true;
         return;
     }
