@@ -6,26 +6,28 @@ IoP Core integration/staging tree
 https://iop.global
 
 
-**RELEASE NOTE v6.2.2**
+**RELEASE NOTE v6.2.3**
 -----------------------
 
-The IoP Blockchain client version *6.2.2* is now available
+The IoP Blockchain client version *6.2.3* is now available
 
 Fixes
 =====
-Fixed a bug in the update check routine
-Fixed some faulty icon rendering
+Fixed bug that causes nodes to crash if a new block contains duplicate inputs (recently discovered in bitcoin core)
+Fixed segregation fault on running iop-qt with startup arguments that cause the program to exit before the Qt backend is initialized.
+Fixed strange behavior of the IOP buy dialog. Input field will now change color if input is out of range instead of rejecting input.
+
 
 Known Issues
 ============
 Toolbar icons still render imperfectly
-Scaling on Linux is broken. To work around it, start the program with `QT_SCALE_FACTOR=2 iop-qt` or equivalently.
+Scaling on Linux and Windows is still broken. To work around it, start the program with `QT_SCALE_FACTOR=2 iop-qt` or equivalently.
 We received feedback about some possible UI improvements. Stay tuned!
 
 
 **RELEASE NOTE v6.2.0**
 -----------------------
-We are proud to announce a complete redesign of the IoP Core wallet. 
+We are proud to announce a complete redesign of the IoP Core wallet.
 You can now buy IOP directly from inside the wallet software thanks to our collaboration with Indacoin.
 
 
