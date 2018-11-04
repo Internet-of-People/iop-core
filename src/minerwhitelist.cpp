@@ -402,6 +402,13 @@ bool CMinerWhitelistDB::isWhitelisted(std::string address) {
     return mDetails.whitelisted;
 }
 
+unsigned int CMinerWhitelistDB::GetLastBlock(std::string address) {
+    MinerDetails det = MinerDetails();
+    if (Read(MinerEntry(address), det))
+        return det.blockVector.back();
+    return 0;
+}
+
 unsigned int CMinerWhitelistDB::GetTotalBlocks(std::string address) {
     MinerDetails det = MinerDetails();
     if (Read(MinerEntry(address), det))

@@ -42,7 +42,7 @@ public:
     bool ExistMiner(std::string address);
     bool isWhitelisted(std::string address);
     
-    
+    unsigned int GetLastBlock(std::string address);
     unsigned int GetTotalBlocks(std::string address);
     unsigned int GetBlocksInWindow(std::string address);
     unsigned int GetWindowStart(unsigned int height);
