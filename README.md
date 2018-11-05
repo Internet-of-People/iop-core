@@ -6,17 +6,16 @@ IoP Core integration/staging tree
 https://iop.global
 
 
-**RELEASE NOTE v6.2.3**
+**RELEASE NOTE v6.2.4**
 -----------------------
 
-The IoP Blockchain client version *6.2.3* is now available
+The IoP Blockchain client version *6.2.4* is now available
 
-Fixes
-=====
-Fixed bug that causes nodes to crash if a new block contains duplicate inputs (recently discovered in bitcoin core)
-Fixed segregation fault on running iop-qt with startup arguments that cause the program to exit before the Qt backend is initialized.
-Fixed strange behavior of the IOP buy dialog. Input field will now change color if input is out of range instead of rejecting input.
-
+Improvements
+============
+Cleared up the help message for dumpminerstats a bit
+Preparations for more verbose minerstats
+Optimized license cap calculation
 
 Known Issues
 ============

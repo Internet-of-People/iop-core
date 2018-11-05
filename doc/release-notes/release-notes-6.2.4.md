@@ -1,4 +1,4 @@
-**RELEASE NOTE v6.2.3**
+**RELEASE NOTE v6.2.4**
 -----------------------
 
 The IoP Blockchain client version *6.2.4* is now available
