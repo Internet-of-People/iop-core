@@ -7,6 +7,7 @@ Improvements
 ============
 Cleared up the help message for dumpminerstats a bit
 Preparations for more verbose minerstats
+Optimized license cap calculation
 
 Known Issues
 ============
