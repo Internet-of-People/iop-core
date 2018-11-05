@@ -54,6 +54,7 @@ public:
     bool RewindBlock(unsigned int index);
     std::string getMinerforBlock(unsigned int index);
     bool DumpStatsForMiner(std::string address, bool *wlisted, unsigned int *windowCoins, unsigned int *totalCoins, unsigned int *lastBlock);
+    bool DumpFullStatsForMiner(std::string address, bool *wlisted, unsigned int *windowCoins, unsigned int *totalCoins, std::vector<unsigned int> &lastBlocks);
     
     
     using CDBWrapper::Sync;

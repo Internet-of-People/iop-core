@@ -483,6 +483,22 @@ bool CMinerWhitelistDB::DumpStatsForMiner(std::string address, bool *wlisted, un
     return true;
 }
 
+bool CMinerWhitelistDB::DumpFullStatsForMiner(std::string address, bool *wlisted, unsigned int *windowBlocks, unsigned int *totalBlocks, std::vector<unsigned int> &lastBlocks) {
+    //LogPrintf("MinerDatabase: Dumping stats for miner %s.\n", address);
+    
+    MinerEntry entry = MinerEntry(address);
+    if(!Exists(entry))
+        return false;
+    
+    MinerDetails details = MinerDetails();
+    Read(entry, details);
+    *wlisted = details.whitelisted;
+    *windowBlocks = details.windowBlocks;
+    *totalBlocks = details.totalBlocks;
+    lastBlocks = details.blockVector;
+    return true;
+}
+
 
 bool CMinerWhitelistDB::MineBlock(unsigned int newHeight, std::string address) {
     unsigned int currHeight;
