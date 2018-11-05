@@ -755,14 +755,19 @@ bool CMinerWhitelistDB::hasExceededCap(std::string address) {
     
     unsigned int cap = CMinerWhitelistDB::GetCap();
     unsigned int blocks = CMinerWhitelistDB::GetBlocksInWindow(address);
+    unsigned int lastBlock = CMinerWhitelistDB::GetLastBlock(address);
     
     // There has been a bug in the previous implementation that did not take the current block 
     // into account when counting the number of blocks mined. Fix these manually.
-    if (blocks == cap + 1 && chainActive.Height() < (int)Params().GetConsensus().minerCapSystemChangeHeight && address == getMinerforBlock(chainActive.Height()) ) {
-        LogPrintf("MinerCap: %s has exceeded cap. Exception because of two consecutive blocks from the same miner.\n", address);
+    if (blocks == cap + 1 && (unsigned int)chainActive.Height() < Params().GetConsensus().minerCapSystemChangeHeight && lastBlock == (unsigned int)chainActive.Height() ) {
+        LogPrintf("MinerCap: %s has exceeded cap. Accepting Block for legacy compatibility.\n", address);
         return false;
     } else if (blocks > cap) {
         LogPrintf("MinerCap: %s has exceeded cap. Not accepting Block.\n", address);
+        return true;
+    } else if (chainActive.Height() > 122976 && (unsigned int)chainActive.Height() - 1 <= lastBlock) {
+        // Additional check for overly powerful mining.
+        LogPrintf("MinerCap: %s is mining too fast. Not accepting Block.\n", address);
         return true;
     } else {
         return false;
