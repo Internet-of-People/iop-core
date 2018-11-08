@@ -765,7 +765,7 @@ bool CMinerWhitelistDB::hasExceededCap(std::string address) {
     } else if (blocks > cap) {
         LogPrintf("MinerCap: %s has exceeded cap. Not accepting Block.\n", address);
         return true;
-    } else if (chainActive.Height() > 122976 && (unsigned int)chainActive.Height() - 1 <= lastBlock) {
+    } else if (chainActive.Height() > 122976 && Params().NetworkIDString() == "main" && (unsigned int)chainActive.Height() - 1 <= lastBlock) {
         // Additional check for overly powerful mining.
         LogPrintf("MinerCap: %s is mining too fast. Not accepting Block.\n", address);
         return true;
