@@ -1053,14 +1053,19 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     /* IoP CHANGE */
     CAmount nSubsidy;
 	if (nHeight == 1) {
-		nSubsidy = 2100000 * COIN;
-    // } else if (nHeight < consensusParams.nPowSubsidyIncreaseHeight) {
-	// 	nSubsidy = 2 * COIN; //this code line to be removed after beta release. We are forcing 1 IoP per block during this phase. Then will be 50 coins per block.
+		nSubsidy = 2100000 * COIN;    
     } else {
         nSubsidy = 50 * COIN;
     }
 
-    // Subsidy is cut in half every 210,000 blocks which will occur approximately every 4 years.
+    // this makes the theor. max supply of mainnet exactly equal to BTC theor. max supply,
+    // compensating for lower halving interval and coins lost due to beta mining
+    if (nHeight == consensusParams.nSubsidyHalvingInterval - 1) {
+        nSubsidy += 6000000 * COIN;
+        nSubsidy += 37027227072051; 
+    }
+
+    // Subsidy is cut in half every 150,000 blocks which will occur approximately every 3 years.
     nSubsidy >>= halvings;
     return nSubsidy;
 }
