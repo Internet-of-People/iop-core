@@ -1,5 +1,5 @@
 ---
-name: "iop-core-osx-6.2.4"
+name: "iop-core-osx-6.3.0"
 enable_cache: true
 suites:
 - "trusty"
