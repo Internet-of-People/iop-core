@@ -6,23 +6,15 @@ IoP Core integration/staging tree
 https://iop.global
 
 
-**RELEASE NOTE v6.2.4**
+**RELEASE NOTE v6.3.0**
 -----------------------
 
-The IoP Blockchain client version *6.2.4* is now available
+The IoP Blockchain client version *6.3.0* is now available
 
-Improvements
-============
-Cleared up the help message for dumpminerstats a bit
-Preparations for more verbose minerstats
-Optimized license cap calculation
-
-Known Issues
-============
-Toolbar icons still render imperfectly
-Scaling on Linux and Windows is still broken. To work around it, start the program with `QT_SCALE_FACTOR=2 iop-qt` or equivalently.
-We received feedback about some possible UI improvements. Stay tuned!
-
+Changes
+=======
+- Updated user interface with the new logo.
+- Updated subsidy calculation with lower halving interval. Additional rewards compensate for lower halving interval and coins lost to fermat beta mining. Max Supply is now just below 21 million IOP, as initially planned. This version will hard fork from previous versions on block 149999. Please update as soon as possible.
 
 **RELEASE NOTE v6.2.0**
 -----------------------

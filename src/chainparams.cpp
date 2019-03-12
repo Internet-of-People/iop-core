@@ -75,7 +75,7 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = "main";
-        consensus.nSubsidyHalvingInterval = 210000;
+        consensus.nSubsidyHalvingInterval = 150000;
         /* **** IOP CHANGE //
         IoP Chain uses the coinbase content to store the miner signature, so we can not enforce BIP34 in its current form.
         So deactivate the check for BIP34 completely
@@ -186,7 +186,7 @@ class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = "test";
-        consensus.nSubsidyHalvingInterval = 210000;
+        consensus.nSubsidyHalvingInterval = 100000;
         /* **** IOP CHANGE //
         IoP Chain uses the coinbase content to store the miner signature, so we can not enforce BIP34 in its current form.
         So deactivate the check for BIP34 completely
